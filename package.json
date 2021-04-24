@@ -1,0 +1,43 @@
+{
+  "name": "blog-house",
+  "version": "1.0.0",
+  "description": "Inspired by Doge House. Taking blogs to the moon 🚀 🌕",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "build:css": "tailwind build src/taildwind.css -o src/public/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/decca-dev/blog-house.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/decca-dev/blog-house/issues"
+  },
+  "homepage": "https://github.com/decca-dev/blog-house#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "chalk": "^4.1.1",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0",
+    "express-session": "^1.17.1",
+    "express-sessions": "^1.0.6",
+    "mongoose": "^5.12.5",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.2.5",
+    "nodemon": "^2.0.7",
+    "postcss": "^8.2.12",
+    "tailwindcss": "^2.1.1"
+  }
+}
