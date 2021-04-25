@@ -1,29 +1,38 @@
 <%- include('../partials/navbar') %>
 <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-    <path fill="#ff5500" fill-opacity="1" d="M0,64L21.8,96C43.6,128,87,192,131,192C174.5,192,218,128,262,133.3C305.5,139,349,213,393,240C436.4,267,480,245,524,224C567.3,203,611,181,655,186.7C698.2,192,742,224,785,208C829.1,192,873,128,916,106.7C960,85,1004,107,1047,101.3C1090.9,96,1135,64,1178,58.7C1221.8,53,1265,75,1309,106.7C1352.7,139,1396,181,1418,202.7L1440,224L1440,0L1418.2,0C1396.4,0,1353,0,1309,0C1265.5,0,1222,0,1178,0C1134.5,0,1091,0,1047,0C1003.6,0,960,0,916,0C872.7,0,829,0,785,0C741.8,0,698,0,655,0C610.9,0,567,0,524,0C480,0,436,0,393,0C349.1,0,305,0,262,0C218.2,0,175,0,131,0C87.3,0,44,0,22,0L0,0Z"></path>
+    <path fill="#ff5500" fill-opacity="1" d="M0,128L48,112C96,96,192,64,288,53.3C384,43,480,53,576,96C672,139,768,213,864,224C960,235,1056,181,1152,160C1248,139,1344,149,1392,154.7L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
 </svg>
 <div class="container">
     <h1 class="mb-4">Blog Articles</h1>
     <a href="/articles/new" class="btn btn-primary"><img src="../../public/art/new.png" alt="new" width="25" height="25" class="inline-block align-center"> New</a>
-    <% articles.forEach(article => { %>
-        <div class="card mt-4">
-            <div class="card-body">
-                <h4 class="card-title"><%= article.title %></h4>
-                <div class="card-subtitle text-muted mb-2">
-                    <%= article.createdAt.toLocaleDateString() %>
+    <% if (articles.length > 0) { %>
+        <% articles.forEach(article => { %>
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h4 class="card-title"><%= article.title %></h4>
+                    <div class="card-subtitle text-muted mb-2">
+                        <%= article.createdAt.toLocaleDateString() %>
+                    </div>
+                    <div class="card-text mb-2">
+                        <%= article.description %>
+                    </div>
+                    <p class="card-text"><small class="text-muted">By <strong><%= article.author %></strong></small></p>
+                    <a href="/articles/<%= article.slug %>" class="btn btn-primary">Read more</a>
+                    <% if (user && article.author === user.name) { %>
+                        <a href="/articles/edit/<%= article.id %>" class="btn btn-info">Edit</a>
+                        <form action="/articles/<%= article.id %>?_method=DELETE" method="POST" class="d-inline">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    <% } %>
                 </div>
-                <div class="card-text mb-2">
-                    <%= article.description %>
-                </div>
-                <p class="card-text"><small class="text-muted">By <strong><%= article.author %></strong></small></p>
-                <a href="/articles/<%= article.slug %>" class="btn btn-primary">Read more</a>
-                <% if (article.author === user.name) { %>
-                    <a href="/articles/edit/<%= article.id %>" class="btn btn-info">Edit</a>
-                    <form action="/articles/<%= article.id %>?_method=DELETE" method="POST" class="d-inline">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                <% } %>
             </div>
+        <% }) %>
+    <% }else { %>
+        <img src="../../public/emojis/cricket.svg" alt="cricket" width="300" height="300" class="mx-auto">
+        <div class="text-center">
+            <h1>*Cricket noises*</h1>
+            <br>
+            <h2>Seems like there aren't any posts</h2>
         </div>
-    <% }) %>
+    <% } %>
 </div>
