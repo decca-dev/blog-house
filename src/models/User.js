@@ -17,6 +17,35 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    id: {
+        type: String
+    },
+    isBanned: {
+        type: Boolean,
+        default: false
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    totalPosts: {
+        type: Number,
+        default: 0
+    },
+    bio: {
+        type: String
+    },
+    followers: {
+        type: Array,
+        default: []
+    },
+    following: {
+        type: Array,
+        default: []
+    },
+    apiKey: {
+        type: String
+    }
 });
 
 module.exports = mongoose.model('User', userSchema)

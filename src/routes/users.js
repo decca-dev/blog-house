@@ -2,6 +2,7 @@ const router = require('express').Router();
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const genID = require('../misc/genID');
 
 router.get('/login', async (req, res) => {
     res.render('login')
@@ -9,7 +10,7 @@ router.get('/login', async (req, res) => {
 
 router.get('/register', async (req, res) => {
     res.render('register');
-})
+});
 
 router.post('/register', async (req, res) => {
     const { name, email, password, password2 } = req.body;
@@ -58,7 +59,8 @@ router.post('/register', async (req, res) => {
                 const newData = new User({
                     name,
                     email,
-                    password
+                    password,
+                    id: genID()
                 });
 
                 //*Hash password
@@ -86,7 +88,7 @@ router.post('/register', async (req, res) => {
 //*Login handle
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/dashboard',
+        successRedirect: '/',
         failureRedirect: '/users/login',
         failureFlash: true
     })(req, res, next)
@@ -96,7 +98,8 @@ router.post('/login', (req, res, next) => {
 router.get('/logout', (req, res) => {
     req.logout();
     req.flash('success_msg', 'You have logged out!');
-    res.redirect('/users/login')
+    res.redirect('/')
 })
+
 
 module.exports = router;
