@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -45,7 +46,18 @@ const userSchema = new mongoose.Schema({
     },
     apiKey: {
         type: String
+    },
+    slug: {
+        type: String,
+        required: true,
+        unique: true
     }
+});
+
+userSchema.pre('validate', function(next) {
+    this.slug = slugify(this.name, { lower: true, strict: true })
+
+    next();
 });
 
 module.exports = mongoose.model('User', userSchema)

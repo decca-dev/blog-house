@@ -14,7 +14,7 @@
                         <%= article.createdAt.toLocaleDateString() %>
                     </div>
                     <div class="card-text mb-2">
-                        <%= article.description %>
+                        <%= article.description.substr(0, 50) %>...
                     </div>
                     <p class="card-text"><small class="text-muted">By <strong><%= article.author %></strong></small></p>
                     <a href="/articles/<%= article.slug %>" class="btn btn-primary">Read more</a>

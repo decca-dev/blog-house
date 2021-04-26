@@ -76,6 +76,10 @@ app.use(indexRoute);
 app.use('/users', usersRoute);
 app.use('/articles', articlesRoute);
 
+app.get('*', (req, res) => {
+    res.render('errors/404.ejs', { title: "BlogHouse", description: "Enjoy the best blogging experience!\nCreate an account or checkout blogs by others.", route: ""})
+})
+
 app.listen(PORT,() => {
     console.clear();
     console.log(chalk.green(`Server started on port ${PORT}`))

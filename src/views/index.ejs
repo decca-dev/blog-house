@@ -9,7 +9,7 @@
     <h5 class="pb-5">You can see other peoples' blogs and follow them to get informed about their future posts.</h5>
     <h1 class="pb-3">Share your magic with the world <img src="../public/emojis/world.svg" alt="world" width="25" height="25" class="inline-block align-middle"></h1>
     <h5 class="pb-5">You can easily write a sick looking blogs with just a little bit of markdown</h5>
-    <a href="/form" type="button" class="btn btn-primary">Get Started</a>
+    <% if (!user) { %>
+        <a href="/form" type="button" class="btn btn-primary">Get Started</a>
+    <% } %>
 </div>
-<style>
-</style>

@@ -5,11 +5,11 @@ const passport = require('passport');
 const genID = require('../misc/genID');
 
 router.get('/login', async (req, res) => {
-    res.render('login')
+    res.render('login', { title: "BlogHouse", description: "Login with BlogHouse", route: "/users/login"})
 })
 
 router.get('/register', async (req, res) => {
-    res.render('register');
+    res.render('register', { title: "BlogHouse", description: "Register an account with BlogHouse", route: "/users/register"});
 });
 
 router.post('/register', async (req, res) => {
@@ -30,6 +30,12 @@ router.post('/register', async (req, res) => {
     //*Check password length
     if (password.length < 6) {
         errors.push({msg: "Password should be at least 6 characters.\n"})
+    }
+
+    const existingName = await User.findOne({ name: name });
+
+    if (existingName) {
+        errors.push({msg: "That name is already taken!\n"})
     }
 
     if (errors.length > 0) {
@@ -101,5 +107,10 @@ router.get('/logout', (req, res) => {
     res.redirect('/')
 })
 
+router.get('/:slug', async (req, res) => {
+    const user = await User.findOne({ slug: req.params.slug })
+    if (user == null) res.redirect('/')
+    res.render('users/profile', { user: user, title: user.name, description: user.bio, route: `/users/${user.slug}` })
+})
 
 module.exports = router;

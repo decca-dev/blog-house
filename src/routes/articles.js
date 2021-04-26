@@ -4,16 +4,19 @@ const { ensureAuthenticated } = require('../misc/auth')
 
 router.get('/', async (req, res) => {
     const articles = await Post.find().sort({ createdAt: "desc" })
-    res.render('articles/index', { articles: articles })
+    res.render('articles/index', { articles: articles, title: "Articles", description: "Checkout some of the coolest articles people made!", route: "/articles" })
 })
 
 router.get('/new', ensureAuthenticated, (req, res) => {
-    res.render('articles/new', { article: new Post() })
+    res.render('articles/new', { article: new Post(), title: "Articles", description: "Create an article on BlogHouse", route: "/articles/new"})
 });
 
 router.get('/edit/:id', ensureAuthenticated, async (req, res) => {
     const post = await Post.findById(req.params.id)
-    res.render('articles/edit', { article: post })
+
+    if (req.user.name !== post.author) return res.redirect('/articles')
+
+    res.render('articles/edit', { article: post, title: "Articles", description: "Edit an article", route: `/articles/edit/${post.id}` })
 });
 
 router.post('/new', ensureAuthenticated, async (req, res, next) => {
@@ -34,7 +37,7 @@ router.delete('/:id', ensureAuthenticated, async (req, res) => {
 router.get('/:slug', async (req, res) => {
     const post = await Post.findOne({ slug: req.params.slug })
     if (post == null) res.redirect('/articles')
-    res.render('articles/show', { article: post })
+    res.render('articles/show', { article: post, title: post.title, description: `${post.description.substr(0, 50)}...`, route: `/articles/${post.slug}`})
 })
 
 function saveArticleAndRedirect(path){
