@@ -1,0 +1,78 @@
+<%- include('../partials/navbar') %>
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+    <path fill="#ff5500" fill-opacity="1" d="M0,128L48,112C96,96,192,64,288,53.3C384,43,480,53,576,96C672,139,768,213,864,224C960,235,1056,181,1152,160C1248,139,1344,149,1392,154.7L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+</svg>
+<div class="container">
+    <img src="../../public/assets/guest.png" alt="guest" width="50" height="50" class="pt-10 mx-auto">
+    <h1 class="text-center pt-4"><%= dude.name %></h1>
+    <h3 class="text-center pt-4"><%= dude.bio || "No bio" %></h3>
+    <div class="flex flex-col">
+        <h4 class="text-center pt-4">Followers: <%= dude.followers.length %></h4>
+        <h4 class="text-center pt-4">Following: <%= dude.following.length %></h4>
+        <a href="/users/<%= dude.slug %>/follow" type="button" class="btn btn-info">Follow</a>
+    </div>
+    <p class="text-center text-muted pt-1">ID: <%= dude.id %></p>
+    <div class="btn-group d-flex justify-content-center" role="group" aria-label="Basic outlined example">
+        <button type="button" class="btn btn-outline-primary" onclick="showArticles()">Articles</button>
+        <button type="button" class="btn btn-outline-primary" onclick="showStats()">Stats</button>
+    </div>
+    <div id="articles" class="hidden">
+        <% if (articles.length > 0) { %>
+            <h1 class="mt-4 mb-4"><%= dude.name %>'s Blogs</h1>
+            <% articles.forEach(article => { %>
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h4 class="card-title"><%= article.title %></h4>
+                        <div class="card-subtitle text-muted mb-2">
+                            <%= article.createdAt.toLocaleDateString() %>
+                        </div>
+                        <div class="card-text mb-2">
+                            <%= article.description.substr(0, 50) %>...
+                        </div>
+                        <p class="card-text"><small class="text-muted">By <strong><%= article.author %></strong></small></p>
+                        <a href="/articles/<%= article.slug %>" class="btn btn-primary">Read more</a>
+                        <% if (user && article.author === user.name) { %>
+                            <a href="/articles/edit/<%= article.id %>" class="btn btn-info">Edit</a>
+                            <form action="/articles/<%= article.id %>?_method=DELETE" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        <% } %>
+                    </div>
+                </div>
+            <% }) %>
+        <% }else { %>
+            <img src="../../public/emojis/cricket.svg" alt="cricket" width="300" height="300" class="mx-auto">
+            <div class="text-center">
+                <h1>*Cricket noises*</h1>
+                <br>
+                <h2>This user has no posts</h2>
+            </div>
+        <% } %>
+    </div>
+    <div id="stats" class="hidden">
+        <h1 class="mt-4 mb-4">Stats</h1>
+        <h2>Boobies</h2>
+    </div>
+</div>
+<script>
+    function showArticles() {
+        
+        const articlesDiv = document.getElementById("articles");
+        if (articlesDiv.style.display === "block") {
+            articlesDiv.style.display = "none";
+        } else {
+            articlesDiv.style.display = "block";
+        }
+
+    }
+    function showStats() {
+
+        const statsDiv = document.getElementById("stats");
+        if (statsDiv.style.display === "block") {
+            statsDiv.style.display = "none";
+        } else {
+            statsDiv.style.display = "block";
+        }
+
+    }
+</script>

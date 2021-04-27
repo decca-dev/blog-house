@@ -4,7 +4,7 @@ module.exports = {
             return next()
         }else {
             req.flash('error_msg', 'Please login first to view this route')
-            res.redirect('/users/login')
+            res.redirect('/403')
         }
     }
 }

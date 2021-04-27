@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const User = require('../models/User');
+const Post = require('../models/Post');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const genID = require('../misc/genID');
@@ -66,7 +67,8 @@ router.post('/register', async (req, res) => {
                     name,
                     email,
                     password,
-                    id: genID()
+                    id: genID(),
+                    bio: ""
                 });
 
                 //*Hash password
@@ -108,9 +110,17 @@ router.get('/logout', (req, res) => {
 })
 
 router.get('/:slug', async (req, res) => {
-    const user = await User.findOne({ slug: req.params.slug })
-    if (user == null) res.redirect('/')
-    res.render('users/profile', { user: user, title: user.name, description: user.bio, route: `/users/${user.slug}` })
+    const dude = await User.findOne({ slug: req.params.slug })
+    if (dude == null) res.redirect('/404')
+    const posts = await Post.find({ author: dude.name });
+    res.render('users/user', { dude: dude, articles: posts, title: dude.name, description: dude.bio, route: `/users/${dude.slug}` })
+})
+
+router.get('/:slug/articles', async (req, res) => {
+    const dude = await User.findOne({ slug: req.params.slug })
+    if (dude == null) res.redirect('/404');
+    const posts = await Post.find({ author: dude.name });
+    res.render('users/articles', { dude: dude, articles: posts, title: dude.name, description: `${dude.name}'s articles`, route: `/users/${dude.slug}/articles` })
 })
 
 module.exports = router;

@@ -76,8 +76,16 @@ app.use(indexRoute);
 app.use('/users', usersRoute);
 app.use('/articles', articlesRoute);
 
-app.get('*', (req, res) => {
+app.get('/404', (req, res) => {
     res.render('errors/404.ejs', { title: "BlogHouse", description: "Enjoy the best blogging experience!\nCreate an account or checkout blogs by others.", route: ""})
+})
+
+app.get('/403', (req, res) => {
+    res.render('errors/403.ejs', { title: "BlogHouse", description: "Enjoy the best blogging experience!\nCreate an account or checkout blogs by others.", route: ""})
+})
+
+app.get('*', (req, res) => {
+    res.redirect('/404')
 })
 
 app.listen(PORT,() => {
