@@ -10,11 +10,11 @@
     <div class="text-muted mb-2">
         <%= article.createdAt.toLocaleDateString() %>
     </div>
+    <div class="mt-4">
+        <%- article.sanitizedHTML %>
+    </div>
     <a href="/articles" class="btn btn-secondary">All articles</a>
     <% if (user && article.author === user.name) { %>
         <a href="/articles/edit/<%= article.id %>" class="btn btn-info">Edit</a>
     <% } %>
-    <div class="mt-4">
-        <%- article.sanitizedHTML %>
-    </div>
 </div>

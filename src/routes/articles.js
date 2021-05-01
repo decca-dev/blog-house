@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Post = require('../models/Post');
+const User = require('../models/User');
 const { ensureAuthenticated } = require('../misc/auth')
 
 router.get('/', async (req, res) => {
@@ -14,13 +15,14 @@ router.get('/new', ensureAuthenticated, (req, res) => {
 router.get('/edit/:id', ensureAuthenticated, async (req, res) => {
     const post = await Post.findById(req.params.id)
 
-    if (req.user.name !== post.author) return res.redirect('/articles')
+    if (req.user.name !== post.author) return res.redirect('/403')
 
     res.render('articles/edit', { article: post, title: "Articles", description: "Edit an article", route: `/articles/edit/${post.id}` })
 });
 
 router.post('/new', ensureAuthenticated, async (req, res, next) => {
     req.post = new Post()
+
     next()
 }, saveArticleAndRedirect('new'))
 
@@ -36,7 +38,7 @@ router.delete('/:id', ensureAuthenticated, async (req, res) => {
 
 router.get('/:slug', async (req, res) => {
     const post = await Post.findOne({ slug: req.params.slug })
-    if (post == null) res.redirect('/articles')
+    if (post == null) res.redirect('/404')
     res.render('articles/show', { article: post, title: post.title, description: `${post.description.substr(0, 50)}...`, route: `/articles/${post.slug}`})
 })
 
@@ -57,7 +59,7 @@ function saveArticleAndRedirect(path){
             res.redirect(`/articles/${post.slug}`)
         } catch (err) {
             console.log(err)
-            res.render(`articles/${path}`, { article: post })
+            res.render(`articles/${path}`, { article: post, title: "BlogHouse", description: "Enjoy the best blogging experience!\nCreate an account or checkout blogs by others.", route: "" })
         }
     }
 }

@@ -12,10 +12,13 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const moment = require('moment');
+const slugify = require('slugify');
 const methodOverride = require('method-override');
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 require('./misc/passport')(passport);
+const { ensureAuthenticated } = require('./misc/auth');
+const checkBanned = require('./misc/checkBanned');
 
 //*Database
 mongoose.connect(MONGO_URI ,{
@@ -58,11 +61,12 @@ app.use(flash());
 
 //*Global variables
 app.use((req, res, next) => {
-    res.locals.success_msg = req.flash("success_msg")
-    res.locals.error_msg = req.flash("error_msg")
-    res.locals.error = req.flash("error")
-    res.locals.user = req.user
-    res.locals.moment = moment
+    res.locals.success_msg = req.flash("success_msg");
+    res.locals.error_msg = req.flash("error_msg");
+    res.locals.error = req.flash("error");
+    res.locals.user = req.user;
+    res.locals.moment = moment;
+    res.locals.slugify = slugify;
     next();
 });
 
@@ -71,13 +75,19 @@ app.use((req, res, next) => {
 const indexRoute = require('./routes/index');
 const usersRoute = require('./routes/users');
 const articlesRoute = require('./routes/articles');
+const dashboardRoute = require('./routes/dashboard');
 
-app.use(indexRoute);
-app.use('/users', usersRoute);
-app.use('/articles', articlesRoute);
+app.use(checkBanned, indexRoute);
+app.use('/users', checkBanned, usersRoute);
+app.use('/articles', checkBanned, articlesRoute);
+app.use('/dashboard', checkBanned, ensureAuthenticated, dashboardRoute);
 
 app.get('/404', (req, res) => {
     res.render('errors/404.ejs', { title: "BlogHouse", description: "Enjoy the best blogging experience!\nCreate an account or checkout blogs by others.", route: ""})
+})
+
+app.get('/401', (req, res) => {
+    res.render('errors/401.ejs', { title: "BlogHouse", description: "Enjoy the best blogging experience!\nCreate an account or checkout blogs by others.", route: ""})
 })
 
 app.get('/403', (req, res) => {

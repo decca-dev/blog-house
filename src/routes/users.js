@@ -67,8 +67,6 @@ router.post('/register', async (req, res) => {
                     name,
                     email,
                     password,
-                    id: genID(),
-                    bio: ""
                 });
 
                 //*Hash password
@@ -109,18 +107,37 @@ router.get('/logout', (req, res) => {
     res.redirect('/')
 })
 
+router.post('/ban/:slug', async (req, res) => {
+    const user = await User.findOne({ slug: req.params.slug });
+
+    if (user == null) return res.redirect('/404');
+
+    user.isBanned = true;
+
+    await user.save();
+
+    res.redirect(`/users/${req.params.slug}`)
+})
+
+router.put('/unban/:slug', async (req, res) => {
+    const user = await User.findOne({ slug: req.params.slug });
+
+    if (user == null) return res.redirect('/404');
+
+    if (user.isBanned == false) return res.redirect(`/users/${req.params.slug}`)
+
+    user.isBanned = false;
+
+    await user.save();
+
+    res.redirect(`/users/${req.params.slug}`)
+})
+
 router.get('/:slug', async (req, res) => {
     const dude = await User.findOne({ slug: req.params.slug })
     if (dude == null) res.redirect('/404')
     const posts = await Post.find({ author: dude.name });
     res.render('users/user', { dude: dude, articles: posts, title: dude.name, description: dude.bio, route: `/users/${dude.slug}` })
-})
-
-router.get('/:slug/articles', async (req, res) => {
-    const dude = await User.findOne({ slug: req.params.slug })
-    if (dude == null) res.redirect('/404');
-    const posts = await Post.find({ author: dude.name });
-    res.render('users/articles', { dude: dude, articles: posts, title: dude.name, description: `${dude.name}'s articles`, route: `/users/${dude.slug}/articles` })
 })
 
 module.exports = router;

@@ -8,7 +8,21 @@
 </div>
 <div class="form-group">
     <label for="markdown" class="mb-4">Markdown</label>
-    <textarea required name="markdown" id="markdown" class="form-control mb-4"><%= article.markdown %></textarea>
+    <textarea oninput="showHTML()" required name="markdown" id="markdown" class="form-control mb-4"><%= article.markdown %></textarea>
+</div>
+<div class="preview">
+    <h3>Markdown preview</h3>
+    <div id="preview-here" class="mt-4 mb-5"></div>
 </div>
 <a href="/articles" class="btn btn-danger">Cancel</a>
 <button type="submit" class="btn btn-primary">Save</button>
+<script src="https://cdn.jsdelivr.net/npm/showdown@1.9.0/dist/showdown.min.js"></script>
+<script>
+    function showHTML(){
+        const markdownArea = document.getElementById('markdown');
+        const previewArea = document.getElementById('preview-here');
+        const converter = new showdown.Converter();
+        showdown.setFlavor('github');
+        previewArea.innerHTML = converter.makeHtml(markdownArea.value)
+    }
+</script>

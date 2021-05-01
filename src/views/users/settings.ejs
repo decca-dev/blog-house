@@ -1,0 +1,55 @@
+<%- include('../partials/navbar') %>
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+    <path fill="#ff5500" fill-opacity="1" d="M0,128L48,112C96,96,192,64,288,53.3C384,43,480,53,576,96C672,139,768,213,864,224C960,235,1056,181,1152,160C1248,139,1344,149,1392,154.7L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+</svg>
+<div class="container">
+    <h1><i class="fas fa-user-cog"></i> Account settings</h1>
+    <form action="/dashboard/settings/name?_method=PUT" method="POST">
+        <div class="form-group">
+            <label for="name" class="mb-4">Edit Name</label>
+            <input required value="<%= user.name %>" type="text" name="name" id="name" class="form-control mb-4">
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+    <div class="mb-10"></div>
+    <form action="/dashboard/settings/bio?_method=PUT" method="POST">
+        <div class="form-group">
+            <label for="name" class="mb-4">Edit Bio</label>
+            <input required value="<%= user.bio || "No bio" %>" type="text" name="bio" id="bio" class="form-control mb-4">
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+    <div class="mb-10"></div>
+    <form action="/dashboard/settings/avatar?_method=PUT" method="POST">
+        <div class="form-group">
+            <label for="avatar" class="mb-4">Change Avatar</label>
+            <input type="text" name="avatar" id="avatar" placeholder="Image URL" class="form-control mb-4">
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+    <div class="mb-10"></div>
+    <button class="btn btn-danger" onclick="show()">Delete Account</button>
+    <div class="mb-4"></div>
+    <div class="hidden" id="delete">
+        <form action="/dashboard/settings/delete?_method=DELETE" method="POST">
+            <div class="form-group">
+                <h1>Are you sure you want to delete your account?</h1>
+                <p>This action cannot be undone.</p>
+                <button type="submit" class="btn btn-danger">Yes</button>
+                <button class="btn btn-success">No</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    const deleteEl = document.getElementById("delete");
+    function show() {
+        
+        if (deleteEl.style.display === "block") {
+            deleteEl.style.display = "none";
+        } else {
+            deleteEl.style.display = "block";
+        }
+
+    }
+</script>
