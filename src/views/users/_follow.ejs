@@ -10,4 +10,7 @@
             </form>
         <% } %>
     <% } %>
+    <% if (!user) { %>
+       <button class="btn btn-primary" onclick="location.href='/login'">Login first</button> 
+    <% } %>
 </div>
