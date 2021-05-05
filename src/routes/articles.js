@@ -3,6 +3,7 @@ const Post = require('../models/Post');
 const User = require('../models/User');
 const { ensureAuthenticated } = require('../misc/auth');
 const baseUrl = process.env.URL;
+const functions = require('../misc/functions');
 
 router.get('/', async (req, res) => {
     const articles = await Post.find().sort({ createdAt: "desc" })
@@ -43,7 +44,7 @@ router.get('/:slug', async (req, res) => {
     post.views += 1;
     await post.save();
     const user = await User.findOne({ uid: post.author })
-    let author = user ? user.name : 'Deleted User'
+    let author = user.name ? user.name : 'Deleted User'
     res.render('articles/show', { article: post, author: author, link: `${baseUrl}/articles/${req.params.slug}`, title: post.title, description: `${post.description.substr(0, 50)}...`, route: `/articles/${post.slug}`})
 })
 
