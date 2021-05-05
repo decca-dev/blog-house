@@ -6,15 +6,26 @@
     <h1 class="mb-1">
         <%= article.title %>
     </h1>
-    <small class="text-muted">By <strong><%= article.author %></strong></small></p>
+    <% if (author !== "Deleted User") { %>
+        <small class="text-muted">By <strong><a href="/users/<%= slugify(author) %>"><%= author %></a></strong></small></p>
+    <% }else { %>
+        <small class="text-muted">By <strong><%= author %></strong></small></p>
+    <% } %>
     <div class="text-muted mb-2">
         <%= article.createdAt.toLocaleDateString() %>
     </div>
-    <div class="mt-4">
+    <div class="mt-4 mb-4">
         <%- article.sanitizedHTML %>
     </div>
+    <h6 class="text-muted">Views: <%= article.views %></h6>
+    <button onclick="copy('<%= link %>')" class="btn btn-primary">Share</button>
     <a href="/articles" class="btn btn-secondary">All articles</a>
-    <% if (user && article.author === user.name) { %>
+    <% if (user && article.author === user.uid) { %>
         <a href="/articles/edit/<%= article.id %>" class="btn btn-info">Edit</a>
     <% } %>
 </div>
+<script>
+    async function copy(link){
+        await navigator.clipboard.writeText(link)
+    }
+</script>

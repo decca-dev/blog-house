@@ -1,0 +1,6 @@
+- [Add stuff to the user's model]
+- [Make the functions]
+- [views++ on /articles/:slug]
+- [Share button on articles]
+- Contact form in footer
+- Solution for async problems in /users/followers

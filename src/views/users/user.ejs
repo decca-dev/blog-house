@@ -3,32 +3,29 @@
     <path fill="#ff5500" fill-opacity="1" d="M0,128L48,112C96,96,192,64,288,53.3C384,43,480,53,576,96C672,139,768,213,864,224C960,235,1056,181,1152,160C1248,139,1344,149,1392,154.7L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
 </svg>
 <div class="container">
+    <%- include('../partials/messages') %>
     <% if (dude.isBanned) { %>
-        <img src="<%= dude.avatar %>" alt="guest" width="50" height="50" class="pt-10 mx-auto">
+        <img src="<%= dude.avatar %>" alt="guest" width="100" height="100" style="border-radius: 50%;" class="pt-10 mx-auto">
         <h1 class="text-center pt-4 mb-10"><%= dude.name %></h1>
         <h1 class="text-center">This user is banned</h1>
         <% if (user.isAdmin) { %>
-            <form action="/users/unban/<%= dude.slug %>?_method=PUT" method="POST">
-                <div class="text-center pt-4">
-                    <button type="submit" class="btn btn-success">Unban <%= dude.name %></button>
-                </div>
-            </form>
+            <div class="text-center pt-4">
+                <%- include('_actions.ejs', { action: "Unban", user: dude, shortAction: "unban", method: "PUT"}) %>
+            </div>
         <% } %>
     <% } else { %>
 
-        <img src="<%= dude.avatar %>" alt="guest" width="50" height="50" class="pt-10 mx-auto">
+        <img src="<%= dude.avatar %>" alt="guest" width="100" height="100" style="border-radius: 50%;" class="pt-10 mx-auto">
         <h1 class="text-center pt-4"><%= dude.name %></h1>
         <h3 class="text-center pt-4"><%= dude.bio || "No bio" %></h3>
         <div class="flex flex-col">
-            <h4 class="text-center pt-4">Followers: <%= dude.followers.length %></h4>
-            <h4 class="text-center pt-4">Following: <%= dude.following.length %></h4>
-            <% if (user && user.name !== dude.name) { %>
-            <a href="/users/<%= dude.slug %>/follow" type="button" class="btn btn-info">Follow</a>
-            <% if (user.isAdmin && dude.isBanned == false) { %>
-                <form action="/users/ban/<%= dude.slug %>" method="POST">
-                    <button type="submit" class="btn btn-danger">Ban <%= dude.name %></button>
-                </form>
-            <% } %>
+            <h4 class="text-center pt-4"><a href="/users/<%= dude.slug %>/followers" style="text-decoration: none;">Followers: <%= dude.followers.length %></a></h4>
+            <h4 class="text-center pt-4"><a href="/users/<%= dude.slug %>/following" style="text-decoration: none;">Following: <%= dude.following.length %></a></h4>
+            <%- include('_follow', { dude: dude }) %>
+            <% if (user && user.isAdmin && dude.isBanned == false) { %>
+                <div class="text-center pt-4">
+                    <%- include('_actions.ejs', { action: "Ban", user: dude, shortAction: "ban", method: "POST"}) %>
+                </div>
             <% } %>
         </div>
         <p class="text-center text-muted pt-1">ID: <%= dude.uid %></p>
@@ -50,7 +47,7 @@
                                 <%= article.description.substr(0, 50) %>...
                             </div>
                             <a href="/articles/<%= article.slug %>" class="btn btn-primary">Read more</a>
-                            <% if (user && article.author === user.name) { %>
+                            <% if (user && article.author === user.uid) { %>
                                 <a href="/articles/edit/<%= article.id %>" class="btn btn-info">Edit</a>
                                 <form action="/articles/<%= article.id %>?_method=DELETE" method="POST" class="d-inline">
                                     <button type="submit" class="btn btn-danger">Delete</button>
@@ -70,7 +67,14 @@
         </div>
         <div id="stats" class="hidden">
             <h1 class="mt-4 mb-4">Stats</h1>
-            <h2>Boobies</h2>
+            <h4 class="mb-4">Total posts: <%= articles.length %></h4>
+            <% if (dude.isAdmin) { %>
+                <h4 class="mb-4">Role: Admin</h4>
+            <% }else { %>
+                <h4 class="mb-4">Role: User</h4>
+            <% } %>
+            <h4 class="mb-4">Reputation</h4>
+            <h4 class="mb-4">Account created at: <%= moment.utc(dude.registeredAt).format("dddd, MMMM Do YYYY") %></h4>
         </div>
 
     <% } %>

@@ -23,7 +23,8 @@ const userSchema = new mongoose.Schema({
     uid: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        default: genID()
     },
     avatar: {
         type: String,
@@ -52,25 +53,38 @@ const userSchema = new mongoose.Schema({
     apiKey: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        default: genKey()
     },
     slug: {
         type: String,
         required: true,
         unique: true
     },
-    reputation: {
+    resetLink: {
+        type: String,
+        default: ''
+    },
+    posRep: {
         type: Number,
         default: 0
+    },
+    negRep: {
+        type: Number,
+        default: 0
+    },
+    hasPosRepped: {
+        type: Array,
+        default: [],
+    },
+    hasNegRepped: {
+        type: Array,
+        default: []
     }
 });
 
 userSchema.pre('validate', function(next) {
     this.slug = slugify(this.name, { lower: true, strict: true })
-
-    this.uid = genID();
-
-    this.apiKey = genKey();
 
     next();
 });

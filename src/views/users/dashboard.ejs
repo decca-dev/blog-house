@@ -3,8 +3,29 @@
     <path fill="#ff5500" fill-opacity="1" d="M0,128L48,112C96,96,192,64,288,53.3C384,43,480,53,576,96C672,139,768,213,864,224C960,235,1056,181,1152,160C1248,139,1344,149,1392,154.7L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
 </svg>
 <div class="container">
-    <h1 class="mt-4 mb-4">Welcome back <%= user.name %></h1>
-    <h2 class="mb-4"><%= user.bio || "No set bio" %></h2>
-    <a href="/dashboard/settings" type="button" class="btn btn-success"><i class="fas fa-cog"></i> Settings</a>
+    <img src="<%= user.avatar %>" alt="avatar" width="50" height="50" class="inline-block align-middle" style="border-radius: 50%;"><h1 class="inline-block align-middle">Welcome back, <%= user.name %></h1>
+    <div class="mt-4">
+        <a href="/dashboard/settings" type="button" class="btn btn-success"><i class="fas fa-cog"></i> Settings</a>
+    </div>
+    <h1 class="pt-10">API Credentials:</h1>
+    <div class="div pt-4">
+        <button class="btn btn-primary" onclick="copy('<%= user.apiKey %>')">Copy API key</button>
+        <button class="btn btn-secondary" onclick="show()">Show API key</button>
+    </div>
+    <p id="api-key" class="hidden pt-4 text-muted text-blue-400"><%= user.apiKey %></p>
+    <h5 class="pt-10">Account ID: <%= user.uid %></h5>
     <h4 class="mt-10">Account created at: <%= moment.utc(user.registeredAt).format("dddd, MMMM Do YYYY") %></h4>
 </div>
+<script>
+    async function copy(text){
+        await navigator.clipboard.writeText(text)
+    }
+    function show(){
+        const api = document.getElementById("api-key");
+        if (api.style.display === "block") {
+            api.style.display = "none";
+        } else {
+            api.style.display = "block";
+        }
+    }
+</script>

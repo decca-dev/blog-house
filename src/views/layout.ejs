@@ -18,7 +18,9 @@
     <meta content="#ff5500" data-react-helmet="true" name="theme-color">
 </head>
 <body>
-    <%- body %>
+    <div class="main-container">
+        <%- body %>
+    </div>
     <div class="loader-wrapper">
         <span class="loader"><img src="../public/art/logo.png" alt="logo" class="load-inner"></img></span>
     </div>
@@ -28,6 +30,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <style>
+    * {
+        box-sizing: border-box;
+    }
+    *:before,
+    *:after {
+        box-sizing: border-box;
+    }
+    html,
+    body {
+        height: 100%;
+        position: relative;
+    }
+    .main-container {
+        min-height: 100vh;
+        overflow: hidden;
+        display: block;
+        position: relative;
+        padding-bottom: 100px;
+    }
     body::-webkit-scrollbar {
         display: none;
         -ms-overflow-style: none;

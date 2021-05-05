@@ -1,0 +1,59 @@
+<%- include('../partials/navbar') %>
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+    <path fill="#ff5500" fill-opacity="1" d="M0,128L48,112C96,96,192,64,288,53.3C384,43,480,53,576,96C672,139,768,213,864,224C960,235,1056,181,1152,160C1248,139,1344,149,1392,154.7L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+</svg>
+<div class="container">
+    <div id="start" class="mb-10">
+        <img src="<%= user.avatar %>" alt="avatar" width="50" height="50" class="inline-block align-middle" style="border-radius: 50%;"><h1 class="inline-block align-middle">Welcome back, <%= user.name %></h1>
+        <% if (logs.length > 0) { %>
+            <h2 class="pt-10 mb-10">Recent Admin logs</h2>
+            <% for (let i = 0; i < 3; i++) { %>
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h4 class="card-title"><%= logs[i].actionType %></h4>
+                        <div class="card-subtitle text-muted mb-2">
+                            <%= moment.utc(logs[i].at).format("dddd, MMMM Do YYYY") %>
+                        </div>
+                        <div class="card-text mb-2">
+                            <h5>Action performed by: <%= logs[i].by %></h5>
+                        </div>
+                        <div class="card-text mb-2">
+                            <h5>Action performed on: <%= logs[i].onUser %></h5>
+                        </div>
+                        <div class="card-text mb-2">
+                            <h5>Reason: <%= logs[i].reason %></h5>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        <% } %>
+    </div>
+    <div class="mb-10" id="admins">
+        <div class="card-deck">
+            <% admins.forEach((admin) => { %>
+                <div class="card" style="width: 14rem;display: inline-block;">
+                    <img class="card-img-top" src="<%= admin.avatar %>" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= admin.name %></h5>
+                        <p class="card-text"><%= admin.bio %></p>
+                        <a href="/users/<%= admin.slug %>" class="btn btn-primary">Profile</a>
+                    </div>
+                </div>
+            <% }) %> 
+        </div>
+    </div>
+    <div class="mb-10" id="banned">
+        <div class="card-deck">
+            <% banned.forEach((ban) => { %>
+                <div class="card" style="width: 18rem;display: inline-block;">
+                    <img class="card-img-top" src="<%= ban.avatar %>" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= ban.name %></h5>
+                        <p class="card-text"><%= ban.bio %></p>
+                        <a href="/users/<%= ban.slug %>" class="btn btn-primary">Profile</a>
+                    </div>
+                </div>
+            <% }) %>    
+        </div>
+    </div>
+</div>

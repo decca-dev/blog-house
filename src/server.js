@@ -14,11 +14,15 @@ const passport = require('passport');
 const moment = require('moment');
 const slugify = require('slugify');
 const methodOverride = require('method-override');
+
+//* Variables and functions
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 require('./misc/passport')(passport);
 const { ensureAuthenticated } = require('./misc/auth');
-const checkBanned = require('./misc/checkBanned');
+const { checkBanned } = require('./misc/check');
+const { checkAdmin } = require('./misc/check');
+const functions = require('./misc/functions');
 
 //*Database
 mongoose.connect(MONGO_URI ,{
@@ -31,10 +35,11 @@ mongoose.connect(MONGO_URI ,{
     console.log(chalk.red(`There was an error trying to connect to Mongo\n${err}`))
 })
 
+//*Middlware
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride('_method'))
 
-//*Middleware
 app.use(expressLayouts);
 
 //*Views
@@ -67,6 +72,8 @@ app.use((req, res, next) => {
     res.locals.user = req.user;
     res.locals.moment = moment;
     res.locals.slugify = slugify;
+    res.locals.findUser = functions.findUser;
+    res.locals.findUserPosts = functions.findUserPosts;
     next();
 });
 
@@ -76,23 +83,13 @@ const indexRoute = require('./routes/index');
 const usersRoute = require('./routes/users');
 const articlesRoute = require('./routes/articles');
 const dashboardRoute = require('./routes/dashboard');
+const adminRoute = require('./routes/admin');
 
 app.use(checkBanned, indexRoute);
 app.use('/users', checkBanned, usersRoute);
 app.use('/articles', checkBanned, articlesRoute);
 app.use('/dashboard', checkBanned, ensureAuthenticated, dashboardRoute);
-
-app.get('/404', (req, res) => {
-    res.render('errors/404.ejs', { title: "BlogHouse", description: "Enjoy the best blogging experience!\nCreate an account or checkout blogs by others.", route: ""})
-})
-
-app.get('/401', (req, res) => {
-    res.render('errors/401.ejs', { title: "BlogHouse", description: "Enjoy the best blogging experience!\nCreate an account or checkout blogs by others.", route: ""})
-})
-
-app.get('/403', (req, res) => {
-    res.render('errors/403.ejs', { title: "BlogHouse", description: "Enjoy the best blogging experience!\nCreate an account or checkout blogs by others.", route: ""})
-})
+app.use('/admin', ensureAuthenticated, checkAdmin, adminRoute);
 
 app.get('*', (req, res) => {
     res.redirect('/404')

@@ -3,141 +3,185 @@ const User = require('../models/User');
 const Post = require('../models/Post');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
-const genID = require('../misc/genID');
+const authControllers = require('../misc/authControllers');
+const functions = require('../misc/functions');
 
 router.get('/login', async (req, res) => {
     res.render('login', { title: "BlogHouse", description: "Login with BlogHouse", route: "/users/login"})
 })
 
+router.post('/login', authControllers.loginHandle)
+
 router.get('/register', async (req, res) => {
     res.render('register', { title: "BlogHouse", description: "Register an account with BlogHouse", route: "/users/register"});
 });
 
-router.post('/register', async (req, res) => {
-    const { name, email, password, password2 } = req.body;
-    let errors = [];
+router.post('/register', authControllers.registerHandle);
 
-    //*Check required fields
+router.get('/activate/:token', authControllers.activateHandle);
 
-    if (!name || !email || !password || !password2) {
-        errors.push({msg: "Please fill in all the fields.\n"})
-    }
-
-    //*Check passwod match
-    if (password !== password2) {
-        errors.push({msg: "Passwords don't match.\n"})
-    }
-
-    //*Check password length
-    if (password.length < 6) {
-        errors.push({msg: "Password should be at least 6 characters.\n"})
-    }
-
-    const existingName = await User.findOne({ name: name });
-
-    if (existingName) {
-        errors.push({msg: "That name is already taken!\n"})
-    }
-
-    if (errors.length > 0) {
-        res.render('register', {
-            errors,
-            name,
-            email,
-            password,
-            password2
-        })
-    }else {
-        
-        //*Validation
-        User.findOne({ email: email })
-        .then(async user => {
-            if (user) {
-                //!User with the same email
-                errors.push({msg: "Email already registered!"})
-                res.render('register', {
-                    errors,
-                    name,
-                    email,
-                    password,
-                    password2
-                });
-            }else {
-                const newData = new User({
-                    name,
-                    email,
-                    password,
-                });
-
-                //*Hash password
-                bcrypt.genSalt(10, (err, salt) => {
-                    bcrypt.hash(newData.password, salt, (err, hash) => {
-                        if (err) throw err;
-
-                        //*Set password to hashed
-                        newData.password = hash;
-                        //*Save user
-                        newData.save()
-                        .then(user => {
-                            req.flash('success_msg', "Registered Successfully! You can now log in")
-                            res.redirect('/users/login')
-                        })
-                        .catch(err => console.error(err))
-                    })
-                })
-
-            }
-        })
-    }
+router.get('/forgot', (req, res) => {
+    res.render('forgot', { title: "BlogHouse", description: "Recover your password", route: "/users/forgot"})
 })
 
-//*Login handle
-router.post('/login', (req, res, next) => {
-    passport.authenticate('local', {
-        successRedirect: '/',
-        failureRedirect: '/users/login',
-        failureFlash: true
-    })(req, res, next)
+router.post('/forgot', authControllers.forgotPassword);
+
+router.get('/forgot/:token', authControllers.gotoReset);
+
+router.get('/reset/:id', (req, res) => {
+    res.render('reset', { id: req.params.id, title: "BlogHouse", description: "Reset your password", route: `/users/reset/${req.params.id}`})
 })
 
-//*Logout
-router.get('/logout', (req, res) => {
-    req.logout();
-    req.flash('success_msg', 'You have logged out!');
-    res.redirect('/')
+router.post('/reset/:id', authControllers.resetPassword);
+
+router.get('/logout', authControllers.logoutHandle);
+
+router.post('/follow/:userID/:toFollowID', async (req, res) => {
+    const { userID, toFollowID } = req.params;
+
+    functions.followUser(userID, toFollowID);
+
+    const toFollowDude = await User.findOne({ uid: toFollowID })
+
+    req.flash('success_msg', `Started following ${toFollowDude.name}`);
+    setTimeout(() => {
+        res.redirect(`/users/${toFollowDude.slug}`)
+    }, 1500);
 })
 
-router.post('/ban/:slug', async (req, res) => {
-    const user = await User.findOne({ slug: req.params.slug });
+router.post('/unfollow/:userID/:toUnfollowID', async (req, res) => {
+    const { userID, toUnfollowID } = req.params;
 
-    if (user == null) return res.redirect('/404');
+    functions.unfollowUser(userID, toUnfollowID);
 
-    user.isBanned = true;
+    const toFollowDude = await User.findOne({ uid: toUnfollowID })
 
-    await user.save();
-
-    res.redirect(`/users/${req.params.slug}`)
+    req.flash('success_msg', `Unfollowed ${toFollowDude.name}`);
+    setTimeout(() => {
+        res.redirect(`/users/${toFollowDude.slug}`)
+    }, 1500);
 })
 
-router.put('/unban/:slug', async (req, res) => {
-    const user = await User.findOne({ slug: req.params.slug });
+router.get('/:slug/followers', async (req, res) => {
+    const { slug } = req.params;
 
-    if (user == null) return res.redirect('/404');
+    const user = await User.findOne({ slug: slug });
 
-    if (user.isBanned == false) return res.redirect(`/users/${req.params.slug}`)
+    const followers = user.followers;
 
-    user.isBanned = false;
+    let data = [];
 
-    await user.save();
+    for (let i = 0; i < followers.length; i++) {
+        data.push(await functions.findUser(followers[i]))
+    }
 
-    res.redirect(`/users/${req.params.slug}`)
+    res.render('users/followers', { dude: user, data: data, followers: followers, title: user.name, description: `Checkout ${user.name}'s followers`, route: `/users/${user.slug}/followers`})
+})
+
+router.get('/:slug/following', async (req, res) => {
+    const { slug } = req.params;
+
+    const user = await User.findOne({ slug: slug });
+
+    const following = user.following;
+
+    let data = [];
+
+    for (let i = 0; i < following.length; i++) {
+        data.push(await functions.findUser(following[i]))
+    }
+
+    res.render('users/following', { dude: user, data: data, following: following, title: user.name, description: `Checkout ${user.name}'s followings`, route: `/users/${user.slug}/following`})
+})
+
+router.get('/:slug/stats', async ( req, res) => {
+    
 })
 
 router.get('/:slug', async (req, res) => {
     const dude = await User.findOne({ slug: req.params.slug })
     if (dude == null) res.redirect('/404')
-    const posts = await Post.find({ author: dude.name });
+    const posts = await Post.find({ author: dude.uid });
     res.render('users/user', { dude: dude, articles: posts, title: dude.name, description: dude.bio, route: `/users/${dude.slug}` })
 })
+
+//! Removed
+// router.post('/register', async (req, res) => {
+//     const { name, email, password, password2 } = req.body;
+//     let errors = [];
+
+//     //*Check required fields
+
+//     if (!name || !email || !password || !password2) {
+//         errors.push({msg: "Please fill in all the fields.\n"})
+//     }
+
+//     //*Check passwod match
+//     if (password !== password2) {
+//         errors.push({msg: "Passwords don't match.\n"})
+//     }
+
+//     //*Check password length
+//     if (password.length < 6) {
+//         errors.push({msg: "Password should be at least 6 characters.\n"})
+//     }
+
+//     const existingName = await User.findOne({ name: name });
+
+//     if (existingName) {
+//         errors.push({msg: "That name is already taken!\n"})
+//     }
+
+//     if (errors.length > 0) {
+//         res.render('register', {
+//             errors,
+//             name,
+//             email,
+//             password,
+//             password2
+//         })
+//     }else {
+        
+//         //*Validation
+//         User.findOne({ email: email })
+//         .then(async user => {
+//             if (user) {
+//                 //!User with the same email
+//                 errors.push({msg: "Email already registered!"})
+//                 res.render('register', {
+//                     errors,
+//                     name,
+//                     email,
+//                     password,
+//                     password2
+//                 });
+//             }else {
+//                 const newData = new User({
+//                     name,
+//                     email,
+//                     password,
+//                 });
+
+//                 //*Hash password
+//                 bcrypt.genSalt(10, (err, salt) => {
+//                     bcrypt.hash(newData.password, salt, (err, hash) => {
+//                         if (err) throw err;
+
+//                         //*Set password to hashed
+//                         newData.password = hash;
+//                         //*Save user
+//                         newData.save()
+//                         .then(user => {
+//                             req.flash('success_msg', "Registered Successfully! You can now log in")
+//                             res.redirect('/users/login')
+//                         })
+//                         .catch(err => console.error(err))
+//                     })
+//                 })
+
+//             }
+//         })
+//     }
+// })
 
 module.exports = router;

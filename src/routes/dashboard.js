@@ -17,12 +17,12 @@ router.put('/settings/name', async (req, res) => {
     const { name } = req.body;
 
     user.name = name;
-    
-    user.slug = slugify(name, { lower: true, strict: true })
 
     await user.save();
 
-    res.redirect('/dashboard')
+    req.flash('success_msg', 'Name changed successfully!');
+
+    res.redirect('/dashboard/settings')
 })
 
 router.put('/settings/bio', async (req, res) => {
@@ -34,7 +34,9 @@ router.put('/settings/bio', async (req, res) => {
 
     await user.save();
 
-    res.redirect('/dashboard')
+    req.flash('success_msg', 'Bio changed successfully!');
+
+    res.redirect('/dashboard/settings')
 })
 
 router.put('/settings/avatar', async (req, res) => {
@@ -46,7 +48,9 @@ router.put('/settings/avatar', async (req, res) => {
 
     await user.save();
 
-    res.redirect('/dashboard');
+    req.flash('success_msg', 'Avatar changed successfully!');
+
+    res.redirect('/dashboard/settings')
 })
 
 router.delete('/settings/delete', async (req, res) => {

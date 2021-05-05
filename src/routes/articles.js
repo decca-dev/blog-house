@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const Post = require('../models/Post');
 const User = require('../models/User');
-const { ensureAuthenticated } = require('../misc/auth')
+const { ensureAuthenticated } = require('../misc/auth');
+const baseUrl = process.env.URL;
 
 router.get('/', async (req, res) => {
     const articles = await Post.find().sort({ createdAt: "desc" })
@@ -15,7 +16,7 @@ router.get('/new', ensureAuthenticated, (req, res) => {
 router.get('/edit/:id', ensureAuthenticated, async (req, res) => {
     const post = await Post.findById(req.params.id)
 
-    if (req.user.name !== post.author) return res.redirect('/403')
+    if (req.user.uid !== post.author) return res.redirect('/403')
 
     res.render('articles/edit', { article: post, title: "Articles", description: "Edit an article", route: `/articles/edit/${post.id}` })
 });
@@ -39,7 +40,11 @@ router.delete('/:id', ensureAuthenticated, async (req, res) => {
 router.get('/:slug', async (req, res) => {
     const post = await Post.findOne({ slug: req.params.slug })
     if (post == null) res.redirect('/404')
-    res.render('articles/show', { article: post, title: post.title, description: `${post.description.substr(0, 50)}...`, route: `/articles/${post.slug}`})
+    post.views += 1;
+    await post.save();
+    const user = await User.findOne({ uid: post.author })
+    let author = user ? user.name : 'Deleted User'
+    res.render('articles/show', { article: post, author: author, link: `${baseUrl}/articles/${req.params.slug}`, title: post.title, description: `${post.description.substr(0, 50)}...`, route: `/articles/${post.slug}`})
 })
 
 function saveArticleAndRedirect(path){
@@ -52,7 +57,7 @@ function saveArticleAndRedirect(path){
         post.title = title
         post.description = description
         post.markdown = markdown
-        post.author = req.user.name
+        post.author = req.user.uid
 
         try {
             post = await post.save()
