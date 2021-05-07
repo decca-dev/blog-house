@@ -1,25 +1,143 @@
-<footer>
-    <div class="text-center pt-36 pb-16">
-        <h4>&copy; Blog House | All rights reserved</h4>
-        <h4>For support: <a href="https://dsc.gg/decca" class="links">Discord server</a></h4>
-        <h4><a href="https://github.com/decca-dev/blog-house" class="links">GitHub Repository</a></h4>
+<footer class="footer">
+    <div class="footer-left">
+        <p>
+            BlogHouse is designed to provide to best user experience when it comes to blogs. If you found an issue, please checkout the discord server. If you would like to contribute, the github icon will link you to the repository.
+        </p>
+        <div class="socials">
+            <a href="https://dsc.gg/decca">
+                <i class="fab fa-discord"></i>
+            </a>
+            <a href="https://github.com/decca-dev/blog-house">
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+    </div>
+    <ul class="footer-right">
+        <li>
+            <h2 class="heading">Product</h2>
+            <ul class="box">
+                <li><a href="#">Penis</a></li>
+                <li><a href="#">Penis</a></li>
+                <li><a href="#">Penis</a></li>
+                <li><a href="#">Penis</a></li>
+                <li><a href="#">Penis</a></li>
+                <li><a href="#">Penis</a></li>
+            </ul>
+        </li>
+        <li class="features">
+            <h2 class="heading">Useful Links</h2>
+            <ul class="box">
+                <li><a href="#">Penis</a></li>
+                <li><a href="#">Penis</a></li>
+                <li><a href="#">Penis</a></li>
+                <li><a href="#">Penis</a></li>
+                <li><a href="#">Penis</a></li>
+                <li><a href="#">Penis</a></li>
+            </ul>
+        </li>
+        <li>
+            <h2 class="heading">Address</h2>
+            <ul class="box">
+                <li><a href="#">Penis</a></li>
+                <li><a href="#">Penis</a></li>
+                <li><a href="#">Penis</a></li>
+                <li><a href="#">Penis</a></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="footer-bottom">
+        <img src="../../public/art/logo.png" alt="" width="10%" class="mx-auto pb-10">
+        <p>All Rights Reserved &copy;</p>
     </div>
 </footer>
 <style>
-
-    .links {
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+    footer {
+        font-family: 'Poppins', sans-serif;
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flex;
+        display: -o-flex;
+        display: flex;
+        flex-flow: row wrap;
+        padding: 50px;
+        color: #fff;
+        background-color: #ff5500;
+    }
+    .footer > * {
+        flex: 1 100%;
+    }
+    .footer-left {
+        margin-right: 1.25em;
+        margin-bottom: 2em;
+        background-image: url('../../public/assets/blob1.svg');
+        background-repeat: no-repeat;
+    }
+    .heading {
+        font-weight: 600;
+        font-size: 17px;
+    }
+    .footer ul {
+        list-style: none;
+        padding-left: 0;
+    }
+    .footer li {
+        line-height: 2em;
+    }
+    .footer a {
         text-decoration: none;
-        color: white;
     }
-
-    .links:hover{
-        color: white;
-        cursor: pointer;
-        text-decoration: underline;
+    .footer-right {
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flex;
+        display: -o-flex;
+        display: flex;
+        flex-flow: row wrap;
+        background-image: url('../../public/assets/blob2.svg');
+        background-repeat: no-repeat;
+        background-position: right;
     }
-
-    footer{
-        background-image: url('../../public/assets/footer.svg');
-        background-repeat: repeat-x;
+    .footer-right > * {
+        flex: 1 50%;
+        margin-right: 1.25em;
+    }
+    .box a {
+        color: #000;
+    }
+    .footer-bottom {
+        text-align: center;
+        color: #000;
+        padding-top: 10%;
+        background-image: url('../../public/assets/blob2.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    .footer-left p {
+        padding-right: 20%;
+        color: #000
+    }
+    .socials a {
+        background: transparent;
+        width: 40px;
+        height: 40px;
+        display: inline-block;
+        margin-right: 10px;
+    }
+    .socials a i {
+        color: #fff;
+        padding: 10px 12px;
+        font-size: 30px;
+    }
+    @media screen and (min-width: 600px) {
+        .footer-right > * {
+            flex: 1;
+        }
+        .footer-left {
+            flex: 1 0px;
+        }
+        .footer-right {
+            flex: 2 0px;
+        }
     }
 </style>
