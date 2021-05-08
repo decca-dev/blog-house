@@ -7,13 +7,13 @@ const authControllers = require('../misc/authControllers');
 const functions = require('../misc/functions');
 
 router.get('/login', async (req, res) => {
-    res.render('login', { title: "BlogHouse", description: "Login with BlogHouse", route: "/users/login"})
+    res.render('login', { heading: "Login | BlogHouse",  title: "BlogHouse", description: "Login with BlogHouse", route: "/users/login"})
 })
 
 router.post('/login', authControllers.loginHandle)
 
 router.get('/register', async (req, res) => {
-    res.render('register', { title: "BlogHouse", description: "Register an account with BlogHouse", route: "/users/register"});
+    res.render('register', { heading: "Register | BlogHouse",  title: "BlogHouse", description: "Register an account with BlogHouse", route: "/users/register"});
 });
 
 router.post('/register', authControllers.registerHandle);
@@ -21,7 +21,7 @@ router.post('/register', authControllers.registerHandle);
 router.get('/activate/:token', authControllers.activateHandle);
 
 router.get('/forgot', (req, res) => {
-    res.render('forgot', { title: "BlogHouse", description: "Recover your password", route: "/users/forgot"})
+    res.render('forgot', { heading: "Forgot Password",  title: "BlogHouse", description: "Recover your password", route: "/users/forgot"})
 })
 
 router.post('/forgot', authControllers.forgotPassword);
@@ -29,7 +29,7 @@ router.post('/forgot', authControllers.forgotPassword);
 router.get('/forgot/:token', authControllers.gotoReset);
 
 router.get('/reset/:id', (req, res) => {
-    res.render('reset', { id: req.params.id, title: "BlogHouse", description: "Reset your password", route: `/users/reset/${req.params.id}`})
+    res.render('reset', { heading: "Reset Password",  id: req.params.id, title: "BlogHouse", description: "Reset your password", route: `/users/reset/${req.params.id}`})
 })
 
 router.post('/reset/:id', authControllers.resetPassword);
@@ -75,7 +75,7 @@ router.get('/:slug/followers', async (req, res) => {
         data.push(await functions.findUser(followers[i]))
     }
 
-    res.render('users/followers', { dude: user, data: data, followers: followers, title: user.name, description: `Checkout ${user.name}'s followers`, route: `/users/${user.slug}/followers`})
+    res.render('users/followers', { heading: "BlogHouse",  dude: user, data: data, followers: followers, title: user.name, description: `Checkout ${user.name}'s followers`, route: `/users/${user.slug}/followers`})
 })
 
 router.get('/:slug/following', async (req, res) => {
@@ -91,18 +91,22 @@ router.get('/:slug/following', async (req, res) => {
         data.push(await functions.findUser(following[i]))
     }
 
-    res.render('users/following', { dude: user, data: data, following: following, title: user.name, description: `Checkout ${user.name}'s followings`, route: `/users/${user.slug}/following`})
+    res.render('users/following', { heading: "BlogHouse",  dude: user, data: data, following: following, title: user.name, description: `Checkout ${user.name}'s followings`, route: `/users/${user.slug}/following`})
 })
 
 router.get('/:slug/stats', async ( req, res) => {
-    
+    const { slug } = req.params;
+
+    const user = await User.findOne({ slug: slug });
+
+    res.render('users/stats', { heading: "BlogHouse",  dude: user, data: data, title: user.name, description: `Checkout ${user.name}'s stats`, route: `/users/${user.slug}/stats`})
 })
 
 router.get('/:slug', async (req, res) => {
     const dude = await User.findOne({ slug: req.params.slug })
     if (dude == null) res.redirect('/404')
     const posts = await Post.find({ author: dude.uid });
-    res.render('users/user', { dude: dude, articles: posts, title: dude.name, description: dude.bio, route: `/users/${dude.slug}` })
+    res.render('users/user', { heading: dude.name,  dude: dude, articles: posts, title: dude.name, description: dude.bio, route: `/users/${dude.slug}` })
 })
 
 //! Removed

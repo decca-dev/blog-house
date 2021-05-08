@@ -4,11 +4,11 @@ const User = require('../models/User');
 const slugify = require('slugify');
 
 router.get('/', (req, res) => {
-    res.render('users/dashboard', { user: req.user, title: "BlogHouse", description: "Enjoy the best blogging experience!\nCreate an account or checkout blogs by others.", route: "/" })
+    res.render('users/dashboard', { heading: "Dashboard",  user: req.user, title: "BlogHouse", description: "Enjoy the best blogging experience!\nCreate an account or checkout blogs by others.", route: "/" })
 })
 
 router.get('/settings', (req, res) => {
-    res.render('users/settings', { user: req.user, title: "BlogHouse", description: "Enjoy the best blogging experience!\nCreate an account or checkout blogs by others.", route: "//settings" })
+    res.render('users/settings', { heading: "Settings", user: req.user, title: "BlogHouse", description: "Enjoy the best blogging experience!\nCreate an account or checkout blogs by others.", route: "//settings" })
 })
 
 router.put('/settings/name', async (req, res) => {

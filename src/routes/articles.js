@@ -7,11 +7,11 @@ const functions = require('../misc/functions');
 
 router.get('/', async (req, res) => {
     const articles = await Post.find().sort({ createdAt: "desc" })
-    res.render('articles/index', { articles: articles, title: "Articles", description: "Checkout some of the coolest articles people made!", route: "/articles" })
+    res.render('articles/index', { heading: "Articles | BlogHouse",  articles: articles, title: "Articles", description: "Checkout some of the coolest articles people made!", route: "/articles" })
 })
 
 router.get('/new', ensureAuthenticated, (req, res) => {
-    res.render('articles/new', { article: new Post(), title: "Articles", description: "Create an article on BlogHouse", route: "/articles/new"})
+    res.render('articles/new', { heading: "New Article",  article: new Post(), title: "Articles", description: "Create an article on BlogHouse", route: "/articles/new"})
 });
 
 router.get('/edit/:id', ensureAuthenticated, async (req, res) => {
@@ -19,7 +19,7 @@ router.get('/edit/:id', ensureAuthenticated, async (req, res) => {
 
     if (req.user.uid !== post.author) return res.redirect('/403')
 
-    res.render('articles/edit', { article: post, title: "Articles", description: "Edit an article", route: `/articles/edit/${post.id}` })
+    res.render('articles/edit', { heading: "Edit Article",  article: post, title: "Articles", description: "Edit an article", route: `/articles/edit/${post.id}` })
 });
 
 router.post('/new', ensureAuthenticated, async (req, res, next) => {
@@ -47,7 +47,7 @@ router.get('/:slug', async (req, res) => {
     let author;
     if (user) author = user.name;
     else author = 'Deleted User';
-    res.render('articles/show', { article: post, author: author, link: `${baseUrl}/articles/${req.params.slug}`, title: post.title, description: `${post.description.substr(0, 50)}...`, route: `/articles/${post.slug}`})
+    res.render('articles/show', { heading: post.title,  article: post, author: author, link: `${baseUrl}/articles/${req.params.slug}`, title: post.title, description: `${post.description.substr(0, 50)}...`, route: `/articles/${post.slug}`})
 })
 
 function saveArticleAndRedirect(path){

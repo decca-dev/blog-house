@@ -6,7 +6,7 @@ router.get('/', async (req, res) => {
     const logs = await Log.find().sort({ at: "desc" });
     const banned = await User.find({ isBanned: true });
     const admins = await User.find({ isAdmin: true });
-    res.render('admin/index', { logs: logs, banned: banned, admins: admins, title: "BlogHouse", description: "Enjoy the best blogging experience!\nCreate an account or checkout blogs by others.", route: ""});
+    res.render('admin/index', { heading: "Admin Panel",  logs: logs, banned: banned, admins: admins, title: "BlogHouse", description: "Enjoy the best blogging experience!\nCreate an account or checkout blogs by others.", route: ""});
 })
 
 router.post('/ban/:uid', async (req, res) => {
