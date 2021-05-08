@@ -24,7 +24,6 @@ router.get('/edit/:id', ensureAuthenticated, async (req, res) => {
 
 router.post('/new', ensureAuthenticated, async (req, res, next) => {
     req.post = new Post()
-
     next()
 }, saveArticleAndRedirect('new'))
 
@@ -42,12 +41,21 @@ router.get('/:slug', async (req, res) => {
     const post = await Post.findOne({ slug: req.params.slug })
     if (post == null) res.redirect('/404')
     post.views += 1;
+    if (req.user) {
+        if (!post.seenBy.includes(req.user.uid)) {
+            post.seenBy.push(req.user.uid)
+        }
+    }
     await post.save();
     const user = await User.findOne({ uid: post.author })
     let author;
     if (user) author = user.name;
     else author = 'Deleted User';
-    res.render('articles/show', { heading: post.title,  article: post, author: author, link: `${baseUrl}/articles/${req.params.slug}`, title: post.title, description: `${post.description.substr(0, 50)}...`, route: `/articles/${post.slug}`})
+    let data = [];
+    for (let i = 0; i < post.seenBy.length; i ++) {
+        data.push(await functions.findUser(post.seenBy[i]))
+    }
+    res.render('articles/show', { heading: post.title, article: post, data: data, author: author, link: `${baseUrl}/articles/${req.params.slug}`, title: post.title, description: `${post.description.substr(0, 50)}...`, route: `/articles/${post.slug}`})
 })
 
 function saveArticleAndRedirect(path){
@@ -61,6 +69,8 @@ function saveArticleAndRedirect(path){
         post.description = description
         post.markdown = markdown
         post.author = req.user.uid
+
+        await functions.log('Post', `Post ${path.charAt(0).toUpperCase()}${path.substring(1, path.length)}`, req.user.uid, '', title)
 
         try {
             post = await post.save()

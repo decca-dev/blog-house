@@ -72,8 +72,6 @@ app.use((req, res, next) => {
     res.locals.user = req.user;
     res.locals.moment = moment;
     res.locals.slugify = slugify;
-    res.locals.findUser = functions.findUser;
-    res.locals.findUserPosts = functions.findUserPosts;
     next();
 });
 

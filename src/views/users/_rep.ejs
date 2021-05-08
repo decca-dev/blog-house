@@ -1,0 +1,12 @@
+<% if (user && user.uid !== dude.uid) { %>
+    <div class="text-center pt-3">
+        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+            <form action="/users/posrep/<%= user.uid %>/<%= dude.uid %>" method="POST">
+                <button type="submit" class="btn btn-success"><i class="fas fa-angle-double-up"></i> <%= dude.posRep %></button>
+            </form>
+            <form action="/users/negrep/<%= user.uid %>/<%= dude.uid %>" method="POST">
+                <button type="submit" class="btn btn-danger"><i class="fas fa-angle-double-down"></i> <%= dude.negRep %></button>
+            </form>
+        </div>
+    </div>
+<% } %>

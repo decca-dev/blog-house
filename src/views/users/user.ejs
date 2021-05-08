@@ -21,6 +21,7 @@
             <h4 class="text-center pt-4"><a href="/users/<%= dude.slug %>/followers" style="text-decoration: none;">Followers: <%= dude.followers.length %></a></h4>
             <h4 class="text-center pt-4"><a href="/users/<%= dude.slug %>/following" style="text-decoration: none;">Following: <%= dude.following.length %></a></h4>
             <%- include('_follow', { dude: dude }) %>
+            <%- include('_rep', { dude: dude }) %>
             <% if (user && user.isAdmin && dude.isBanned == false) { %>
                 <div class="text-center pt-4">
                     <%- include('_actions.ejs', { action: "Ban", user: dude, shortAction: "ban", method: "POST"}) %>

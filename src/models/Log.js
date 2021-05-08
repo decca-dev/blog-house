@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 const logSchema = new mongoose.Schema({
+    category: {
+        type: String
+    },
     actionType: {
         type: String
     },

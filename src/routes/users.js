@@ -43,10 +43,12 @@ router.post('/follow/:userID/:toFollowID', async (req, res) => {
 
     const toFollowDude = await User.findOne({ uid: toFollowID })
 
+    await functions.log('User', 'User Follow', req.user.uid, toFollowDude.uid, '');
+
     req.flash('success_msg', `Started following ${toFollowDude.name}`);
     setTimeout(() => {
         res.redirect(`/users/${toFollowDude.slug}`)
-    }, 1500);
+    }, 1000);
 })
 
 router.post('/unfollow/:userID/:toUnfollowID', async (req, res) => {
@@ -59,7 +61,31 @@ router.post('/unfollow/:userID/:toUnfollowID', async (req, res) => {
     req.flash('success_msg', `Unfollowed ${toFollowDude.name}`);
     setTimeout(() => {
         res.redirect(`/users/${toFollowDude.slug}`)
-    }, 1500);
+    }, 1000);
+})
+
+router.post('/posrep/:userID/:toRepID', async (req, res) => {
+    const { userID, toRepID } = req.params;
+
+    functions.posRep(userID, toRepID, req);
+
+    const dude = await User.findOne({ uid: toRepID });
+
+    setTimeout(() => {
+        res.redirect(`/users/${dude.slug}`)
+    }, 1000)
+})
+
+router.post('/negrep/:userID/:toRepID', async (req, res) => {
+    const { userID, toRepID } = req.params;
+
+    functions.negRep(userID, toRepID, req);
+
+    const dude = await User.findOne({ uid: toRepID });
+
+    setTimeout(() => {
+        res.redirect(`/users/${dude.slug}`)
+    }, 1000)
 })
 
 router.get('/:slug/followers', async (req, res) => {
@@ -99,7 +125,7 @@ router.get('/:slug/stats', async ( req, res) => {
 
     const user = await User.findOne({ slug: slug });
 
-    res.render('users/stats', { heading: "BlogHouse",  dude: user, data: data, title: user.name, description: `Checkout ${user.name}'s stats`, route: `/users/${user.slug}/stats`})
+    res.render('users/stats', { heading: "Stats",  dude: user, data: data, title: user.name, description: `Checkout ${user.name}'s stats`, route: `/users/${user.slug}/stats`})
 })
 
 router.get('/:slug', async (req, res) => {

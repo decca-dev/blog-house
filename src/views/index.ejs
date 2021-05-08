@@ -5,6 +5,49 @@
     <h1 class="pb-3">BlogHouse, taking blogs to the moon <img src="../public/emojis/rocket.svg" alt="rocket" width="25" height="25" class="inline-block align-middle"></h1>
     <h5 class="pb-3">Making blogs just got more fun!</h5>
     <h2 class="text-muted italic pb-5">BlogHouse is designed to make writing blogs fun and easy for everyone!</h2>
+    <div class="text-center">
+        <h3 class="pb-3">Some Screenshots</h3>
+        <img src="../public/emojis/point_down.svg" alt="point down" width="40" height="40" class="mx-auto pb-5">
+    </div>
+    <div class="slideshow-container" data-aos="zoom-in">
+
+        <div class="mySlides">
+          <img src="../public/screenshots/ss-1.png" style="width:100%">
+          <div class="text">Dashboard</div>
+        </div>
+      
+        <div class="mySlides">
+          <img src="../public/screenshots/ss-2.png" style="width:100%">
+          <div class="text">Settings</div>
+        </div>
+      
+        <div class="mySlides">
+          <img src="../public/screenshots/ss-3.png" style="width:100%">
+          <div class="text">Other users profile</div>
+        </div>
+
+        <div class="mySlides">
+            <img src="../public/screenshots/ss-4.png" style="width:100%">
+            <div class="text">Advanced search</div>
+        </div>
+
+        <div class="mySlides">
+            <img src="../public/screenshots/ss-5.png" style="width:100%">
+            <div class="text">Quality article interface</div>
+        </div>
+      
+        <a class="prev" onclick="plusSlides(-1)"><i class="fas fa-arrow-circle-left"></i></a>
+        <a class="next" onclick="plusSlides(1)"><i class="fas fa-arrow-circle-right"></i></a>
+      </div>
+      <br>
+      
+      <div style="text-align:center">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span>
+      </div>
     <img src="../public/art/Rectangle 1.png" alt="" width="300" height="300" class="bg-black rounded-xl shadow-md float-right" data-aos="fade-left">
     <h1 class="pb-3">Discover other bloggers <img src="../public/emojis/thumbsup.svg" alt="thumbsup" width="25" height="25" class="inline-block align-middle"></h1>
     <h5 class="pb-36">You can see other peoples' blogs and follow them to get informed about their future posts.</h5>
@@ -12,6 +55,113 @@
     <h1 class="pb-3">Share your magic with the world <img src="../public/emojis/world.svg" alt="world" width="25" height="25" class="inline-block align-middle"></h1>
     <h5 class="pb-36">You can easily write a sick looking blogs with just a little bit of markdown</h5>
     <% if (!user) { %>
-        <a href="/form" type="button" class="btn btn-primary">Get Started</a>
+        <div class="btn-group d-flex justify-content-center" role="group" aria-label="Basic outlined example">
+            <button type="button" class="btn btn-primary" onclick="location.href='/form'">Get Started</button>
+        </div>
     <% } %>
 </div>
+<style>
+    .slideshow-container {
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+    }
+
+    /* Hide the images by default */
+    .mySlides {
+    display: none;
+    }
+
+    /* Next & previous buttons */
+    .prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    }
+
+    /* Position the "next button" to the right */
+    .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+    }
+
+    /* On hover, add a black background color with a little bit see-through */
+    .prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+    }
+
+    /* Caption text */
+    .text {
+    color: #000;
+    font-size: 15px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+    }
+
+    /* Number text (1/3 etc) */
+    .numbertext {
+    color: #000;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+    }
+
+    /* The dots/bullets/indicators */
+    .dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: black;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+    }
+
+    .active-dot, .dot:hover {
+    background-color: crimson;
+    }
+</style>
+<script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    // Next/previous controls
+    function plusSlides(n) {
+    showSlides(slideIndex += n);
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+    showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+    var i;
+    var slides = document.getElementsByClassName("mySlides");
+    var dots = document.getElementsByClassName("dot");
+    if (n > slides.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = slides.length}
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+    for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active-dot", "");
+    }
+    slides[slideIndex-1].style.display = "block";
+    dots[slideIndex-1].className += " active-dot";
+    }
+</script>

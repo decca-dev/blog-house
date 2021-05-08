@@ -2,6 +2,8 @@ const User = require('../models/User');
 const Post = require('../models/Post');
 const Log = require('../models/Log');
 
+const timeout = 3600000 // 1 hour
+
 module.exports.findUser = async (id) => {
     const user = await User.findOne({ uid: id });
     return user
@@ -34,9 +36,10 @@ module.exports.unfollowUser = async (userID, toUnfollowID) => {
     await guyToUnfollow.save();
 }
 
-module.exports.log = async (actionType, by, on, reason) => {
+module.exports.log = async (category, actionType, by, on, reason) => {
     const log = new Log({
-        actiontype: actionType,
+        category: category,
+        actionType: actionType,
         by: by,
         onUser: on,
         reason: reason
@@ -51,7 +54,7 @@ module.exports.promote = async (user, toPromote, reason) => {
     await dude.save();
 
     const log = new Log({
-        actiontype: 'User Promotion',
+        actionType: 'User Promotion',
         by: user.uid,
         onUser: toPromote,
         reason: reason
@@ -66,7 +69,7 @@ module.exports.demote = async (user, toDemote, reason) => {
     await dude.save();
 
     const log = new Log({
-        actiontype: 'User Demotion',
+        actionType: 'User Demotion',
         by: user.uid,
         onUser: toDemote,
         reason: reason
@@ -75,36 +78,62 @@ module.exports.demote = async (user, toDemote, reason) => {
     await log.save();
 }
 
-module.exports.posRep = async (user, toRep) => {
-    const dude = await User.findOne({ uid: user.uid }),
-    guyToRep = await User.findOne({ uid: toRep.uid });
+module.exports.posRep = async (user, toRep, req) => {
+    const dude = await User.findOne({ uid: user }),
+    guyToRep = await User.findOne({ uid: toRep });
+
+    const dudeAge = new Date(dude.registeredAt).getTime();
+
+    if (timeout - (Date.now() - dudeAge) > 0) {
+        let time = ms(timeout - (Date.now() - dudeAge))
+        return req.flash('error_msg', `Your account is too young. You still have ${time} left until you can Rep someone!`)
+    }
+
+    if (dude.hasNegRepped.includes(guyToRep.uid)) {
+        return req.flash('error_msg', `You already added a negative rep to this user!`)
+    }
 
     if (!dude.hasPosRepped.includes(guyToRep.uid)) {
         guyToRep.posRep += 1;
         dude.hasPosRepped.push(guyToRep.uid);
         await dude.save();
         await guyToRep.save();
+        req.flash('success_msg', `Successfully added 1 postive rep point to ${guyToRep.name}`)
     }else {
         guyToRep.posRep -= 1;
-        dude.hasPosRepped.slice(0, guyToRep.uid);
+        dude.hasPosRepped.splice(0, guyToRep.uid);
         await dude.save();
         await guyToRep.save();
+        req.flash('success_msg', `Successfully removed 1 postive rep point from ${guyToRep.name}`)
     }
 }
 
-module.exports.negRep = async (user, toRep) => {
-    const dude = await User.findOne({ uid: user.uid }),
-    guyToRep = await User.findOne({ uid: toRep.uid });
+module.exports.negRep = async (user, toRep, req) => {
+    const dude = await User.findOne({ uid: user }),
+    guyToRep = await User.findOne({ uid: toRep });
+
+    const dudeAge = new Date(dude.registeredAt).getTime();
+
+    if (timeout - (Date.now() - dudeAge) > 0) {
+        let time = ms(timeout - (Date.now() - dudeAge))
+        return req.flash('error_msg', `Your account is too young. You still have ${time} left until you can Rep someone!`)
+    }
+
+    if (dude.hasPosRepped.includes(guyToRep.uid)) {
+        return req.flash('error_msg', `You already added a positive rep to this user!`)
+    }
 
     if (!dude.hasNegRepped.includes(guyToRep.uid)) {
         guyToRep.negRep += 1;
         dude.hasNegRepped.push(guyToRep.uid);
         await dude.save();
         await guyToRep.save();
+        req.flash('success_msg', `Successfully added 1 negative rep point to ${guyToRep.name}`)
     }else {
         guyToRep.negRep -= 1;
-        dude.hasNegRepped.slice(0, guyToRep.uid);
+        dude.hasNegRepped.splice(0, guyToRep.uid);
         await dude.save();
         await guyToRep.save();
+        req.flash('success_msg', `Successfully removed 1 negative rep point from ${guyToRep.name}`)
     }
 }
