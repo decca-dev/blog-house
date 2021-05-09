@@ -12,7 +12,7 @@
         <h1 class="pb-10"><img src="../../public/emojis/upvote.png" alt="" width="40" height="40" class="inline-block"> Reputation <img src="../../public/emojis/downvote.png" alt="" width="40" height="40" class="inline-block"></h1>
         <h3>Positive reputation rank: </h3><h4 class="text-muted"><%= reprank.pos + 1 %></h4>
         <h3>Negative reputation rank: </h3><h4 class="text-muted"><%= reprank.neg + 1 %></h4>
-        <div><canvas id="repChart" width="250" height="250"></canvas></div>
+        <div class="pb-10"><canvas id="repChart" width="250" height="250"></canvas></div>
         <div><canvas id="fameChart" width="250" height="250"></canvas></div>
     </div>
 </div>
@@ -50,7 +50,7 @@
                     parseInt("<%= dude.followers.length %>"),
                     parseInt("<%= dude.following.length %>"),
                 ],
-                backgroundColor: ['blue', 'yellow']
+                backgroundColor: ['blue', 'pink']
             }]
         },
         options: {
