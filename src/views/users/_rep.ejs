@@ -9,4 +9,9 @@
             </form>
         </div>
     </div>
+<% } else { %>
+    <div class="text-center pt-3">
+        <a href="#" class="btn btn-success btn-lg disabled" tabindex="-1" role="button" aria-disabled="true"><i class="fas fa-angle-double-up"></i> <%= dude.posRep %></a>
+        <a href="#" class="btn btn-danger btn-lg disabled" tabindex="-1" role="button" aria-disabled="true"><i class="fas fa-angle-double-down"></i> <%= dude.negRep %></a>
+    </div>
 <% } %>

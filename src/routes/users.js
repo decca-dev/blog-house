@@ -117,15 +117,35 @@ router.get('/:slug/following', async (req, res) => {
         data.push(await functions.findUser(following[i]))
     }
 
-    res.render('users/following', { heading: "BlogHouse",  dude: user, data: data, following: following, title: user.name, description: `Checkout ${user.name}'s followings`, route: `/users/${user.slug}/following`})
+    res.render('users/following', { heading: "BlogHouse", dude: user, data: data, following: following, title: user.name, description: `Checkout ${user.name}'s followings`, route: `/users/${user.slug}/following`})
 })
 
 router.get('/:slug/stats', async ( req, res) => {
     const { slug } = req.params;
 
     const user = await User.findOne({ slug: slug });
+    const allDocs = await User.find();
+    const posRepRank = await User.find().limit(allDocs.length).sort({ posRep: 'desc' });
+    const negRepRank = await User.find().limit(allDocs.length).sort({ negRep: 'desc' });
 
-    res.render('users/stats', { heading: "Stats",  dude: user, data: data, title: user.name, description: `Checkout ${user.name}'s stats`, route: `/users/${user.slug}/stats`})
+    let reprank = {
+        pos: null,
+        neg: null
+    };
+
+    for (let i = 0; i < posRepRank.length; i++) {
+        if (user.uid === posRepRank[i].uid) {
+            reprank.pos = i;
+        }
+    }
+
+    for (let j = 0; j < negRepRank.length; j++) {
+        if (user.uid === negRepRank[j].uid) {
+            reprank.neg = j;
+        }
+    }
+
+    res.render('users/stats', { heading: "Stats", dude: user, reprank: reprank, title: user.name, description: `Checkout ${user.name}'s stats`, route: `/users/${user.slug}/stats`})
 })
 
 router.get('/:slug', async (req, res) => {
