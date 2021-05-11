@@ -1,42 +1,88 @@
-<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="pt-10">
-    <path fill="#ff5500" fill-opacity="1" d="M0,64L20,90.7C40,117,80,171,120,165.3C160,160,200,96,240,58.7C280,21,320,11,360,37.3C400,64,440,128,480,181.3C520,235,560,277,600,261.3C640,245,680,171,720,133.3C760,96,800,96,840,112C880,128,920,160,960,149.3C1000,139,1040,85,1080,69.3C1120,53,1160,75,1200,85.3C1240,96,1280,96,1320,128C1360,160,1400,224,1420,256L1440,288L1440,0L1420,0C1400,0,1360,0,1320,0C1280,0,1240,0,1200,0C1160,0,1120,0,1080,0C1040,0,1000,0,960,0C920,0,880,0,840,0C800,0,760,0,720,0C680,0,640,0,600,0C560,0,520,0,480,0C440,0,400,0,360,0C320,0,280,0,240,0C200,0,160,0,120,0C80,0,40,0,20,0L0,0Z"></path>
+<svg
+  width="100%"
+  height="100%"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1440 320"
+  class="pt-10"
+>
+  <path
+    fill="#ff5500"
+    fill-opacity="1"
+    d="M0,64L20,90.7C40,117,80,171,120,165.3C160,160,200,96,240,58.7C280,21,320,11,360,37.3C400,64,440,128,480,181.3C520,235,560,277,600,261.3C640,245,680,171,720,133.3C760,96,800,96,840,112C880,128,920,160,960,149.3C1000,139,1040,85,1080,69.3C1120,53,1160,75,1200,85.3C1240,96,1280,96,1320,128C1360,160,1400,224,1420,256L1440,288L1440,0L1420,0C1400,0,1360,0,1320,0C1280,0,1240,0,1200,0C1160,0,1120,0,1080,0C1040,0,1000,0,960,0C920,0,880,0,840,0C800,0,760,0,720,0C680,0,640,0,600,0C560,0,520,0,480,0C440,0,400,0,360,0C320,0,280,0,240,0C200,0,160,0,120,0C80,0,40,0,20,0L0,0Z"
+  ></path>
 </svg>
 <div class="container">
-    <img src="<%= user.avatar %>" alt="avatar" width="50" height="50" class="inline-block align-middle" style="border-radius: 50%;"><h1 class="inline-block align-middle">Welcome back, <%= user.name %></h1>
-    <div class="mt-4">
-        <a href="/dashboard/settings" type="button" class="btn btn-success" id="settings"><i class="fas fa-cog"></i> Settings</a>
-    </div>
-    <h1 class="pt-10">API Credentials:</h1>
-    <div class="div pt-4">
-        <button class="btn btn-primary" onclick="copy('<%= user.apiKey %>')" id="copy-btn">Copy API key</button>
-        <button class="btn btn-secondary" onclick="show()" id="show-btn">Show API key</button>
-    </div>
-    <div class="pt-10"></div>
-    <a href="/users/<%= user.slug %>/stats" type="button" class="btn btn-primary"><img src="../../public/emojis/chart.svg" alt="stats" class="inline-block align-middle" width="25" height="25"> Stats</a>
-    <p id="api-key" class="hidden pt-4 text-muted text-blue-400"><%= user.apiKey %></p>
-    <h5 class="pt-10">Account ID: <%= user.uid %></h5>
-    <h4 class="mt-10">Account created at: <%= moment.utc(user.registeredAt).format("dddd, MMMM Do YYYY") %></h4>
+  <img
+    src="<%= user.avatar %>"
+    alt="avatar"
+    width="50"
+    height="50"
+    class="inline-block align-middle"
+    style="border-radius: 50%"
+  />
+  <h1 class="inline-block align-middle">Welcome back, <%= user.name %></h1>
+  <div class="mt-4">
+    <a
+      href="/dashboard/settings"
+      type="button"
+      class="btn btn-success"
+      id="settings"
+      ><i class="fas fa-cog"></i> Settings</a
+    >
+  </div>
+  <h1 class="pt-10">API Credentials:</h1>
+  <div class="div pt-4">
+    <button
+      class="btn btn-primary"
+      onclick="copy('<%= user.apiKey %>')"
+      id="copy-btn"
+    >
+      Copy API key
+    </button>
+    <button class="btn btn-secondary" onclick="show()" id="show-btn">
+      Show API key
+    </button>
+  </div>
+  <div class="pt-10"></div>
+  <a href="/users/<%= user.slug %>/stats" type="button" class="btn btn-primary"
+    ><img
+      src="../../public/emojis/chart.svg"
+      alt="stats"
+      class="inline-block align-middle"
+      width="25"
+      height="25"
+    />
+    Stats</a
+  >
+  <p id="api-key" class="hidden pt-4 text-muted text-blue-400">
+    <%= user.apiKey %>
+  </p>
+  <h5 class="pt-10">Account ID: <%= user.uid %></h5>
+  <h4 class="mt-10">
+    Account created at: <%= moment.utc(user.registeredAt).format("dddd, MMMM Do
+    YYYY") %>
+  </h4>
 </div>
 <script>
-    const settings = document.getElementById('settings')
-    settings.addEventListener('click', function(){
-        settings.classList.add('animate-pulse')
-    })
-    async function copy(text){
-        await navigator.clipboard.writeText(text)
-        document.getElementById('copy-btn').innerHTML = "Copied!"
-        setTimeout(() => {
-            document.getElementById('copy-btn').innerHTML = "Copy API key"
-        }, 1000);
+  const settings = document.getElementById("settings");
+  settings.addEventListener("click", function () {
+    settings.classList.add("animate-pulse");
+  });
+  async function copy(text) {
+    await navigator.clipboard.writeText(text);
+    document.getElementById("copy-btn").innerHTML = "Copied!";
+    setTimeout(() => {
+      document.getElementById("copy-btn").innerHTML = "Copy API key";
+    }, 1000);
+  }
+  function show() {
+    const api = document.getElementById("api-key");
+    if (api.style.display === "block") {
+      api.style.display = "none";
+      document.getElementById("show-btn").innerHTML = "Show API key";
+    } else {
+      api.style.display = "block";
+      document.getElementById("show-btn").innerHTML = "Hide Key";
     }
-    function show(){
-        const api = document.getElementById("api-key");
-        if (api.style.display === "block") {
-            api.style.display = "none";
-            document.getElementById('show-btn').innerHTML = "Show API key"
-        } else {
-            api.style.display = "block";
-            document.getElementById('show-btn').innerHTML = "Hide Key"
-        }
-    }
+  }
 </script>

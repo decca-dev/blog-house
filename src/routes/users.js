@@ -1,159 +1,220 @@
-const router = require('express').Router();
-const User = require('../models/User');
-const Post = require('../models/Post');
-const bcrypt = require('bcryptjs');
-const passport = require('passport');
-const authControllers = require('../misc/authControllers');
-const functions = require('../misc/functions');
+const router = require("express").Router();
+const User = require("../models/User");
+const Post = require("../models/Post");
+const bcrypt = require("bcryptjs");
+const passport = require("passport");
+const authControllers = require("../misc/authControllers");
+const functions = require("../misc/functions");
 
-router.get('/login', async (req, res) => {
-    res.render('login', { heading: "Login | BlogHouse",  title: "BlogHouse", description: "Login with BlogHouse", route: "/users/login"})
-})
-
-router.post('/login', authControllers.loginHandle)
-
-router.get('/register', async (req, res) => {
-    res.render('register', { heading: "Register | BlogHouse",  title: "BlogHouse", description: "Register an account with BlogHouse", route: "/users/register"});
+router.get("/login", async (req, res) => {
+  res.render("login", {
+    heading: "Login | BlogHouse",
+    title: "BlogHouse",
+    description: "Login with BlogHouse",
+    route: "/users/login",
+  });
 });
 
-router.post('/register', authControllers.registerHandle);
+router.post("/login", authControllers.loginHandle);
 
-router.get('/activate/:token', authControllers.activateHandle);
+router.get("/register", async (req, res) => {
+  res.render("register", {
+    heading: "Register | BlogHouse",
+    title: "BlogHouse",
+    description: "Register an account with BlogHouse",
+    route: "/users/register",
+  });
+});
 
-router.get('/forgot', (req, res) => {
-    res.render('forgot', { heading: "Forgot Password",  title: "BlogHouse", description: "Recover your password", route: "/users/forgot"})
-})
+router.post("/register", authControllers.registerHandle);
 
-router.post('/forgot', authControllers.forgotPassword);
+router.get("/activate/:token", authControllers.activateHandle);
 
-router.get('/forgot/:token', authControllers.gotoReset);
+router.get("/forgot", (req, res) => {
+  res.render("forgot", {
+    heading: "Forgot Password",
+    title: "BlogHouse",
+    description: "Recover your password",
+    route: "/users/forgot",
+  });
+});
 
-router.get('/reset/:id', (req, res) => {
-    res.render('reset', { heading: "Reset Password",  id: req.params.id, title: "BlogHouse", description: "Reset your password", route: `/users/reset/${req.params.id}`})
-})
+router.post("/forgot", authControllers.forgotPassword);
 
-router.post('/reset/:id', authControllers.resetPassword);
+router.get("/forgot/:token", authControllers.gotoReset);
 
-router.get('/logout', authControllers.logoutHandle);
+router.get("/reset/:id", (req, res) => {
+  res.render("reset", {
+    heading: "Reset Password",
+    id: req.params.id,
+    title: "BlogHouse",
+    description: "Reset your password",
+    route: `/users/reset/${req.params.id}`,
+  });
+});
 
-router.post('/follow/:userID/:toFollowID', async (req, res) => {
-    const { userID, toFollowID } = req.params;
+router.post("/reset/:id", authControllers.resetPassword);
 
-    functions.followUser(userID, toFollowID);
+router.get("/logout", authControllers.logoutHandle);
 
-    const toFollowDude = await User.findOne({ uid: toFollowID })
+router.post("/follow/:userID/:toFollowID", async (req, res) => {
+  const { userID, toFollowID } = req.params;
 
-    await functions.log('User', 'User Follow', req.user.uid, toFollowDude.uid, '');
+  functions.followUser(userID, toFollowID);
 
-    req.flash('success_msg', `Started following ${toFollowDude.name}`);
-    setTimeout(() => {
-        res.redirect(`/users/${toFollowDude.slug}`)
-    }, 1000);
-})
+  const toFollowDude = await User.findOne({ uid: toFollowID });
 
-router.post('/unfollow/:userID/:toUnfollowID', async (req, res) => {
-    const { userID, toUnfollowID } = req.params;
+  await functions.log(
+    "User",
+    "User Follow",
+    req.user.uid,
+    toFollowDude.uid,
+    ""
+  );
 
-    functions.unfollowUser(userID, toUnfollowID);
+  req.flash("success_msg", `Started following ${toFollowDude.name}`);
+  setTimeout(() => {
+    res.redirect(`/users/${toFollowDude.slug}`);
+  }, 1000);
+});
 
-    const toFollowDude = await User.findOne({ uid: toUnfollowID })
+router.post("/unfollow/:userID/:toUnfollowID", async (req, res) => {
+  const { userID, toUnfollowID } = req.params;
 
-    req.flash('success_msg', `Unfollowed ${toFollowDude.name}`);
-    setTimeout(() => {
-        res.redirect(`/users/${toFollowDude.slug}`)
-    }, 1000);
-})
+  functions.unfollowUser(userID, toUnfollowID);
 
-router.post('/posrep/:userID/:toRepID', async (req, res) => {
-    const { userID, toRepID } = req.params;
+  const toFollowDude = await User.findOne({ uid: toUnfollowID });
 
-    functions.posRep(userID, toRepID, req);
+  req.flash("success_msg", `Unfollowed ${toFollowDude.name}`);
+  setTimeout(() => {
+    res.redirect(`/users/${toFollowDude.slug}`);
+  }, 1000);
+});
 
-    const dude = await User.findOne({ uid: toRepID });
+router.post("/posrep/:userID/:toRepID", async (req, res) => {
+  const { userID, toRepID } = req.params;
 
-    setTimeout(() => {
-        res.redirect(`/users/${dude.slug}`)
-    }, 1000)
-})
+  functions.posRep(userID, toRepID, req);
 
-router.post('/negrep/:userID/:toRepID', async (req, res) => {
-    const { userID, toRepID } = req.params;
+  const dude = await User.findOne({ uid: toRepID });
 
-    functions.negRep(userID, toRepID, req);
+  setTimeout(() => {
+    res.redirect(`/users/${dude.slug}`);
+  }, 1000);
+});
 
-    const dude = await User.findOne({ uid: toRepID });
+router.post("/negrep/:userID/:toRepID", async (req, res) => {
+  const { userID, toRepID } = req.params;
 
-    setTimeout(() => {
-        res.redirect(`/users/${dude.slug}`)
-    }, 1000)
-})
+  functions.negRep(userID, toRepID, req);
 
-router.get('/:slug/followers', async (req, res) => {
-    const { slug } = req.params;
+  const dude = await User.findOne({ uid: toRepID });
 
-    const user = await User.findOne({ slug: slug });
+  setTimeout(() => {
+    res.redirect(`/users/${dude.slug}`);
+  }, 1000);
+});
 
-    const followers = user.followers;
+router.get("/:slug/followers", async (req, res) => {
+  const { slug } = req.params;
 
-    let data = [];
+  const user = await User.findOne({ slug: slug });
 
-    for (let i = 0; i < followers.length; i++) {
-        data.push(await functions.findUser(followers[i]))
+  const followers = user.followers;
+
+  let data = [];
+
+  for (let i = 0; i < followers.length; i++) {
+    data.push(await functions.findUser(followers[i]));
+  }
+
+  res.render("users/followers", {
+    heading: "BlogHouse",
+    dude: user,
+    data: data,
+    followers: followers,
+    title: user.name,
+    description: `Checkout ${user.name}'s followers`,
+    route: `/users/${user.slug}/followers`,
+  });
+});
+
+router.get("/:slug/following", async (req, res) => {
+  const { slug } = req.params;
+
+  const user = await User.findOne({ slug: slug });
+
+  const following = user.following;
+
+  let data = [];
+
+  for (let i = 0; i < following.length; i++) {
+    data.push(await functions.findUser(following[i]));
+  }
+
+  res.render("users/following", {
+    heading: "BlogHouse",
+    dude: user,
+    data: data,
+    following: following,
+    title: user.name,
+    description: `Checkout ${user.name}'s followings`,
+    route: `/users/${user.slug}/following`,
+  });
+});
+
+router.get("/:slug/stats", async (req, res) => {
+  const { slug } = req.params;
+
+  const user = await User.findOne({ slug: slug });
+  const allDocs = await User.find();
+  const posRepRank = await User.find()
+    .limit(allDocs.length)
+    .sort({ posRep: "desc" });
+  const negRepRank = await User.find()
+    .limit(allDocs.length)
+    .sort({ negRep: "desc" });
+
+  let reprank = {
+    pos: null,
+    neg: null,
+  };
+
+  for (let i = 0; i < posRepRank.length; i++) {
+    if (user.uid === posRepRank[i].uid) {
+      reprank.pos = i;
     }
+  }
 
-    res.render('users/followers', { heading: "BlogHouse",  dude: user, data: data, followers: followers, title: user.name, description: `Checkout ${user.name}'s followers`, route: `/users/${user.slug}/followers`})
-})
-
-router.get('/:slug/following', async (req, res) => {
-    const { slug } = req.params;
-
-    const user = await User.findOne({ slug: slug });
-
-    const following = user.following;
-
-    let data = [];
-
-    for (let i = 0; i < following.length; i++) {
-        data.push(await functions.findUser(following[i]))
+  for (let j = 0; j < negRepRank.length; j++) {
+    if (user.uid === negRepRank[j].uid) {
+      reprank.neg = j;
     }
+  }
 
-    res.render('users/following', { heading: "BlogHouse", dude: user, data: data, following: following, title: user.name, description: `Checkout ${user.name}'s followings`, route: `/users/${user.slug}/following`})
-})
+  res.render("users/stats", {
+    heading: "Stats",
+    dude: user,
+    reprank: reprank,
+    title: user.name,
+    description: `Checkout ${user.name}'s stats`,
+    route: `/users/${user.slug}/stats`,
+  });
+});
 
-router.get('/:slug/stats', async ( req, res) => {
-    const { slug } = req.params;
-
-    const user = await User.findOne({ slug: slug });
-    const allDocs = await User.find();
-    const posRepRank = await User.find().limit(allDocs.length).sort({ posRep: 'desc' });
-    const negRepRank = await User.find().limit(allDocs.length).sort({ negRep: 'desc' });
-
-    let reprank = {
-        pos: null,
-        neg: null
-    };
-
-    for (let i = 0; i < posRepRank.length; i++) {
-        if (user.uid === posRepRank[i].uid) {
-            reprank.pos = i;
-        }
-    }
-
-    for (let j = 0; j < negRepRank.length; j++) {
-        if (user.uid === negRepRank[j].uid) {
-            reprank.neg = j;
-        }
-    }
-
-    res.render('users/stats', { heading: "Stats", dude: user, reprank: reprank, title: user.name, description: `Checkout ${user.name}'s stats`, route: `/users/${user.slug}/stats`})
-})
-
-router.get('/:slug', async (req, res) => {
-    const dude = await User.findOne({ slug: req.params.slug })
-    if (dude == null) res.redirect('/404')
-    const posts = await Post.find({ author: dude.uid });
-    res.render('users/user', { heading: dude.name,  dude: dude, articles: posts, title: dude.name, description: dude.bio, route: `/users/${dude.slug}` })
-})
+router.get("/:slug", async (req, res) => {
+  const dude = await User.findOne({ slug: req.params.slug });
+  if (dude == null) res.redirect("/404");
+  const posts = await Post.find({ author: dude.uid });
+  res.render("users/user", {
+    heading: dude.name,
+    dude: dude,
+    articles: posts,
+    title: dude.name,
+    description: dude.bio,
+    route: `/users/${dude.slug}`,
+  });
+});
 
 //! Removed
 // router.post('/register', async (req, res) => {
@@ -191,7 +252,7 @@ router.get('/:slug', async (req, res) => {
 //             password2
 //         })
 //     }else {
-        
+
 //         //*Validation
 //         User.findOne({ email: email })
 //         .then(async user => {
