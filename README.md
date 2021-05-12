@@ -1,7 +1,7 @@
 # Blog House
 Inspired by Doge House. Taking blogs to the moon 🚀 🌕
 
-## Contribution guide:
+# Contribution guide:
 
 1. Fork the repository
 2. Clone it to your development environnement
@@ -29,3 +29,10 @@ URL=http://localhost:PORT
 
 4. run `npm install`
 5. run `node .` and your app should be on.
+
+# Todo
+
+- [  ] API
+- [  ] Feed (tracking what followed users did)
+- [  ] Reputation leaderboard
+- [  ] Post of the day
