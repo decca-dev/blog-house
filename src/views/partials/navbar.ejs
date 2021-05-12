@@ -1,29 +1,35 @@
 <% if (user) { %> <% if(user.isBanned) { %>
-<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbarTogglerDemo01"
-    aria-controls="navbarTogglerDemo01"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <img src="../../public/art/logo.png" alt="logo" width="50" height="50" /><a
-      class="navbar-brand"
-      href="#"
-      >BlogHouse</a
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img
+        class="mr-3 ml-2"
+        src="../../public/art/logo.png"
+        alt="logo"
+        width="50"
+        height="50"
+      />
+      BlogHouse</a
     >
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
   </div>
 </nav>
-<% }else { %>
+<% } else { %>
 <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
   <button
     class="navbar-toggler"
     type="button"
+    style="float: right"
     data-toggle="collapse"
     data-target="#navbarTogglerDemo01"
     aria-controls="navbarTogglerDemo01"
@@ -33,10 +39,15 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <img src="../../public/art/logo.png" alt="logo" width="50" height="50" /><a
-      class="navbar-brand"
-      href="#"
-      >BlogHouse</a
+    <a class="navbar-brand" href="#">
+      <img
+        class="mr-3 ml-2"
+        src="../../public/art/logo.png"
+        alt="logo"
+        width="50"
+        height="50"
+      />
+      BlogHouse</a
     >
     <ul class="navbar-nav mr-1 mt-2 mt-lg-0">
       <li class="nav-item active">
@@ -114,7 +125,7 @@
             <input
               type="text"
               class="form-control"
-              placeholder="Search"
+              placeholder="Find blogs and users..."
               aria-label="Search"
               aria-describedby="basic-addon2"
               name="search"
@@ -132,70 +143,62 @@
   </div>
 </nav>
 <% } %> <% }else { %>
-<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
+  <a class="navbar-brand" href="/">
+    <img
+      src="../../public/art/logo.png"
+      alt="logo"
+      width="30"
+      height="24"
+      class="d-inline-block align-text-top mr-2 ml-1"
+    />BlogHouse</a
+  >
   <button
     class="navbar-toggler"
     type="button"
     data-toggle="collapse"
-    data-target="#navbarTogglerDemo01"
-    aria-controls="navbarTogglerDemo01"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
     aria-expanded="false"
     aria-label="Toggle navigation"
   >
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <img src="../../public/art/logo.png" alt="logo" width="50" height="50" /><a
-      class="navbar-brand"
-      href="#"
-      >BlogHouse</a
-    >
-    <ul class="navbar-nav mr-1 mt-2 mt-lg-0">
-      <li class="nav-item active">
-        <a class="nav-link" href="/"
-          ><i class="fas fa-home"></i> Home
-          <span class="sr-only">(current)</span></a
-        >
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link ml-1" href="/"><i class="fas fa-home"></i> Home</a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="/articles"
+      <li class="nav-item">
+        <a class="nav-link ml-1" href="/articles"
           ><i class="fas fa-scroll"></i> Articles</a
         >
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/users/login"
-          >You are currently browsing as a guest
-          <img
-            src="../../public/emojis/login.svg"
-            alt="login"
-            width="25"
-            height="25"
-            class="inline-block align-middle"
-          />
-          <strong>Login</strong></a
+        <a class="nav-link ml-1" href="/users/login"
+          >You are currently browsing as a guest | 💚 <strong>Login</strong></a
         >
       </li>
-      <li class="nav-item ml-80">
-        <form action="/" method="GET" class="form-inline">
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Search"
-              aria-label="Search"
-              aria-describedby="basic-addon2"
-              name="search"
-              id="search"
-            />
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="submit">
-                Search
-              </button>
-            </div>
-          </div>
-        </form>
-      </li>
     </ul>
+    <form action="/" method="GET" class="form-inline my-2 my-lg-0 mr-1">
+      <div class="input-group">
+        <input
+          type="search"
+          class="form-control search-input"
+          placeholder="Find blogs and users"
+          aria-label="Search"
+          aria-describedby="basic-addon2"
+          name="search"
+          id="search"
+        />
+        <span class="input-group-btn">
+          <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">
+            Search
+          </button>
+        </span>
+      </div>
+    </form>
   </div>
 </nav>
 <% } %>
