@@ -8,12 +8,12 @@ router.get('/', (req, res) => {
     res.send('API docs will be here soon!')
 })
 
-router.get('/users', verifyApiKey, async (req, res) => {
+router.get('/users', async (req, res) => {
     const users = await User.find()
     res.status(200).send(users)
 })
 
-router.get('/users/:slug', verifyApiKey, async (req, res) => {
+router.get('/users/:slug', async (req, res) => {
     const user = await User.findOne({ slug: req.params.slug });
     if (user == null) return res.status(404).json({
         error: true,
@@ -22,7 +22,7 @@ router.get('/users/:slug', verifyApiKey, async (req, res) => {
     res.status(200).send(user)
 })
 
-router.get('/users/:slug/posts', verifyApiKey, async (req, res) => {
+router.get('/users/:slug/posts', async (req, res) => {
     const user = await User.findOne({ slug: req.params.slug });
     if (user == null) return res.status(404).json({
         error: true,
@@ -32,12 +32,12 @@ router.get('/users/:slug/posts', verifyApiKey, async (req, res) => {
     res.status(200).send(posts)
 })
 
-router.get('/posts', verifyApiKey, async (req, res) => {
+router.get('/posts', async (req, res) => {
     const posts =  await Post.find()
     res.status(200).send(posts)
 })
 
-router.get('/posts/:slug', verifyApiKey, async (req, res) => {
+router.get('/posts/:slug', async (req, res) => {
     const post = await Post.findOne({ slug: req.params.slug });
     if (post == null) return res.status(404).json({
         error: true,

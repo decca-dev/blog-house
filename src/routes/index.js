@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const Post = require("../models/Post");
+const fetch = require("node-fetch");
 
 router.get("/", async (req, res) => {
   const { search } = req.query;
@@ -40,12 +41,17 @@ router.get("/form", (req, res) => {
   });
 });
 
-router.get('/contributors', (req, res) => {
+router.get('/contributors', async (req, res) => {
+  let Data = [];
+  await fetch('https://api.github.com/repos/decca-dev/blog-house/contributors')
+  .then (res => res.json())
+  .then(data => Data = data)
   res.render('contributors', {
     heading: "Contributors",
     title: "The BlogHouse contributors",
     description: "Checkout the amazing contributors behind BlogHouse",
-    route: "/contributors"
+    route: "/contributors",
+    data: Data
   })
 })
 

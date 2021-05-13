@@ -19,6 +19,7 @@ const session = require("express-session");
 const passport = require("passport");
 const moment = require("moment");
 const slugify = require("slugify");
+const chalk = require("chalk")
 const methodOverride = require("method-override");
 
 //* Variables and functions
