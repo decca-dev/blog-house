@@ -1,104 +1,155 @@
-<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="pt-10">
-    <path fill="#ff5500" fill-opacity="1" d="M0,64L20,90.7C40,117,80,171,120,165.3C160,160,200,96,240,58.7C280,21,320,11,360,37.3C400,64,440,128,480,181.3C520,235,560,277,600,261.3C640,245,680,171,720,133.3C760,96,800,96,840,112C880,128,920,160,960,149.3C1000,139,1040,85,1080,69.3C1120,53,1160,75,1200,85.3C1240,96,1280,96,1320,128C1360,160,1400,224,1420,256L1440,288L1440,0L1420,0C1400,0,1360,0,1320,0C1280,0,1240,0,1200,0C1160,0,1120,0,1080,0C1040,0,1000,0,960,0C920,0,880,0,840,0C800,0,760,0,720,0C680,0,640,0,600,0C560,0,520,0,480,0C440,0,400,0,360,0C320,0,280,0,240,0C200,0,160,0,120,0C80,0,40,0,20,0L0,0Z"></path>
+<svg
+  width="100%"
+  height="100%"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1440 320"
+  class="pt-10"
+>
+  <path
+    fill="#ff5500"
+    fill-opacity="1"
+    d="M0,64L20,90.7C40,117,80,171,120,165.3C160,160,200,96,240,58.7C280,21,320,11,360,37.3C400,64,440,128,480,181.3C520,235,560,277,600,261.3C640,245,680,171,720,133.3C760,96,800,96,840,112C880,128,920,160,960,149.3C1000,139,1040,85,1080,69.3C1120,53,1160,75,1200,85.3C1240,96,1280,96,1320,128C1360,160,1400,224,1420,256L1440,288L1440,0L1420,0C1400,0,1360,0,1320,0C1280,0,1240,0,1200,0C1160,0,1120,0,1080,0C1040,0,1000,0,960,0C920,0,880,0,840,0C800,0,760,0,720,0C680,0,640,0,600,0C560,0,520,0,480,0C440,0,400,0,360,0C320,0,280,0,240,0C200,0,160,0,120,0C80,0,40,0,20,0L0,0Z"
+  ></path>
 </svg>
 <div class="container">
-    <%- include('../partials/messages') %>
-    <% if (dude.isBanned) { %>
-        <img src="<%= dude.avatar %>" alt="guest" width="100" height="100" style="border-radius: 50%;" class="pt-10 mx-auto">
-        <h1 class="text-center pt-4 mb-10"><%= dude.name %></h1>
-        <h1 class="text-center">This user is banned</h1>
-        <% if (user.isAdmin) { %>
-            <div class="text-center pt-4">
-                <%- include('_actions.ejs', { action: "Unban", user: dude, shortAction: "unban", method: "PUT"}) %>
-            </div>
-        <% } %>
-    <% } else { %>
+  <%- include('../partials/messages') %> <% if (dude.isBanned) { %>
+  <img
+    src="<%= dude.avatar %>"
+    alt="guest"
+    width="100"
+    height="100"
+    style="border-radius: 50%"
+    class="pt-10 mx-auto"
+  />
+  <h1 class="text-center pt-4 mb-10"><%= dude.name %></h1>
+  <h1 class="text-center">This user is banned</h1>
+  <% if (user.isAdmin) { %>
+  <div class="text-center pt-4">
+    <%- include('_actions.ejs', { action: "Unban", user: dude, shortAction:
+    "unban", method: "PUT"}) %>
+  </div>
+  <% } %> <% } else { %>
 
-        <img src="<%= dude.avatar %>" alt="guest" width="100" height="100" style="border-radius: 50%;" class="pt-10 mx-auto">
-        <h1 class="text-center pt-4"><%= dude.name %></h1>
-        <h3 class="text-center pt-4"><%= dude.bio || "No bio" %></h3>
-        <div class="flex flex-col">
-            <h4 class="text-center pt-4"><a href="/users/<%= dude.slug %>/followers" style="text-decoration: none;">Followers: <%= dude.followers.length %></a></h4>
-            <h4 class="text-center pt-4"><a href="/users/<%= dude.slug %>/following" style="text-decoration: none;">Following: <%= dude.following.length %></a></h4>
-            <%- include('_follow', { dude: dude }) %>
-            <%- include('_rep', { dude: dude }) %>
-            <% if (user && user.isAdmin && dude.isBanned == false) { %>
-                <div class="text-center pt-4">
-                    <%- include('_actions.ejs', { action: "Ban", user: dude, shortAction: "ban", method: "POST"}) %>
-                </div>
-            <% } %>
-        </div>
-        <p class="text-center text-muted pt-1">ID: <%= dude.uid %></p>
-        <div class="btn-group d-flex justify-content-center" role="group" aria-label="Basic outlined example">
-            <button type="button" class="btn btn-outline-primary" onclick="showArticles()">Articles</button>
-            <button type="button" class="btn btn-outline-primary" onclick="showStats()">Stats</button>
-        </div>
-        <div id="articles" class="hidden">
-            <% if (articles.length > 0) { %>
-                <h1 class="mt-4 mb-4"><%= dude.name %>'s Blogs</h1>
-                <% articles.forEach(article => { %>
-                    <div class="card mt-4">
-                        <div class="card-body">
-                            <h4 class="card-title"><%= article.title %></h4>
-                            <div class="card-subtitle text-muted mb-2">
-                                <%= article.createdAt.toLocaleDateString() %>
-                            </div>
-                            <div class="card-text mb-2">
-                                <%= article.description.substr(0, 50) %>...
-                            </div>
-                            <a href="/articles/<%= article.slug %>" class="btn btn-primary">Read more</a>
-                            <% if (user && article.author === user.uid) { %>
-                                <a href="/articles/edit/<%= article.id %>" class="btn btn-info">Edit</a>
-                                <form action="/articles/<%= article.id %>?_method=DELETE" method="POST" class="d-inline">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                            <% } %>
-                        </div>
-                    </div>
-                <% }) %>
-            <% }else { %>
-                <img src="../../public/emojis/cricket.svg" alt="cricket" width="300" height="300" class="mx-auto">
-                <div class="text-center">
-                    <h1>*Cricket noises*</h1>
-                    <br>
-                    <h2>This user has no posts</h2>
-                </div>
-            <% } %>
-        </div>
-        <div id="stats" class="hidden">
-            <h1 class="mt-4 mb-4">Stats</h1>
-            <h4 class="mb-4">Total posts: <%= articles.length %></h4>
-            <% if (dude.isAdmin) { %>
-                <h4 class="mb-4">Role: Admin</h4>
-            <% }else { %>
-                <h4 class="mb-4">Role: User</h4>
-            <% } %>
-            <h4 class="mb-4">Reputation</h4>
-            <h4 class="mb-4">Account created at: <%= moment.utc(dude.registeredAt).format("dddd, MMMM Do YYYY") %></h4>
-        </div>
-
+  <img
+    src="<%= dude.avatar %>"
+    alt="guest"
+    width="100"
+    height="100"
+    style="border-radius: 50%"
+    class="pt-10 mx-auto"
+  />
+  <h1 class="text-center pt-4"><%= dude.name %></h1>
+  <h3 class="text-center pt-4"><%= dude.bio || "No bio" %></h3>
+  <div class="flex flex-col">
+    <h4 class="text-center pt-4">
+      <a href="/users/<%= dude.slug %>/followers" style="text-decoration: none"
+        >Followers: <%= dude.followers.length %></a
+      >
+    </h4>
+    <h4 class="text-center pt-4">
+      <a href="/users/<%= dude.slug %>/following" style="text-decoration: none"
+        >Following: <%= dude.following.length %></a
+      >
+    </h4>
+    <%- include('_follow', { dude: dude }) %> <%- include('_rep', { dude: dude
+    }) %> <% if (user && user.isAdmin && dude.isBanned == false) { %>
+    <div class="text-center pt-4">
+      <%- include('_actions.ejs', { action: "Ban", user: dude, shortAction:
+      "ban", method: "POST"}) %>
+    </div>
     <% } %>
-    
+  </div>
+  <p class="text-center text-muted pt-1">ID: <%= dude.uid %></p>
+  <div
+    class="btn-group d-flex justify-content-center"
+    role="group"
+    aria-label="Basic outlined example"
+  >
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      onclick="showArticles()"
+    >
+      Articles
+    </button>
+    <button type="button" class="btn btn-outline-primary" onclick="showStats()">
+      Stats
+    </button>
+  </div>
+  <div id="articles" class="hidden">
+    <% if (articles.length > 0) { %>
+    <h1 class="mt-4 mb-4"><%= dude.name %>'s Blogs</h1>
+    <% articles.forEach(article => { %>
+    <div class="card mt-4">
+      <div class="card-body">
+        <h4 class="card-title"><%= article.title %></h4>
+        <div class="card-subtitle text-muted mb-2">
+          <%= article.createdAt.toLocaleDateString() %>
+        </div>
+        <div class="card-text mb-2">
+          <%= article.description.substr(0, 50) %>...
+        </div>
+        <a href="/articles/<%= article.slug %>" class="btn btn-primary"
+          >Read more</a
+        >
+        <% if (user && article.author === user.uid) { %>
+        <a href="/articles/edit/<%= article.id %>" class="btn btn-info">Edit</a>
+        <form
+          action="/articles/<%= article.id %>?_method=DELETE"
+          method="POST"
+          class="d-inline"
+        >
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+        <% } %>
+      </div>
+    </div>
+    <% }) %> <% }else { %>
+    <img
+      src="../../public/emojis/cricket.svg"
+      alt="cricket"
+      width="300"
+      height="300"
+      class="mx-auto"
+    />
+    <div class="text-center">
+      <h1>*Cricket noises*</h1>
+      <br />
+      <h2>This user has no posts</h2>
+    </div>
+    <% } %>
+  </div>
+  <div id="stats" class="hidden">
+    <h1 class="mt-4 mb-4">Stats</h1>
+    <h4 class="mb-4">Total posts: <%= articles.length %></h4>
+    <% if (dude.isAdmin) { %>
+    <h4 class="mb-4">Role: Admin</h4>
+    <% }else { %>
+    <h4 class="mb-4">Role: User</h4>
+    <% } %>
+    <h4 class="mb-4">Reputation</h4>
+    <h4 class="mb-4">
+      Account created at: <%= moment.utc(dude.registeredAt) %>
+    </h4>
+  </div>
+
+  <% } %>
 </div>
 <script>
-    function showArticles() {
-        
-        const articlesDiv = document.getElementById("articles");
-        if (articlesDiv.style.display === "block") {
-            articlesDiv.style.display = "none";
-        } else {
-            articlesDiv.style.display = "block";
-        }
-
+  function showArticles() {
+    const articlesDiv = document.getElementById("articles");
+    if (articlesDiv.style.display === "block") {
+      articlesDiv.style.display = "none";
+    } else {
+      articlesDiv.style.display = "block";
     }
-    function showStats() {
-
-        const statsDiv = document.getElementById("stats");
-        if (statsDiv.style.display === "block") {
-            statsDiv.style.display = "none";
-        } else {
-            statsDiv.style.display = "block";
-        }
-
+  }
+  function showStats() {
+    const statsDiv = document.getElementById("stats");
+    if (statsDiv.style.display === "block") {
+      statsDiv.style.display = "none";
+    } else {
+      statsDiv.style.display = "block";
     }
+  }
 </script>

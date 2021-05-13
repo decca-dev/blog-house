@@ -1,11 +1,12 @@
 module.exports = () => {
-    let id = '';
+  let id = "";
 
-    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    for (let i = 0; i < 25; i++) { 
-        id += possible.charAt(Math.floor(Math.random() * possible.length)); 
-    }
+  for (let i = 0; i < 25; i++) {
+    id += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
 
-    return id;
-}
+  return id;
+};

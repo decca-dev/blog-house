@@ -1,16 +1,16 @@
 <div class="text-center">
-    <% if (user && user.uid !== dude.uid) { %>
-        <% if (user && !user.following.includes(dude.uid)) { %>
-            <form action="/users/follow/<%= user.uid %>/<%= dude.uid %>" method="POST">
-                <button type="submit" class="btn btn-primary">Follow</button>
-            </form>
-        <% }else { %>
-            <form action="/users/unfollow/<%= user.uid %>/<%= dude.uid %>" method="POST">
-                <button type="submit" class="btn btn-primary">Unfollow</button>
-            </form>
-        <% } %>
-    <% } %>
-    <% if (!user) { %>
-       <button class="btn btn-primary" onclick="location.href='/users/login'">Login first to follow</button> 
-    <% } %>
+  <% if (user && user.uid !== dude.uid) { %> <% if (user &&
+  !user.following.includes(dude.uid)) { %>
+  <form action="/users/follow/<%= user.uid %>/<%= dude.uid %>" method="POST">
+    <button type="submit" class="btn btn-primary">Follow</button>
+  </form>
+  <% }else { %>
+  <form action="/users/unfollow/<%= user.uid %>/<%= dude.uid %>" method="POST">
+    <button type="submit" class="btn btn-primary">Unfollow</button>
+  </form>
+  <% } %> <% } %> <% if (!user) { %>
+  <button class="btn btn-primary" onclick="location.href='/users/login'">
+    Login first to follow
+  </button>
+  <% } %>
 </div>

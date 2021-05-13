@@ -1,163 +1,167 @@
-<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="pt-10">
-    <path fill="#ff5500" fill-opacity="1" d="M0,64L20,90.7C40,117,80,171,120,165.3C160,160,200,96,240,58.7C280,21,320,11,360,37.3C400,64,440,128,480,181.3C520,235,560,277,600,261.3C640,245,680,171,720,133.3C760,96,800,96,840,112C880,128,920,160,960,149.3C1000,139,1040,85,1080,69.3C1120,53,1160,75,1200,85.3C1240,96,1280,96,1320,128C1360,160,1400,224,1420,256L1440,288L1440,0L1420,0C1400,0,1360,0,1320,0C1280,0,1240,0,1200,0C1160,0,1120,0,1080,0C1040,0,1000,0,960,0C920,0,880,0,840,0C800,0,760,0,720,0C680,0,640,0,600,0C560,0,520,0,480,0C440,0,400,0,360,0C320,0,280,0,240,0C200,0,160,0,120,0C80,0,40,0,20,0L0,0Z"></path>
+<svg
+  width="100%"
+  height="100%"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1440 320"
+  class="pt-10"
+>
+  <path
+    fill="#ff990a"
+    fill-opacity="1"
+    d="M0,64L20,90.7C40,117,80,171,120,165.3C160,160,200,96,240,58.7C280,21,320,11,360,37.3C400,64,440,128,480,181.3C520,235,560,277,600,261.3C640,245,680,171,720,133.3C760,96,800,96,840,112C880,128,920,160,960,149.3C1000,139,1040,85,1080,69.3C1120,53,1160,75,1200,85.3C1240,96,1280,96,1320,128C1360,160,1400,224,1420,256L1440,288L1440,0L1420,0C1400,0,1360,0,1320,0C1280,0,1240,0,1200,0C1160,0,1120,0,1080,0C1040,0,1000,0,960,0C920,0,880,0,840,0C800,0,760,0,720,0C680,0,640,0,600,0C560,0,520,0,480,0C440,0,400,0,360,0C320,0,280,0,240,0C200,0,160,0,120,0C80,0,40,0,20,0L0,0Z"
+  ></path>
 </svg>
 <div class="container">
-    <h1 class="pb-3">BlogHouse, taking blogs to the moon <img src="../public/emojis/rocket.svg" alt="rocket" width="25" height="25" class="inline-block align-middle"></h1>
-    <h5 class="pb-3">Making blogs just got more fun!</h5>
-    <h2 class="text-muted italic pb-5">BlogHouse is designed to make writing blogs fun and easy for everyone!</h2>
-    <div class="text-center">
-        <h3 class="pb-3">Some Screenshots</h3>
-        <img src="../public/emojis/point_down.svg" alt="point down" width="40" height="40" class="mx-auto pb-5">
+  <img
+    src="../public/art/logo.png"
+    alt="Logo for BlogHouse"
+    width="150px"
+    style="display: block; margin-left: auto; margin-right: auto"
+  />
+  <h1 class="pb-3 container__heading text-center">
+    BlogHouse, taking blogs to the moon 🚀
+  </h1>
+  <h5 class="pb-3 container__subheading text-center">
+    Making blogs just got more fun!
+  </h5>
+  <h2 class="text-muted italic pb-5 text-center">
+    BlogHouse is designed to make writing blogs fun and easy for everyone!
+  </h2>
+  <div class="text-center">
+    <h3 class="pb-3">Check out some snapshots 👇</h3>
+  </div>
+  <div id="carousel-home" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carousel-home" data-slide-to="0" class="active"></li>
+      <li data-target="#carousel-home" data-slide-to="1"></li>
+      <li data-target="#carousel-home" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img
+          src="../public/screenshots/ss-1.PNG"
+          class="d-block w-100"
+          alt="Screenshot 1"
+        />
+        <div class="carousel-caption d-none d-md-block">
+          <h5 class="text-black text-4xl">First slide label</h5>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img
+          src="../public/screenshots/ss-2.PNG"
+          class="d-block w-100"
+          alt="Screenshot 2"
+        />
+        <div class="carousel-caption d-none d-md-block">
+          <h5 class="text-black text-4xl">Second slide label</h5>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img
+          src="../public/screenshots/ss-3.PNG"
+          class="d-block w-100"
+          alt="Screenshot 3"
+        />
+        <div class="carousel-caption d-none d-md-block text-black">
+          <h5 class="text-black text-4xl">Third slide label</h5>
+        </div>
+      </div>
     </div>
-    <div class="slideshow-container" data-aos="zoom-in">
+    <a
+      class="carousel-control-prev"
+      href="#carousel-home"
+      role="button"
+      data-slide="prev"
+    >
+      <i class="fas fa-arrow-left carousel-previous-icon"></i>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a
+      class="carousel-control-next"
+      href="#carousel-home"
+      role="button"
+      data-slide="next"
+    >
+      <i class="fas fa-arrow-right carousel-next-icon"></i>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+  <br />
 
-        <div class="mySlides">
-          <img src="../public/screenshots/ss-1.png" style="width:100%">
-          <div class="text">Neat Dashboard</div>
-        </div>
-      
-        <div class="mySlides">
-          <img src="../public/screenshots/ss-2.png" style="width:100%">
-          <div class="text">Customize your profile</div>
-        </div>
-      
-        <div class="mySlides">
-          <img src="../public/screenshots/ss-3.png" style="width:100%">
-          <div class="text">Checkout other users profile</div>
-        </div>
-
-        <div class="mySlides">
-            <img src="../public/screenshots/ss-4.png" style="width:100%">
-            <div class="text">Advanced search system</div>
-        </div>
-
-        <div class="mySlides">
-            <img src="../public/screenshots/ss-5.png" style="width:100%">
-            <div class="text">Quality interface. Providing the best user experience</div>
-        </div>
-      
-        <a class="prev" onclick="plusSlides(-1)"><i class="fas fa-arrow-circle-left"></i></a>
-        <a class="next" onclick="plusSlides(1)"><i class="fas fa-arrow-circle-right"></i></a>
-      </div>
-      <br>
-      
-      <div style="text-align:center">
-        <span class="dot" onclick="currentSlide(1)"></span>
-        <span class="dot" onclick="currentSlide(2)"></span>
-        <span class="dot" onclick="currentSlide(3)"></span>
-        <span class="dot" onclick="currentSlide(4)"></span>
-        <span class="dot" onclick="currentSlide(5)"></span>
-      </div>
-    <img src="../public/art/Rectangle 1.png" alt="" width="300" height="300" class="bg-black rounded-xl shadow-md float-right" data-aos="fade-left">
-    <h1 class="pb-3">Discover other bloggers <img src="../public/emojis/thumbsup.svg" alt="thumbsup" width="25" height="25" class="inline-block align-middle"></h1>
-    <h5 class="pb-36">You can see other peoples' blogs and follow them to get informed about their future posts.</h5>
-    <img src="../public/art/Rectangle 2.png" alt="" width="300" height="300" class="bg-black rounded-xl shadow-md float-left" data-aos="fade-right">
-    <h1 class="pb-3">Share your magic with the world <img src="../public/emojis/world.svg" alt="world" width="25" height="25" class="inline-block align-middle"></h1>
-    <h5 class="pb-36">You can easily write a sick looking blogs with just a little bit of markdown</h5>
+  <div class="features-container">
+    <div class="feature feature-one">
+      <img
+        src="../public/art/Rectangle 1.png"
+        alt=""
+        width="400px"
+        height="400px"
+        class="bg-black rounded-xl shadow-md float-right"
+        data-aos="fade-left"
+      />
+      <h1 class="pb-3 text-center">Discover other bloggers ✈</h1>
+      <h5 class="pb-40 text-center">
+        You can see other peoples' blogs and follow them to get informed about
+        their future posts.
+      </h5>
+    </div>
+    <div class="feature feature-one mt-5">
+      <img
+        src="../public/art/Rectangle 2.png"
+        alt=""
+        width="400px"
+        height="400px"
+        class="bg-black rounded-xl shadow-md float-left mr-4"
+        data-aos="fade-right"
+      />
+      <h1 class="pb-3 text-center">Share your magic with the world 🌎</h1>
+      <h5 class="pb-40 text-center">
+        You can easily write a sick looking blog with a little bit of markdown!
+      </h5>
+    </div>
     <% if (!user) { %>
-        <div class="btn-group d-flex justify-content-center" role="group" aria-label="Basic outlined example">
-            <button type="button" class="btn btn-primary" onclick="location.href='/form'">Get Started</button>
-        </div>
+    <div class="home-end mt-8">
+      <h2 class="text-center">Ready to start blogging?</h2>
+      <div
+        class="btn-group d-flex justify-content-center mt-4"
+        role="group"
+        aria-label="Basic outlined example"
+      >
+        <button
+          type="button"
+          class="btn btn-primary"
+          onclick="location.href='/form'"
+        >
+          Get Started
+        </button>
+      </div>
+    </div>
+    <% } else { %>
+    <div
+      class="btn-group d-flex justify-content-center"
+      role="group"
+      aria-label="Basic outlined example"
+    >
+      <button
+        type="button"
+        class="btn btn-primary"
+        onclick="location.href='/dashboard'"
+      >
+        View dashboard
+      </button>
+    </div>
     <% } %>
+  </div>
 </div>
 <style>
-    .slideshow-container {
-    max-width: 1000px;
-    position: relative;
-    margin: auto;
-    }
+  .container__heading {
+    margin-top: 10px;
+  }
+  .container__subheading {
+    margin-bottom: 135px;
+  }
 
-    /* Hide the images by default */
-    .mySlides {
-    display: none;
-    }
-
-    /* Next & previous buttons */
-    .prev, .next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    width: auto;
-    margin-top: -22px;
-    padding: 16px;
-    color: black;
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-    user-select: none;
-    }
-
-    /* Position the "next button" to the right */
-    .next {
-    right: 0;
-    border-radius: 3px 0 0 3px;
-    }
-
-    /* Caption text */
-    .text {
-    color: white;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-    font-size: 30px;
-    padding: 8px 12px;
-    position: absolute;
-    bottom: 8px;
-    width: 100%;
-    text-align: center;
-    }
-
-    /* Number text (1/3 etc) */
-    .numbertext {
-    color: #000;
-    font-size: 12px;
-    padding: 8px 12px;
-    position: absolute;
-    top: 0;
-    }
-
-    /* The dots/bullets/indicators */
-    .dot {
-    cursor: pointer;
-    height: 15px;
-    width: 15px;
-    margin: 0 2px;
-    background-color: black;
-    border-radius: 50%;
-    display: inline-block;
-    transition: background-color 0.6s ease;
-    }
-
-    .active-dot, .dot:hover {
-    background-color: crimson;
-    }
+  .features-container {
+    margin-top: 135px;
+  }
 </style>
-<script>
-    var slideIndex = 1;
-    showSlides(slideIndex);
-
-    // Next/previous controls
-    function plusSlides(n) {
-    showSlides(slideIndex += n);
-    }
-
-    // Thumbnail image controls
-    function currentSlide(n) {
-    showSlides(slideIndex = n);
-    }
-
-    function showSlides(n) {
-    var i;
-    var slides = document.getElementsByClassName("mySlides");
-    var dots = document.getElementsByClassName("dot");
-    if (n > slides.length) {slideIndex = 1}
-    if (n < 1) {slideIndex = slides.length}
-    for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
-    for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active-dot", "");
-    }
-    slides[slideIndex-1].style.display = "block";
-    dots[slideIndex-1].className += " active-dot";
-    }
-</script>
