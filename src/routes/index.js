@@ -40,6 +40,15 @@ router.get("/form", (req, res) => {
   });
 });
 
+router.get('/contributors', (req, res) => {
+  res.render('contributors', {
+    heading: "Contributors",
+    title: "The BlogHouse contributors",
+    description: "Checkout the amazing contributors behind BlogHouse",
+    route: "/contributors"
+  })
+})
+
 router.get("/404", (req, res) => {
   res.render("errors/404.ejs", {
     heading: "Not Found",

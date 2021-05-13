@@ -108,12 +108,14 @@ const usersRoute = require("./routes/users");
 const articlesRoute = require("./routes/articles");
 const dashboardRoute = require("./routes/dashboard");
 const adminRoute = require("./routes/admin");
+const apiRoute = require("./routes/api");
 
 app.use(checkBanned, indexRoute);
 app.use("/users", checkBanned, usersRoute);
 app.use("/articles", checkBanned, articlesRoute);
 app.use("/dashboard", checkBanned, ensureAuthenticated, dashboardRoute);
 app.use("/admin", ensureAuthenticated, checkAdmin, adminRoute);
+app.use("/api", apiRoute);
 
 app.get("*", (req, res) => {
   res.redirect("/404");
