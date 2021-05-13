@@ -1,3 +1,5 @@
+const User = require('../models/User');
+
 module.exports.checkBanned = async (req, res, next) => {
   if (req.user) {
     if (req.user.isBanned) {
@@ -24,3 +26,28 @@ module.exports.checkAdmin = async (req, res, next) => {
     }
   }
 };
+
+module.exports.validateApiKey = async (req, res, next) => {
+  let keys = [];
+
+  const users = await User.find();
+
+  for (let i = 0; i < users.length; i++) {
+    keys.push(users[i].apiKey)
+  }
+
+  const { key } = req.query;
+
+  if (key) {
+    if (!keys.includes(key)) return res.status(401).json({
+      error: true,
+      message: "Unauthorized key"
+    })
+    next()
+  }else {
+    return res.status(401).json({
+      error: true,
+      message: "Missing api key"
+    })
+  }
+}
