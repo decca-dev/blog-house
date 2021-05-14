@@ -115,6 +115,20 @@ router.post("/negrep/:userID/:toRepID", async (req, res) => {
   }, 1000);
 });
 
+router.get("/:slug", async (req, res) => {
+  const dude = await User.findOne({ slug: req.params.slug });
+  if (dude == null) res.redirect("/404");
+  const posts = await Post.find({ author: dude.uid });
+  res.render("users/user", {
+    heading: dude.name,
+    dude: dude,
+    articles: posts,
+    title: dude.name,
+    description: dude.bio,
+    route: `/users/${dude.slug}`,
+  });
+});
+
 router.get("/:slug/followers", async (req, res) => {
   const { slug } = req.params;
 
@@ -160,59 +174,6 @@ router.get("/:slug/following", async (req, res) => {
     title: user.name,
     description: `Checkout ${user.name}'s followings`,
     route: `/users/${user.slug}/following`,
-  });
-});
-
-router.get("/:slug/stats", async (req, res) => {
-  const { slug } = req.params;
-
-  const user = await User.findOne({ slug: slug });
-  const allDocs = await User.find();
-  const posRepRank = await User.find()
-    .limit(allDocs.length)
-    .sort({ posRep: "desc" });
-  const negRepRank = await User.find()
-    .limit(allDocs.length)
-    .sort({ negRep: "desc" });
-
-  let reprank = {
-    pos: null,
-    neg: null,
-  };
-
-  for (let i = 0; i < posRepRank.length; i++) {
-    if (user.uid === posRepRank[i].uid) {
-      reprank.pos = i;
-    }
-  }
-
-  for (let j = 0; j < negRepRank.length; j++) {
-    if (user.uid === negRepRank[j].uid) {
-      reprank.neg = j;
-    }
-  }
-
-  res.render("users/stats", {
-    heading: "Stats",
-    dude: user,
-    reprank: reprank,
-    title: user.name,
-    description: `Checkout ${user.name}'s stats`,
-    route: `/users/${user.slug}/stats`,
-  });
-});
-
-router.get("/:slug", async (req, res) => {
-  const dude = await User.findOne({ slug: req.params.slug });
-  if (dude == null) res.redirect("/404");
-  const posts = await Post.find({ author: dude.uid });
-  res.render("users/user", {
-    heading: dude.name,
-    dude: dude,
-    articles: posts,
-    title: dude.name,
-    description: dude.bio,
-    route: `/users/${dude.slug}`,
   });
 });
 
