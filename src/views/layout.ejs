@@ -18,7 +18,6 @@
       crossorigin="anonymous"
     />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"></script>
     <link rel="icon" href="../public/art/logo.png" type="image/png" />
     <title><%= heading %></title>
     <meta content="https://bloghouse.cf<%= route %>" property="og:url" />
@@ -34,6 +33,7 @@
   </head>
   <body>
     <%- include('partials/navbar') %>
+    <img src="../public/assets/top.svg" alt="" width="100%" height="100%">
     <div class="main-container"><%- body %></div>
     <div class="loader-wrapper">
       <span class="loader"
@@ -86,11 +86,6 @@
         position: relative;
         padding-bottom: 100px;
       }
-      /* body::-webkit-scrollbar {
-        display: none;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    } */
       .loader-wrapper {
         width: 100%;
         height: 100%;
