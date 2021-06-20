@@ -7,10 +7,12 @@ const functions = require("../misc/functions");
 
 router.get("/", async (req, res) => {
   const articles = await Post.find().sort({ createdAt: "desc" });
+  const randomPost = articles[Math.floor(Math.random() * articles.length)];
   
   res.render("articles/index", {
     heading: "Articles | BlogHouse",
     articles: articles,
+    random: randomPost,
     title: "Articles",
     description: "Checkout some of the coolest articles people made!",
     route: "/articles",

@@ -1,0 +1,30 @@
+<div class="container">
+    <h1 class="pb-3">BlogHouse is designed to make blogging easy and fun for everyone.</h1>
+    <h3 class="pb-4"><a href="/users/register" style="text-decoration: none;color: black;" class="font-bold">Create an account</a> or <a href="/users/login" style="text-decoration: none;color: black;" class="font-bold">Login</a> to get started with your amazing journey!</h3>
+    <h4 class="text-center pb-96"><a href="#features" style="text-decoration: none;color: black;">What we offer 👇</a></h4>
+    <div id="features" class="text-center">
+        <div id="one" data-aos="fade-right" class="pb-14">
+            <h3 class="pb-3">Professional User Interface</h3>
+            <img src="../public/screenshots/ss-3.png" alt="ss-3" width="100%" height="100" class="rounded-xl shadow-md">
+        </div>
+        <div id="two" data-aos="fade-left" class="pb-14">
+            <h3 class="pb-3">Advanced Search Sysem</h3>
+            <img src="../public/screenshots/ss-4.PNG" alt="ss-4" width="100%" height="100" class="rounded-xl shadow-md">
+        </div>
+        <div id="three" data-aos="fade-up-right" class="pb-14">
+            <h3 class="pb-3">Profile Customization</h3>
+            <img src="../public/screenshots/ss-5.png" alt="ss-5" width="100%" height="100" class="rounded-xl shadow-md">
+        </div>
+        <div id="three" data-aos="fade-up-left" class="pb-14">
+            <h3 class="pb-3">Moderation Panel</h3>
+            <img src="../public/screenshots/ss-6.png" alt="ss-6" width="100%" height="100" class="rounded-xl shadow-md">
+        </div>
+        <h4 class="italic">And, more on the way thanks to our awesome contributors!</h4>
+        <div class="mx-auto pb-5">
+            <% data.forEach((el) => { %>
+                <a href="https://github.com/<%= el.login %>"><img src="<%= el.avatar_url %>" alt="<%= el.login %>" title="<%= el.login %>" width="75" height="75" style="border-radius: 50%;" class="inline-block align-middle"></a>
+            <% }) %>
+        </div>
+        <a href="https://github.com/decca-dev/blog-house" class="btn btn-primary">Contribute today, make BlogHouse a better place!</a>
+    </div>
+</div>

@@ -55,6 +55,20 @@ router.get('/contributors', async (req, res) => {
   })
 })
 
+router.get('/about', async (req, res) => {
+  let Data = [];
+  await fetch('https://api.github.com/repos/decca-dev/blog-house/contributors')
+  .then (res => res.json())
+  .then(data => Data = data)
+  res.render('about', {
+    heading: "About",
+    title: "About",
+    description: "About BlogHouse",
+    route: "/about",
+    data: Data
+  })
+})
+
 router.get("/404", (req, res) => {
   res.render("errors/404.ejs", {
     heading: "Not Found",
