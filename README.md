@@ -32,7 +32,7 @@ URL=http://localhost:PORT
 
 # Todo
 
-- [  ] API
-- [  ] Feed (tracking what followed users did)
-- [  ] Reputation leaderboard
-- [  ] Post of the day
+- API
+- Feed (tracking what followed users did)
+- Reputation leaderboard
+- Post of the day

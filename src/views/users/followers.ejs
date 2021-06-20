@@ -1,34 +1,46 @@
-<div class="container">
-  <% if (followers.length > 0) { %>
-  <h1 class="mb-4"><%= dude.name %>'s Followers</h1>
-  <% data.forEach((d) => { %>
-  <div class="card">
-    <div class="card-body">
-      <h1 class="inline-block align-middle">
-        <img
-          src="<%= d.avatar %>"
-          alt="avatar"
-          width="50"
-          class="inline-block align-middle"
-          style="border-radius: 50%"
-        /><a href="/users/<%= d.slug %>" style="text-decoration: none"
-          ><%= d.name %></a
-        >
-      </h1>
+<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#followersModal">
+  Followers: <%= dude.followers.length %>
+</button>
+<div class="modal fade" id="followersModal" tabindex="-1" aria-labelledby="followersModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="followersModalLabel"><%= dude.name %>'s followers:</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <% if (followers.length > 0) { %>
+          <% followers.forEach((d) => { %>
+          <div class="card">
+            <div class="card-body">
+              <h1 class="inline-block align-middle">
+                <img
+                  src="<%= d.avatar %>"
+                  alt="avatar"
+                  width="50"
+                  class="inline-block align-middle"
+                  style="border-radius: 50%"
+                /><a href="/users/<%= d.slug %>" style="text-decoration: none"
+                  ><%= d.name %></a
+                >
+              </h1>
+            </div>
+          </div>
+          <% }) %> <% } else { %>
+          <div class="text-center">
+            <img
+              src="../../public/emojis/cricket.svg"
+              alt="cricket"
+              width="200"
+              height="200"
+              class="mx-auto mb-4"
+            />
+            <h1>*Cricket noises*</h1>
+            <br />
+            <h3 class="mb-4"><%= dude.name %> has no followers</h3>
+          </div>
+          <% } %>
+      </div>
     </div>
   </div>
-  <% }) %> <% } else { %>
-  <div class="text-center">
-    <img
-      src="../../public/emojis/cricket.svg"
-      alt="cricket"
-      width="200"
-      height="200"
-      class="mx-auto mb-4"
-    />
-    <h1>*Cricket noises*</h1>
-    <br />
-    <h3 class="mb-4"><%= dude.name %> has no followers</h3>
-  </div>
-  <% } %>
 </div>

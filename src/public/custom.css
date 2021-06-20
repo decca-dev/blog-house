@@ -49,3 +49,31 @@ h3 {
 .carousel-previous-icon {
   color: #f89d1d !important;
 }
+
+/* #ff8400 */
+
+.btn-secondary {
+  background-color:#ff8400 !important;
+  border-color:#ff8400 !important;
+}
+
+.btn-outline-secondary {
+  color:#ff8400 !important;
+  border-color:#ff8400 !important;
+}
+
+.btn-outline-secondary:hover {
+  background-color:#ff8400 !important;
+  color: white !important;
+}
+
+.btn-outline-secondary:focus {
+  background-color:#ff8400 !important;
+  color: white !important;
+}
+
+.btn-secondary:focus,
+.btn-outline-secondary:focus {
+  border-color:#ff8400 !important;
+  box-shadow: 0 0 0 0.25rem rgb(255, 153, 10, 0.25) !important;
+}
