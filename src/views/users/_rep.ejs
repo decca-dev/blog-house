@@ -2,13 +2,13 @@
 <div class="text-center pt-3">
   <div class="btn-group" role="group" aria-label="Basic mixed styles example">
     <form action="/users/posrep/<%= user.uid %>/<%= dude.uid %>" method="POST">
-      <button type="submit" class="btn btn-success">
-        <i class="fas fa-angle-double-up"></i> <%= dude.posRep %>
+      <button type="submit">
+        <img src="../../public/emojis/upvote.png" alt="upvote" width="50" height="50">
       </button>
     </form>
     <form action="/users/negrep/<%= user.uid %>/<%= dude.uid %>" method="POST">
-      <button type="submit" class="btn btn-danger">
-        <i class="fas fa-angle-double-down"></i> <%= dude.negRep %>
+      <button type="submit">
+        <img src="../../public/emojis/downvote.png" alt="upvote" width="50" height="50">
       </button>
     </form>
   </div>

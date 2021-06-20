@@ -7,6 +7,7 @@ const functions = require("../misc/functions");
 
 router.get("/", async (req, res) => {
   const articles = await Post.find().sort({ createdAt: "desc" });
+  
   res.render("articles/index", {
     heading: "Articles | BlogHouse",
     articles: articles,

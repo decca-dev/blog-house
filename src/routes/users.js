@@ -119,63 +119,79 @@ router.get("/:slug", async (req, res) => {
   const dude = await User.findOne({ slug: req.params.slug });
   if (dude == null) res.redirect("/404");
   const posts = await Post.find({ author: dude.uid });
+  const followers = dude.followers;
+
+  let followersData = [];
+
+  for (let i = 0; i < followers.length; i++) {
+    followersData.push(await functions.findUser(followers[i]));
+  }
+  const following = dude.following;
+
+  let followingData = [];
+
+  for (let i = 0; i < following.length; i++) {
+    followingData.push(await functions.findUser(following[i]));
+  }
   res.render("users/user", {
     heading: dude.name,
     dude: dude,
     articles: posts,
     title: dude.name,
+    followers: followersData,
+    following: followingData,
     description: dude.bio,
     route: `/users/${dude.slug}`,
   });
 });
 
-router.get("/:slug/followers", async (req, res) => {
-  const { slug } = req.params;
+// router.get("/:slug/followers", async (req, res) => {
+//   const { slug } = req.params;
 
-  const user = await User.findOne({ slug: slug });
+//   const user = await User.findOne({ slug: slug });
 
-  const followers = user.followers;
+//   const followers = user.followers;
 
-  let data = [];
+//   let data = [];
 
-  for (let i = 0; i < followers.length; i++) {
-    data.push(await functions.findUser(followers[i]));
-  }
+//   for (let i = 0; i < followers.length; i++) {
+//     data.push(await functions.findUser(followers[i]));
+//   }
 
-  res.render("users/followers", {
-    heading: "BlogHouse",
-    dude: user,
-    data: data,
-    followers: followers,
-    title: user.name,
-    description: `Checkout ${user.name}'s followers`,
-    route: `/users/${user.slug}/followers`,
-  });
-});
+//   res.render("users/followers", {
+//     heading: "BlogHouse",
+//     dude: user,
+//     data: data,
+//     followers: followers,
+//     title: user.name,
+//     description: `Checkout ${user.name}'s followers`,
+//     route: `/users/${user.slug}/followers`,
+//   });
+// });
 
-router.get("/:slug/following", async (req, res) => {
-  const { slug } = req.params;
+// router.get("/:slug/following", async (req, res) => {
+//   const { slug } = req.params;
 
-  const user = await User.findOne({ slug: slug });
+//   const user = await User.findOne({ slug: slug });
 
-  const following = user.following;
+//   const following = user.following;
 
-  let data = [];
+//   let data = [];
 
-  for (let i = 0; i < following.length; i++) {
-    data.push(await functions.findUser(following[i]));
-  }
+//   for (let i = 0; i < following.length; i++) {
+//     data.push(await functions.findUser(following[i]));
+//   }
 
-  res.render("users/following", {
-    heading: "BlogHouse",
-    dude: user,
-    data: data,
-    following: following,
-    title: user.name,
-    description: `Checkout ${user.name}'s followings`,
-    route: `/users/${user.slug}/following`,
-  });
-});
+//   res.render("users/following", {
+//     heading: "BlogHouse",
+//     dude: user,
+//     data: data,
+//     following: following,
+//     title: user.name,
+//     description: `Checkout ${user.name}'s followings`,
+//     route: `/users/${user.slug}/following`,
+//   });
+// });
 
 //! Removed
 // router.post('/register', async (req, res) => {
