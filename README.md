@@ -36,3 +36,4 @@ URL=http://localhost:PORT
 - Feed (tracking what followed users did)
 - Reputation leaderboard
 - Post of the day
+- Routes that need to be added: about, privacy, tos, changelog
