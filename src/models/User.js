@@ -95,6 +95,8 @@ userSchema.methods.toJSON = function() {
     delete obj.resetLink;
     delete obj.apiKey;
     delete obj.email;
+    delete obj._id;
+    delete obg.__v;
     return obj;
 }
 

@@ -80,7 +80,7 @@ h3 {
 
 .avatar {
   border-radius: 50%;
-  border-color: #ff5500;
+  border: 1px solid #ff5500;
 }
 
 .avatar:hover {

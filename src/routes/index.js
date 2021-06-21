@@ -2,6 +2,7 @@ const router = require("express").Router();
 const User = require("../models/User");
 const Post = require("../models/Post");
 const fetch = require("node-fetch");
+const functions = require('../misc/functions');
 
 router.get("/", async (req, res) => {
   const { search } = req.query;
@@ -73,6 +74,11 @@ router.get('/leaderboard', async (req, res) => {
 
   const rep = await User.find().sort({ posRep: 'desc' });
   const posts = await Post.find().sort({ views: 'desc' });
+  let authors = [];
+  for (let i = 0; i < posts.length; i++) {
+    let data = await functions.findUser(posts[i].author)
+    authors.push(data.name)
+  }
   const ranks = [
     "👑", // 1
     "2️⃣", // 2
@@ -93,7 +99,8 @@ router.get('/leaderboard', async (req, res) => {
     route: "/leaderboard",
     rep: rep,
     posts: posts,
-    ranks: ranks
+    ranks: ranks,
+    authors: authors
   })
 })
 
