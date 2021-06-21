@@ -1,0 +1,26 @@
+<div class="container text-center">
+    <h1 class="pb-10">🏆 <strong>Leaderboard</strong> 🏆</h1>
+    <% if (rep.length > 0) { %>
+        <% if (rep.length > 10) { %>
+            <h2 class="pb-10"><img src="../public/emojis/upvote.png" alt="⬆" width="25" height="25" class="inline-block align-top"> Top 10 users with the most positive reputation <img src="../public/emojis/upvote.png" alt="⬆" width="25" height="25" class="inline-block align-top"></h2>
+            <% for (let i = 0; i < 10; i++) { %>
+                <h3><%= ranks[i] %> <a href="/users/<%= rep[i].slug %>" style="text-decoration: none;"><%= rep[i].name %> <img src="<%= rep[i].avatar %>" alt="<%= rep[i].name %>'s avatar'" width="25" height="25" class="avatar inline-block align-top" style="border-radius: 50%;"></a></h3>
+            <% } %>
+        <% } else { %>
+            <h2 class="pb-10"><img src="../public/emojis/upvote.png" alt="⬆" width="25" height="25" class="inline-block align-top"> Top 10 users with the most positive reputation <img src="../public/emojis/upvote.png" alt="⬆" width="25" height="25" class="inline-block align-top"></h2>
+            <% for (let i = 0; i < rep.length; i++) { %>
+                <h3><%= ranks[i] %> <a href="/users/<%= rep[i].slug %>" style="text-decoration: none;"><%= rep[i].name %> <img src="<%= rep[i].avatar %>" alt="<%= rep[i].name %>'s avatar'" width="25" height="25" class="avatar inline-block align-top" style="border-radius: 50%;"></a></h3>
+            <% } %>
+        <% } %>
+    <% }else { %>
+        <img
+            src="../../public/emojis/question.svg"
+            alt="question"
+            width="200"
+            height="200"
+            class="mx-auto mb-4"
+        />
+        <h1 class="pb-4">Couldn't find any data for the Leaderboard</h1>
+        <a href="/" class="btn btn-primary">Go back home</a>
+    <% } %>
+</div>

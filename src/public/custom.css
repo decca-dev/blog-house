@@ -77,3 +77,14 @@ h3 {
   border-color:#ff8400 !important;
   box-shadow: 0 0 0 0.25rem rgb(255, 153, 10, 0.25) !important;
 }
+
+.avatar {
+  border-radius: 50%;
+  border-color: #ff5500;
+}
+
+.avatar:hover {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+  outline: none;
+}

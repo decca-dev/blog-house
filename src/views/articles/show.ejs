@@ -16,8 +16,8 @@
     <div class="text-muted mb-2">
         <%= article.createdAt.toLocaleDateString() %>
     </div>
-    <h6 class="text-muted pb-3"><i class="fas fa-eye"></i> Views: <%= article.views %></h6>
-    <h6 class="text-muted pb-3"><i class="far fa-eye"></i> Unique views: <%= article.seenBy.length %></h6>
+    <h6 class="text-muted pb-3"><i class="fas fa-eye"></i> Times Viewed: <%= article.views %></h6>
+    <h6 class="text-muted pb-3"><i class="far fa-eye"></i> Viewers: <%= article.seenBy.length %></h6>
     <div class="flex flex-wrap">
         <p class="text-muted pb-3">Viewed By</p>
         <div class="pt-5 pb-5 space-x-4">

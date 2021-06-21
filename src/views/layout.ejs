@@ -133,6 +133,10 @@
       $(window).on("load", function () {
         $(".loader-wrapper").fadeOut("slow");
       });
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+      })
     </script>
     <%- include('partials/footer') %>
   </body>

@@ -69,6 +69,34 @@ router.get('/about', async (req, res) => {
   })
 })
 
+router.get('/leaderboard', async (req, res) => {
+
+  const rep = await User.find().sort({ posRep: 'desc' });
+  const posts = await Post.find().sort({ views: 'desc' });
+  const ranks = [
+    "👑", // 1
+    "2️⃣", // 2
+    "3️⃣", // 3
+    "4️⃣", // 4
+    "5️⃣", // 5
+    "6️⃣", // 6
+    "7️⃣", // 7
+    "8️⃣", // 8
+    "9️⃣", // 9
+    "🔟", // 10
+  ]
+
+  res.render('leaderboard', {
+    heading: 'Leaderboard',
+    title: 'Leaderboard',
+    description: 'Checkout the leading users and posts in BlogHouse!',
+    route: "/leaderboard",
+    rep: rep,
+    posts: posts,
+    ranks: ranks
+  })
+})
+
 router.get("/404", (req, res) => {
   res.render("errors/404.ejs", {
     heading: "Not Found",
