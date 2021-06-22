@@ -25,18 +25,16 @@
     <button type="submit" class="btn btn-primary">Save</button>
   </form>
   <div class="mb-10"></div>
-  <form action="/dashboard/settings/avatar?_method=PUT" method="POST">
+  <div id="errors"></div>
+  <form method="POST" enctype="multipart/form-data" id="avatar-form">
     <div class="form-group">
-      <label for="avatar" class="mb-4">Change Avatar</label>
-      <input
-        type="text"
-        name="avatar"
-        id="avatar"
-        placeholder="Image URL"
-        class="form-control mb-4"
-      />
+      <label for="file" class="mb-3">Change avatar</label>
+      <div class="input-group mb-3">
+        <input type="file" class="form-control" id="file" name="files[]">
+        <button class="btn btn-outline-secondary" type="submit" id="file">Upload</button>
+      </div>
+      <div id="result" class="text-center"></div>
     </div>
-    <button type="submit" class="btn btn-primary">Save</button>
   </form>
   <div class="mb-10"></div>
   <button
@@ -87,3 +85,94 @@
   </div>
   <div class="mb-4"></div>
 </div>
+<script>
+  let ts = "<%= timestamp %>"
+  let sig = "<%= signature %>"
+  let key = "<%= apiKey %>"
+
+  const form = document.querySelector('#avatar-form');
+  const errors = document.querySelector('#errors');
+  const result = document.querySelector('#result');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    let url = "https://api.cloudinary.com/v1_1/decc00n/image/upload";
+
+    const file = document.querySelector('[type=file]').files[0];
+
+    if (!file) {
+      return errors.innerHTML = `
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        Please choose a file first!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      `
+    }
+
+    const  fileType = file['type'];
+    const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+    if (!validImageTypes.includes(fileType)) {
+      return errors.innerHTML = `
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        That file is not an image!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      `
+    }
+
+    if (file.size > 1048576) {
+      return errors.innerHTML = `
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        Image size larger than 1MB!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      `
+    }
+
+    const formData = new FormData();
+
+    formData.append("file", file);
+    formData.append("api_key", key);
+    formData.append("eager", "w_400,h_300,c_pad|w_260,h_200,c_crop");
+    formData.append("public_id", `<%= user.name %>-avatar`);
+    formData.append("timestamp", ts);
+    formData.append("signature", sig);
+
+    fetch(url, {
+      method: "POST",
+      body: formData
+    })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      const image = document.createElement('img');
+      image.src = data.url;
+      image.setAttribute('height', '100')
+      image.setAttribute('width', '100')
+      image.classList.add('mx-auto');
+      result.appendChild(image);
+
+      const payload = {
+        uid: '<%= user.uid %>',
+        avatar: data.url
+      }
+
+      fetch(`/dashboard/settings/avatar`, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      })
+      .then((res) => {
+        console.log(res.status)
+        location.href = "/dashboard/settings"
+      })
+      
+    });
+
+  });
+</script>

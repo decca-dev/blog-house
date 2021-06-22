@@ -8,13 +8,20 @@
     style="border-radius: 50%"
   />
   <h1 class="inline-block align-middle">Welcome back, <%= user.name %></h1>
-  <div class="mt-4">
+  <div class="mt-4 flex flex-row">
     <a
       href="/dashboard/settings"
       type="button"
-      class="btn btn-success"
+      class="btn btn-success mr-3"
       id="settings"
       ><i class="fas fa-cog"></i> Settings</a
+    >
+    <a
+      href="/users/<%= user.slug %>"
+      type="button"
+      class="btn btn-secondary"
+      id="profile"
+      ><i class="fas fa-user"></i> Profile</a
     >
   </div>
   <h1 class="pt-10">API Credentials:</h1>

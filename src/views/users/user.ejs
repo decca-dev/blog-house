@@ -1,22 +1,22 @@
 <div class="container">
-  <%- include('../partials/messages') %> <% if (dude.isBanned) { %>
+  <%- include('../partials/messages') %>
+  <% if (dude.isBanned) { %>
   <img
     src="<%= dude.avatar %>"
-    alt="guest"
+    alt="<%= dude.name %>"
     width="100"
     height="100"
-    style="border-radius: 50%"
-    class="pt-10 mx-auto"
+    class="avatar pt-10 mx-auto"
   />
-  <h1 class="text-center pt-4 mb-10"><%= dude.name %></h1>
+  <h1 class="text-center pt-4 mb-10">🛑 <%= dude.name %></h1>
   <h1 class="text-center">This user is banned</h1>
-  <% if (user.isAdmin) { %>
+    <% if (user.isAdmin) { %>
   <div class="text-center pt-4">
     <%- include('_actions.ejs', { action: "Unban", user: dude, shortAction:
     "unban", method: "PUT"}) %>
   </div>
-  <% } %> <% } else { %>
-
+    <% } %>
+  <% } else { %>
   <img
     src="<%= dude.avatar %>"
     alt="guest"
@@ -25,7 +25,11 @@
     style="border-radius: 50%"
     class="pt-10 mx-auto"
   />
-  <h1 class="text-center pt-4"><%= dude.name %></h1>
+   <% if (dude.isAdmin) { %>
+    <h1 class="text-center pt-4 mb-10">🛡️ <%= dude.name %></h1>
+   <% }else { %>
+    <h1 class="text-center pt-4"><%= dude.name %></h1>
+   <% } %> 
   <h3 class="text-center pt-4"><%= dude.bio || "No bio" %></h3>
   <div class="flex flex-col">
     <div class="text-center pt-4">
@@ -111,7 +115,6 @@
     <% }else { %>
     <h4 class="mb-4">Role: User</h4>
     <% } %>
-    <h4 class="mb-4">Reputation</h4>
     <h4 class="mb-4">
       Account created at: <%= moment.utc(dude.registeredAt) %>
     </h4>

@@ -2,13 +2,13 @@
 <div class="text-center pt-3">
   <div class="btn-group" role="group" aria-label="Basic mixed styles example">
     <form action="/users/posrep/<%= user.uid %>/<%= dude.uid %>" method="POST">
-      <button type="submit">
-        <img src="../../public/emojis/upvote.png" alt="upvote" width="50" height="50">
+      <button type="submit" class="btn btn-success mr-3">
+        <img src="../../public/emojis/upvote.png" alt="upvote" width="25" height="25" class="inline-block align-middle"> <%= dude.posRep %>
       </button>
     </form>
     <form action="/users/negrep/<%= user.uid %>/<%= dude.uid %>" method="POST">
-      <button type="submit">
-        <img src="../../public/emojis/downvote.png" alt="upvote" width="50" height="50">
+      <button type="submit" class="btn btn-danger">
+        <img src="../../public/emojis/downvote.png" alt="downvote" width="25" height="25" class="inline-block align-middle"> <%= dude.negRep %>
       </button>
     </form>
   </div>
@@ -21,7 +21,7 @@
     tabindex="-1"
     role="button"
     aria-disabled="true"
-    ><i class="fas fa-angle-double-up"></i> <%= dude.posRep %></a
+    ><img src="../../public/emojis/upvote.png" alt="upvote" width="25" height="25" class="inline-block align-middle"> <%= dude.posRep %></a
   >
   <a
     href="#"
@@ -29,7 +29,7 @@
     tabindex="-1"
     role="button"
     aria-disabled="true"
-    ><i class="fas fa-angle-double-down"></i> <%= dude.negRep %></a
+    ><img src="../../public/emojis/downvote.png" alt="downvote" width="25" height="25" class="inline-block align-middle"> <%= dude.negRep %></a
   >
 </div>
 <% } %>

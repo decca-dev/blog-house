@@ -77,7 +77,7 @@ router.get('/leaderboard', async (req, res) => {
   let authors = [];
   for (let i = 0; i < posts.length; i++) {
     let data = await functions.findUser(posts[i].author)
-    authors.push(data.name)
+    authors.push({name: data.name, slug: data.slug})
   }
   const ranks = [
     "👑", // 1
