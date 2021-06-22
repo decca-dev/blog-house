@@ -35,10 +35,12 @@
     <%- include('partials/navbar') %>
     <img src="../public/assets/top.svg" alt="" width="100%" height="100%">
     <div class="main-container"><%- body %></div>
-    <div class="loader-wrapper">
+    <div class="loader-wrapper flex flex-col">
       <span class="loader"
         ><img src="../public/art/logo.png" alt="logo" class="load-inner"
       /></span>
+      <br>
+      <h6 class="text-white" id="fact"></h6>
     </div>
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -130,8 +132,21 @@
     </style>
     <script>
       twemoji.parse(document.body);
+
+      const facts = [
+        "BlogHouse's name is inspired by DogeHouse while DogeHouse's name is inspired from ClubHouse.",
+        "BlogHouse now has an API.",
+        "BlogHouse now has a leaderboard for people with the most positive reputation and the most viewed posts.",
+        "BlogHouse was planned ever since DogeHouse became popular.",
+        "BlogHouse is an open source platform.",
+        "BlogHouse's color palette is made of: #ff5500, #ff8400 and #fffff."
+      ]
+
       $(window).on("load", function () {
-        $(".loader-wrapper").fadeOut("slow");
+        document.querySelector('#fact').innerHTML = facts[Math.floor(Math.random() * facts.length)]
+        setTimeout(() => {
+          $(".loader-wrapper").fadeOut("slow");          
+        }, 2500);
       });
       var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
       var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
