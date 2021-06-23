@@ -145,54 +145,6 @@ router.get("/:slug", async (req, res) => {
   });
 });
 
-// router.get("/:slug/followers", async (req, res) => {
-//   const { slug } = req.params;
-
-//   const user = await User.findOne({ slug: slug });
-
-//   const followers = user.followers;
-
-//   let data = [];
-
-//   for (let i = 0; i < followers.length; i++) {
-//     data.push(await functions.findUser(followers[i]));
-//   }
-
-//   res.render("users/followers", {
-//     heading: "BlogHouse",
-//     dude: user,
-//     data: data,
-//     followers: followers,
-//     title: user.name,
-//     description: `Checkout ${user.name}'s followers`,
-//     route: `/users/${user.slug}/followers`,
-//   });
-// });
-
-// router.get("/:slug/following", async (req, res) => {
-//   const { slug } = req.params;
-
-//   const user = await User.findOne({ slug: slug });
-
-//   const following = user.following;
-
-//   let data = [];
-
-//   for (let i = 0; i < following.length; i++) {
-//     data.push(await functions.findUser(following[i]));
-//   }
-
-//   res.render("users/following", {
-//     heading: "BlogHouse",
-//     dude: user,
-//     data: data,
-//     following: following,
-//     title: user.name,
-//     description: `Checkout ${user.name}'s followings`,
-//     route: `/users/${user.slug}/following`,
-//   });
-// });
-
 //! Removed
 // router.post('/register', async (req, res) => {
 //     const { name, email, password, password2 } = req.body;
