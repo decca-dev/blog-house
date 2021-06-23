@@ -354,7 +354,7 @@ exports.resetPassword = async (req, res) => {
 };
 
 exports.githubLoginHandle = async (req, res, next) => {
-  passport.authenticate("local", {
+  passport.authenticate("github", {
     successRedirect: "/",
     failureRedirect: "/form",
     failureFlash: true,
