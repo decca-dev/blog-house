@@ -59,7 +59,10 @@ router.get("/logout", authControllers.logoutHandle);
 
 router.get('/auth/github', passport.authenticate('github'));
 
-router.get('/auth/github/callback', authControllers.githubLoginHandle);
+router.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/form' }),
+  function(req, res) {
+  res.redirect('/');
+});
 
 router.post("/follow/:userID/:toFollowID", async (req, res) => {
   const { userID, toFollowID } = req.params;

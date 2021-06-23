@@ -46,6 +46,21 @@ module.exports.github = (passport) => {
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
     callbackURL: process.env.URL + "/users/auth/github/callback"
   }, function(accessToken, refreshToken, profile, cb) {
-    console.log(profile)
+      User.findOne({uid: profile.id})
+      .then((user) => {
+        if (!user) {
+          User.create({
+            name: profile.username,
+            uid: profile.id,
+            avatar: profile._json.avatar_url,
+            bio: profile._json.bio
+          })
+          .then((newUser) => {
+            return cb(null, newUser)
+          })
+        }else {
+          return cb(null, user)
+        }
+      })
   }))
 }
