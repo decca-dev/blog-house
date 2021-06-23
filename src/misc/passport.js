@@ -39,3 +39,13 @@ module.exports.local = (passport) => {
     });
   });
 };
+
+module.exports.github = (passport) => {
+  passport.use(new GithubStrategy({
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    callbackURL: process.env.URL + "/users/auth/github/callback"
+  }, function(accessToken, refreshToken, profile, cb) {
+    console.log(profile)
+  }))
+}

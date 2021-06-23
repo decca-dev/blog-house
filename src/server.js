@@ -4,7 +4,8 @@ require("dotenv").config();
 const Logger = require("./utils/Logger");
 
 Logger.info("Loading resources...", "server");
-
+const livereload = require("livereload");
+const connectLivereload = require("connect-livereload");
 const http = require("http");
 const express = require("express");
 const app = express();
@@ -25,6 +26,7 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 const strategies = require('./misc/passport');
 strategies.local(passport);
+strategies.github(passport);
 const { ensureAuthenticated } = require("./misc/auth");
 const { checkBanned } = require("./misc/check");
 const { checkAdmin } = require("./misc/check");
@@ -124,4 +126,10 @@ app.get("*", (req, res) => {
 
 app.listen(PORT, () => {
   Logger.info(`Server started on port ${PORT}`, "server");
+});
+
+livereloadServer.server.once("connection", () => {
+  setTimeout(() => {
+    livereloadServer.refresh("/");
+  }, 100);
 });

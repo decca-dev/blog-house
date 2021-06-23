@@ -57,6 +57,10 @@ router.post("/reset/:id", authControllers.resetPassword);
 
 router.get("/logout", authControllers.logoutHandle);
 
+router.get('/auth/github', passport.authenticate('github'));
+
+router.get('/auth/github/callback', authControllers.githubLoginHandle);
+
 router.post("/follow/:userID/:toFollowID", async (req, res) => {
   const { userID, toFollowID } = req.params;
 
