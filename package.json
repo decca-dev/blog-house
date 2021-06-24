@@ -44,6 +44,7 @@
     "nodemailer": "^6.6.0",
     "nodemon": "latest",
     "passport": "^0.4.1",
+    "passport-discord": "^0.1.4",
     "passport-github": "^1.1.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",

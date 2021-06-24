@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const GithubStrategy = require('passport-github').Strategy;
+const DiscordStrategy = require('passport-discord').Strategy;
 
 module.exports.local = (passport) => {
   passport.use(
@@ -46,11 +47,11 @@ module.exports.github = (passport) => {
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
     callbackURL: process.env.URL + "/users/auth/github/callback"
   }, function(accessToken, refreshToken, profile, cb) {
-      User.findOne({uid: profile.id})
+      User.findOne({ uid: profile.id })
       .then((user) => {
         if (!user) {
           User.create({
-            name: profile.username,
+            name: profile.username + '-gh',
             uid: profile.id,
             avatar: profile._json.avatar_url,
             bio: profile._json.bio
@@ -62,5 +63,30 @@ module.exports.github = (passport) => {
           return cb(null, user)
         }
       })
+  }))
+}
+
+module.exports.discord = (passport) => {
+  const scope = 'identify';
+  passport.use(new DiscordStrategy({
+    clientID: process.env.DISCORD_CLIENT_ID,
+    clientSecret: process.env.DISCORD_CLIENT_SECRET,
+    scope: scope
+  }, function (accessToken, refreshToken, profile, cb) {
+    User.findOne({ uid: profile.id })
+    .then((user) => {
+      if (!user) {
+        User.create({
+          name: profile.username + '-dc',
+          uid: profile.id,
+          avatar: `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png`,
+        })
+        .then((newUser) => {
+          return cb(null, newUser)
+        })
+      }else {
+        return cb(null, user)
+      }
+    })
   }))
 }

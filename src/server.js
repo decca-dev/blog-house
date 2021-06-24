@@ -27,6 +27,7 @@ const MONGO_URI = process.env.MONGO_URI;
 const strategies = require('./misc/passport');
 strategies.local(passport);
 strategies.github(passport);
+strategies.discord(passport);
 const { ensureAuthenticated } = require("./misc/auth");
 const { checkBanned } = require("./misc/check");
 const { checkAdmin } = require("./misc/check");

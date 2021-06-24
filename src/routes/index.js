@@ -131,7 +131,47 @@ router.get('/feed', ensureAuthenticated, async (req, res) => {
   for (let i = 0; i < logged.length; i++) {
     if (logged[i].actionType == "User Follow") {
       const user = await functions.findUser(logged[i].onUser);
-      users2.push({name: user.name, avatar: user.avatar})
+      const by = await functions.findUser(logged[i].by);
+      users2.push({Onname: user.name, Onavatar: user.avatar, at: logged[i].at, Byname: by.name, Byavatar: by.avatar})
+    }
+  }
+
+  let data = [];
+  let data2 = [];
+
+  for (let i = 0; i < logged.length; i++) {
+    let payload;
+    if (logged[i].category === "Post") {
+      payload = {
+        at: logged[i].at,
+        actionType: logged[i].actionType,
+        category: logged[i].category,
+        reason: logged[i].reason,
+        by: {
+          name: users[i].name,
+          avatar: users[i].avatar
+        }
+      }
+    }
+    data.push(payload)
+  }
+
+  if (users2.length > 0) {
+    for (let i = 0; i < users2.length; i++) {
+      let payload = {
+        at: users2[i].at,
+        actionType: "User Follow",
+        category: "User",
+        by: {
+          name: users2[i].Byname,
+          avatar: users2[i].Byavatar
+        },
+        onUser: {
+          name: users2[i].Onname,
+          avatar: users2[i].Onavatar
+        }
+      }
+      data2.push(payload)
     }
   }
 
@@ -140,9 +180,8 @@ router.get('/feed', ensureAuthenticated, async (req, res) => {
     title: 'Feed',
     description: 'Check your feed!',
     route: '/feed',
-    logged: logged,
-    users: users,
-    users2: users2
+    data: data,
+    data2: data2
   })
 })
 

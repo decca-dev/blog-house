@@ -59,9 +59,17 @@ router.get("/logout", authControllers.logoutHandle);
 
 router.get('/auth/github', passport.authenticate('github'));
 
-router.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/form' }),
+router.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/users/login' }),
   function(req, res) {
-  res.redirect('/');
+    res.redirect('/dashboard');
+  });
+
+router.get('/auth/discord', passport.authenticate('discord'));
+
+router.get('/auth/discord/callback', passport.authenticate('discord', {
+  failureRedirect: '/users/login'
+}), function(req, res) {
+  res.redirect('/dashboard')
 });
 
 router.post("/follow/:userID/:toFollowID", async (req, res) => {

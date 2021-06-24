@@ -1,35 +1,49 @@
 <div class="container">
     <h1 class="pb-10">Your feed</h1>
     <% if (user.following.length > 0) { %>
-      <% if (logged.length > 0) { %>
-        <% logged.forEach((log) => { %>
-          <% users.forEach((u) => { %>
-            <% if (users2.length > 0) { %>
-              <% users2.forEach((u2) => { %>
-                <div class="card">
-                  <div class="card-header">
-                    <img src="<%= u.avatar %>" alt="<%= u.name %>'s avatar" width="25" height="25" class="inline-block align-middle avatar"> <%= u.name %>
-                      </div>
-                        <div class="card-body">
-                        <blockquote class="blockquote mb-0">
-                          <% if (log.actionType === "Post New") { %>
-                            <p><strong><%= u.name %></strong> created a new post</p>
-                            <h5><a href="/articles/<%= slugify(log.reason) %>" class="no-underline"><%= log.reason %></a></h5>
-                          <% }else if (log.actionType === "Post Edit") { %>
-                            <p><strong><%= u.name %></strong> edited a post</p>
-                            <h5><a href="/articles/<%= slugify(log.reason) %>" class="no-underline"><%= log.reason %></a></h5>
-                          <% }else if (log.actionType === 'User Follow') { %>
-    
-                            <p><strong><%= u.name %></strong> started following <a href="/logged/<%= slugify(u2.name) %>" class="no-underline"><%= u2.name %></a></p>
-                          <% } %>
-                        </blockquote>
+      <% if (data.length > 0) { %>
+        <% data.forEach((d) => { %>
+          <% if (d !== undefined) { %>
+            <div class="card mb-3">
+              <div class="card-header">
+                <img src="<%= d.by.avatar %>" alt="<%= d.by.name %>'s avatar" width="25" height="25" class="inline-block align-middle avatar"> <%= d.by.name %>
                   </div>
-                </div>
-              <% }) %>
-            <% } %>
-          <% }) %>
+                    <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                      <% if (d.actionType === "Post New") { %>
+                        <p><strong><%= d.by.name %></strong> created a new post</p>
+                        <h5><a href="/articles/<%= slugify(d.reason) %>" class="no-underline"><%= d.reason %></a></h5>
+                      <% }else if (d.actionType === "Post Edit") { %>
+                        <p><strong><%= d.by.name %></strong> edited a post</p>
+                        <h5><a href="/articles/<%= slugify(d.reason) %>" class="no-underline"><%= d.reason %></a></h5>
+                      <% } %>
+                      <h3 class="blockquote-footer mt-3"><%= moment(d.at).fromNow() %></h3>
+                    </blockquote>
+              </div>
+            </div>
+          <% }else { %>
+            <div></div>
+          <% } %>
         <% }) %>
-      <% }else { %>
+      <% } %>
+      <% if (data2.length > 0) { %>
+        <% data2.forEach((d2) => { %>
+          <div class="card mb-3">
+            <div class="card-header">
+              <img src="<%= d2.by.avatar %>" alt="<%= d2.by.name %>'s avatar" width="25" height="25" class="inline-block align-middle avatar"> <%= d2.by.name %>
+                </div>
+                  <div class="card-body">
+                  <blockquote class="blockquote mb-0">
+                    <% if (d2.actionType === "User Follow") { %>
+                      <p><strong><%= d2.by.name %></strong> started following <a href="/users/<%= slugify(d2.onUser.name) %>" class="no-underline"><%= d2.onUser.name %></a></p>
+                    <% } %>
+                    <h3 class="blockquote-footer mt-3"><%= moment(d2.at).fromNow() %></h3>
+                  </blockquote>
+            </div>
+          </div>
+        <% }) %>
+      <% } %>
+      <% if (data.length < 0 && data2.length < 0) { %>
         <img
           src="../../public/emojis/cricket.svg"
           alt="cricket"

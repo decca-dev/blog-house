@@ -50,13 +50,20 @@ router.put("/settings/name", async (req, res) => {
 
   const { name } = req.body;
 
-  user.name = name;
+  const dupe = await User.findOne({ name: name});
 
-  await user.save();
+  if (dupe) {
+    req.flash('error_msg', "That name is already taken!")
+    res.redirect("/dashboard/settings");
+    return;
+  }else {
+    user.name = name;
 
-  req.flash("success_msg", "Name changed successfully!");
+    await user.save();
 
-  res.redirect("/dashboard/settings");
+    req.flash("success_msg", "Name changed successfully!");
+    res.redirect("/dashboard/settings");
+  } 
 });
 
 router.put("/settings/bio", async (req, res) => {
