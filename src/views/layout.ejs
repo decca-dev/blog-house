@@ -146,7 +146,7 @@
         document.querySelector('#fact').innerHTML = facts[Math.floor(Math.random() * facts.length)]
         setTimeout(() => {
           $(".loader-wrapper").fadeOut("slow");          
-        }, 2500);
+        }, 1000);
       });
       var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
       var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {

@@ -31,6 +31,12 @@
     <h1 class="text-center pt-4"><%= dude.name %></h1>
    <% } %> 
   <h3 class="text-center pt-4"><%= dude.bio || "No bio" %></h3>
+  <% if (user && user.isAdmin && dude.isBanned == false) { %>
+    <div class="text-center pt-4">
+      <%- include('_actions.ejs', { action: "Ban", dude: dude, shortAction:
+      "ban", method: "POST"}) %>
+    </div>
+  <% } %>
   <div class="flex flex-col">
     <div class="text-center pt-4">
       <%- include('followers', {dude: dude, followers: followers}) %>
@@ -40,12 +46,6 @@
     </div>
     <%- include('_follow', { dude: dude }) %>
     <%- include('_rep', { dude: dude}) %>
-    <% if (user && user.isAdmin && dude.isBanned == false) { %>
-    <div class="text-center pt-4">
-      <%- include('_actions.ejs', { action: "Ban", user: dude, shortAction:
-      "ban", method: "POST"}) %>
-    </div>
-    <% } %>
   </div>
   <p class="text-center text-muted pt-1">ID: <%= dude.uid %></p>
   <div

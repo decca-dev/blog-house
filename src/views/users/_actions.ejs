@@ -5,7 +5,7 @@
   data-toggle="modal"
   data-target="#exampleModal"
 >
-  <%= action %> <%= user.name %>
+  <%= action %> <%= dude.name %>
 </button>
 <div
   class="modal fade"
@@ -19,7 +19,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
-          Are you sure you want to <%= action %> <%= user.name %>?
+          Are you sure you want to <%= action %> <%= dude.name %>?
         </h5>
         <button
           type="button"
@@ -31,7 +31,7 @@
         </button>
       </div>
       <form
-        action="/admin/<%= shortAction %>/<%= user.uid %>?_method=<%= method %>"
+        action="/admin/<%= shortAction %>/<%= dude.uid %>?_method=<%= method %>"
         method="POST"
       >
         <div class="modal-body">

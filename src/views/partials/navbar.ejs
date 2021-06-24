@@ -60,15 +60,16 @@
         >
       </li>
       <% } %>
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="/articles"
           ><i class="fas fa-scroll"></i> Articles</a
         >
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/dashboard"
-          ><img src="<%= user.avatar %>" alt="avatar" class="inline-block align-top" width="25" height="25" style="border-radius: 50%;"/> Dashboard</a
+        <a class="nav-link" href="/feed"
+          ><i class="fas fa-compass"></i> Feed</a
         >
+      </li>
       </li>
       <li class="nav-item dropdown">
         <a
@@ -116,6 +117,10 @@
           >
         </div>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/dashboard"
+          ><img src="<%= user.avatar %>" alt="avatar" class="inline-block align-top" width="25" height="25" style="border-radius: 50%;"/> Dashboard</a
+      >
       <li class="nav-item ml-80">
         <form action="/" method="GET" class="form-inline my-2 my-lg-0 mr-1">
           <div class="input-group">

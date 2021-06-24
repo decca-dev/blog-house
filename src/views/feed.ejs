@@ -1,0 +1,90 @@
+<div class="container">
+    <h1 class="pb-10">Your feed</h1>
+    <% if (user.following.length > 0) { %>
+      <% if (logged.length > 0) { %>
+        <% logged.forEach((log) => { %>
+          <% users.forEach((u) => { %>
+            <% if (users2.length > 0) { %>
+              <% users2.forEach((u2) => { %>
+                <div class="card">
+                  <div class="card-header">
+                    <img src="<%= u.avatar %>" alt="<%= u.name %>'s avatar" width="25" height="25" class="inline-block align-middle avatar"> <%= u.name %>
+                      </div>
+                        <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                          <% if (log.actionType === "Post New") { %>
+                            <p><strong><%= u.name %></strong> created a new post</p>
+                            <h5><a href="/articles/<%= slugify(log.reason) %>" class="no-underline"><%= log.reason %></a></h5>
+                          <% }else if (log.actionType === "Post Edit") { %>
+                            <p><strong><%= u.name %></strong> edited a post</p>
+                            <h5><a href="/articles/<%= slugify(log.reason) %>" class="no-underline"><%= log.reason %></a></h5>
+                          <% }else if (log.actionType === 'User Follow') { %>
+    
+                            <p><strong><%= u.name %></strong> started following <a href="/logged/<%= slugify(u2.name) %>" class="no-underline"><%= u2.name %></a></p>
+                          <% } %>
+                        </blockquote>
+                  </div>
+                </div>
+              <% }) %>
+            <% } %>
+          <% }) %>
+        <% }) %>
+      <% }else { %>
+        <img
+          src="../../public/emojis/cricket.svg"
+          alt="cricket"
+          width="300"
+          height="300"
+          class="mx-auto"
+        />
+        <div class="text-center">
+          <h1>It's quiet...for now</h1>
+          <br />
+          <h2 class="pb-3">Seems like there aren't any recent actions from the people you follow!</h2>
+          <h5 class="pb-4">Find more logged here:</h5>
+          <form action="/" method="GET" class="form-inline my-2 my-lg-0 mr-1">
+            <div class="input-group">
+              <input
+                type="search"
+                class="form-control search-input"
+                placeholder="Find blogs and logged"
+                aria-label="Search"
+                aria-describedby="basic-addon2"
+                name="search"
+                id="search"
+              />
+              <span class="input-group-btn">
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">
+                  Search
+                </button>
+              </span>
+            </div>
+        </form>
+        </div>
+      <% } %>
+    <% }else { %>
+        <div class="text-center">
+            <h2 class="pb-3">🤷 Looks like you're not following anyone!</h2>
+            <h3 class="pb-3">While you're here, check some <a href="/articles" class="no-underline">articles</a> written by awesome bloggers and follow them to get info in your feed.</h3>
+            <h3 class="pb-4">Or you can search for some logged here:</h3>
+            <form action="/" method="GET" class="form-inline my-2 my-lg-0 mr-1">
+                <div class="input-group">
+                  <input
+                    type="search"
+                    class="form-control search-input"
+                    placeholder="Find blogs and logged"
+                    aria-label="Search"
+                    aria-describedby="basic-addon2"
+                    name="search"
+                    id="search"
+                  />
+                  <span class="input-group-btn">
+                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">
+                      Search
+                    </button>
+                  </span>
+                </div>
+            </form>
+        </div>
+    <% } %>
+</div>

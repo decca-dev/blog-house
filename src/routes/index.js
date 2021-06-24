@@ -1,8 +1,10 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const Post = require("../models/Post");
+const Log = require('../models/Log');
 const fetch = require("node-fetch");
 const functions = require('../misc/functions');
+const { ensureAuthenticated } = require('../misc/auth')
 
 router.get("/", async (req, res) => {
   const { search } = req.query;
@@ -101,6 +103,46 @@ router.get('/leaderboard', async (req, res) => {
     posts: posts,
     ranks: ranks,
     authors: authors
+  })
+})
+
+router.get('/feed', ensureAuthenticated, async (req, res) => {
+  const logs = await Log.find().sort({ at: 'desc' });
+  const followedUsers = req.user.following;
+  let logged = [];
+
+  for (let i = 0; i < logs.length; i++) {
+    if (logs[i].category !== 'Moderation') {
+      if (followedUsers.includes(logs[i].by)) {
+        logged.push(logs[i])
+      }
+    }
+  }
+
+  let users = [];
+
+  for (let i = 0; i < logged.length; i++) {
+    const user = await functions.findUser(logged[i].by);
+    users.push({name: user.name, avatar: user.avatar})
+  }
+
+  let users2 = [];
+
+  for (let i = 0; i < logged.length; i++) {
+    if (logged[i].actionType == "User Follow") {
+      const user = await functions.findUser(logged[i].onUser);
+      users2.push({name: user.name, avatar: user.avatar})
+    }
+  }
+
+  res.render('feed', {
+    heading: "Your feed",
+    title: 'Feed',
+    description: 'Check your feed!',
+    route: '/feed',
+    logged: logged,
+    users: users,
+    users2: users2
   })
 })
 

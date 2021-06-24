@@ -45,7 +45,6 @@ router.get("/edit/:id", ensureAuthenticated, async (req, res) => {
 
 router.post(
   "/new",
-  ensureAuthenticated,
   async (req, res, next) => {
     req.post = new Post();
     next();
@@ -55,7 +54,6 @@ router.post(
 
 router.put(
   "/:id",
-  ensureAuthenticated,
   async (req, res, next) => {
     req.post = await Post.findById(req.params.id);
     next();
@@ -63,7 +61,7 @@ router.put(
   saveArticleAndRedirect("edit")
 );
 
-router.delete("/:id", ensureAuthenticated, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   await Post.findByIdAndDelete(req.params.id);
   res.redirect("/articles");
 });
