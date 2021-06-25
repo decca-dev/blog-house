@@ -40,8 +40,8 @@ CLOUDINARY_API_SECRET=
 
 # Todo
 
-- API
-- Feed (tracking what followed users did)
+- API (Gotta make the documentation page)
+- Feed => Done
 - Reputation leaderboard => Done
 - Post of the day => Done
 - Routes that need to be added: about, privacy, tos, changelog

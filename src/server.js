@@ -9,6 +9,7 @@ const connectLivereload = require("connect-livereload");
 const http = require("http");
 const express = require("express");
 const app = express();
+const server = http.createServer(app);
 const expressLayouts = require("express-ejs-layouts");
 const bodyParser = require("body-parser");
 const path = require("path");
@@ -125,7 +126,7 @@ app.get("*", (req, res) => {
   res.redirect("/404");
 });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   Logger.info(`Server started on port ${PORT}`, "server");
 });
 
