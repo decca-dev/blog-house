@@ -5,7 +5,12 @@ const functions = require('../misc/functions');
 const { validateApiKey } = require('../misc/check')
 
 router.get('/', (req, res) => {
-    res.send('API docs will be here soon!')
+    res.render('api/index', {
+        heading: 'API',
+        title: 'BlogHouse API',
+        description: "Checkout our API for developers!",
+        route: "/api"
+    })
 })
 
 router.get('/users', validateApiKey, async (req, res) => {
