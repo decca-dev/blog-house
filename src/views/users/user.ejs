@@ -1,13 +1,16 @@
-<div class="container pt-10">
+<div class="container"></div>
   <%- include('../partials/messages') %>
   <% if (dude.isBanned) { %>
-  <img
+  <div class="avatar-bg">
+    <img
     src="<%= dude.avatar %>"
     alt="<%= dude.name %>"
     width="100"
     height="100"
-    class="avatar mx-auto"
+    class="mx-auto pt-10 pb-10"
+    style="border-radius: 50%;"
   />
+  </div>
   <h1 class="text-center pt-4 mb-10">🛑 <%= dude.name %></h1>
   <h1 class="text-center">This user is banned</h1>
     <% if (user.isAdmin) { %>
@@ -17,13 +20,16 @@
   </div>
     <% } %>
   <% } else { %>
-  <img
-    src="<%= dude.avatar %>"
-    alt="guest"
-    width="100"
-    height="100"
-    class="avatar mx-auto"
-  />
+    <div class="avatar-bg">
+      <img
+      src="<%= dude.avatar %>"
+      alt="<%= dude.name %>"
+      width="100"
+      height="100"
+      class="mx-auto pt-10 pb-10"
+      style="border-radius: 50%;"
+    />
+    </div>
    <% if (dude.isAdmin) { %>
     <h1 class="text-center pt-4 mb-10">🛡️ <%= dude.name %></h1>
    <% }else { %>
@@ -138,4 +144,7 @@
       statsDiv.style.display = "block";
     }
   }
+
+  document.getElementById('top-svg').setAttribute('style', "<%= style %>")
+  document.querySelector('.avatar-bg').setAttribute('style', "<%= style %>")
 </script>

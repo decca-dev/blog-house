@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const authControllers = require("../misc/authControllers");
 const functions = require("../misc/functions");
+const getColors = require('get-image-colors');
 
 router.get("/login", async (req, res) => {
   res.render("login", {
@@ -148,16 +149,25 @@ router.get("/:slug", async (req, res) => {
   for (let i = 0; i < following.length; i++) {
     followingData.push(await functions.findUser(following[i]));
   }
-  res.render("users/user", {
-    heading: dude.name,
-    dude: dude,
-    articles: posts,
-    title: dude.name,
-    followers: followersData,
-    following: followingData,
-    description: dude.bio,
-    route: `/users/${dude.slug}`,
-  });
+
+  getColors(dude.avatar).then(colors => {
+    let Colors = colors.map(color => color.hex())
+
+    let style = `background-image: linear-gradient(to right, ${Colors[0]} , ${Colors[1]});`
+
+    res.render("users/user", {
+      heading: dude.name,
+      dude: dude,
+      articles: posts,
+      title: dude.name,
+      followers: followersData,
+      following: followingData,
+      description: dude.bio,
+      route: `/users/${dude.slug}`,
+      colors: Colors,
+      style: style
+    });
+  })
 });
 
 //! Removed

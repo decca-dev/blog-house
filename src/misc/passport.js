@@ -71,6 +71,7 @@ module.exports.discord = (passport) => {
   passport.use(new DiscordStrategy({
     clientID: process.env.DISCORD_CLIENT_ID,
     clientSecret: process.env.DISCORD_CLIENT_SECRET,
+    callbackURL: process.env.URL + "/users/auth/discord/callback",
     scope: scope
   }, function (accessToken, refreshToken, profile, cb) {
     User.findOne({ uid: profile.id })
