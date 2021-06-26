@@ -1,0 +1,99 @@
+<div class="container">
+    <h1 class="pb-5"><i class="fas fa-code"></i> BlogHouse API</h1>
+    <h3 class="pb-5">This page will guide you through everything you need to know about our api!</h3>
+    <div class="toc-container">
+        <p class="toc-title">Table of contents</p>
+        <ul class="toc-list">
+            <li><a href="#auth">Authorization</a>
+                <ul>
+                    <li><a href="#getkey">Getting API key</a></li>
+                    <li><a href="#usage">Usage</a></li>
+                </ul>
+            </li>
+            <li><a href="#endpoints">Endpoints</a>
+                <ul>
+                    <li><a href="#getusers">Get users</a></li>
+                    <li><a href="#getuserbyslug">Get user by slug</a></li>
+                    <li><a href="#getuserposts">Get user posts</a></li>
+                    <li><a href="#getposts">Get posts</a></li>
+                    <li><a href="#getpostbyslug">Get post by slug</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <section id="auth" class="pt-10 pb-5">
+        <h1 class="pb-3 text-blue-400"><i class="fas fa-exclamation-circle"></i> Authorization</h1>
+        <p>To get started with our api, you first need to get your api key.</p>
+        <div id="getkey" class="pb-3">
+            <ol class="steps">
+                <li class="pb-3"><strong>1.</strong> Go to <a href="/dashboard">your dashboard</a></li>
+                <li class="pb-5"><strong>2.</strong> Copy your api key</li>
+            </ol>
+            <img src="../../public/screenshots/ss-7.png" alt="screenshot" width="100%" height="100%" class="mx-auto pb-5">
+            <h1 class="text-center pb-3 emoji-float">👇</h1>
+            <img src="../../public/screenshots/ss-8.png" alt="screenshot" width="100%" height="100%" class="mx-auto pb-3">
+            <p class="text-red-700 font-bold"><i class="fas fa-exclamation-triangle"></i> Note: You should never share your api key with anyone!</p>
+        </div>
+        <div id="usage" class="pb-3">
+            <h1 class="pb-3 text-blue-400"><i class="fas fa-wrench"></i> Usage</h1>
+            <p class="pb-3">It's quite simple to you our api, here's an example:</p>
+            <pre>
+                <code>
+                    fetch('https://bloghouse.cf/api/users', {
+                        method: "GET",
+                        headers: {
+                            authorization: "your-api-key"
+                        }
+                    }).then(res => res.json())
+                    .then(data => console.log(data))
+                </code>
+            </pre>
+        </div>
+    </section>
+    <section id="endpoints">
+        <h1 class="pb-3 text-blue-500"><i class="fas fa-layer-group"></i> Endpoints</h1>
+    </section>
+</div>
+
+<style>
+    .toc-container {
+        background: #f9f9f9 none repeat scroll 0 0;
+        border: 1px solid #aaa;
+        display: table;
+        font-size: 95%;
+        margin-bottom: 1em;
+        padding: 20px;
+        width: auto;
+    }
+
+    .toc-title {
+        font-weight: 700;
+        text-align: center;
+    }
+
+    .toc-container li,
+    .toc-container ul,
+    .toc-container ul li {
+        list-style: outside !important;
+    }
+
+    .toc-container .toc-list a {
+        text-decoration: none;
+    }
+
+    .toc-container .toc-list a:hover {
+        color: red;
+        transition: .5s;
+    }
+
+    .emoji-float {
+        transform: translatey(0px);
+        animation: floatEmoji 6s ease-in-out infinite;
+    }
+
+    @keyframes floatEmoji {
+        0% { transform: translatey(0px); }
+        50% { transform: translatey(-20px); }
+        100% { transform: translatey(0px); }
+    }
+</style>

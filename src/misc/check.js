@@ -36,10 +36,10 @@ module.exports.validateApiKey = async (req, res, next) => {
     keys.push(users[i].apiKey)
   }
 
-  const { key } = req.query;
+  const { authorization } = req.headers;
 
-  if (key) {
-    if (!keys.includes(key)) return res.status(401).json({
+  if (authorization) {
+    if (!keys.includes(authorization)) return res.status(401).json({
       error: true,
       message: "Unauthorized key"
     })

@@ -17,6 +17,7 @@
       integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/default.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link rel="icon" href="../public/art/logo.png" type="image/png" />
     <title><%= heading %></title>
@@ -64,7 +65,7 @@
       crossorigin="anonymous"
     ></script>
     <script src="../server.js"></script>
-
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script>
     <script>
       AOS.init();
     </script>
@@ -131,6 +132,7 @@
       }
     </style>
     <script>
+      hljs.initHighlightingOnLoad();
       twemoji.parse(document.body);
 
       const facts = [
