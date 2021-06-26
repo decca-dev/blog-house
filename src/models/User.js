@@ -32,6 +32,9 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    bannedAt: {
+        type: Date
+    },
     isAdmin: {
         type: Boolean,
         default: false

@@ -22,6 +22,22 @@ module.exports = class Log {
     );
   }
 
+  static db(message, src) {
+    console.log(
+      `[${this.toHHMMSS(new Date())}] ${chalk.yellow("DATABASE")} [${this.getSource(
+        src
+      )}] ${message}`
+    )
+  }
+
+  static success(message, src) {
+    console.log(
+      `[${this.toHHMMSS(new Date())}] ${chalk.cyan("SUCCESS")} [${this.getSource(
+        src
+      )}] ${message}`
+    )
+  }
+
   static toHHMMSS(time) {
     let hours = time.getHours().toString().padStart(2, "0");
     let minutes = time.getMinutes().toString().padStart(2, "0");
