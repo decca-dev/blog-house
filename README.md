@@ -27,6 +27,14 @@ CLOUDINARY_CLOUD_NAME=
 CLOUDINARY_API_KEY=
 
 CLOUDINARY_API_SECRET=
+
+GITHUB_CLIENT_ID=
+
+GITHUB_CLIENT_SECRET=
+
+DISCORD_CLIENT_ID=
+
+DISCORD_CLIENT_SECRET=
 ```
 
 **Note:** Since we're using nodemailer for sending the verification email to registered users, we would recommend that you make a new gmail account, put the credentials in the .env file, then, in your account check the [Allow less secure apps to access account](https://myaccount.google.com/lesssecureapps) option, by default this settings is off and you simply turn it on. Also you need to make sure that 2 factor authentication for the account is disabled.

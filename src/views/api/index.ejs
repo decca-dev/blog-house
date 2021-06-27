@@ -39,19 +39,100 @@
             <p class="pb-3">It's quite simple to you our api, here's an example:</p>
             <pre>
                 <code>
-                    fetch('https://bloghouse.cf/api/users', {
-                        method: "GET",
-                        headers: {
-                            authorization: "your-api-key"
-                        }
-                    }).then(res => res.json())
-                    .then(data => console.log(data))
+            fetch('https://bloghouse.cf/api/users', {
+                method: "GET",
+                headers: {
+                    authorization: "your-api-key"
+                }
+            }).then(res => res.json())
+            .then(data => console.log(data))
                 </code>
             </pre>
         </div>
     </section>
     <section id="endpoints">
         <h1 class="pb-3 text-blue-500"><i class="fas fa-layer-group"></i> Endpoints</h1>
+        <p class="pb-3">As of now, our api has 5 main endpoints:</p>
+        <div id="getusers" class="pb-5">
+            <p>
+                <a class="btn btn-outline-primary" data-toggle="collapse" href="#getusersCollaple" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  Get users
+                </a>
+            </p>
+            <div class="collapse" id="getusersCollaple">
+                <div class="card card-body">
+                  <p>Method: <span class="method">GET</span> /api/users</p>
+                  <p><strong>IF status code is 200</strong></p>
+                    <p>Returns: <span class="returns">Array with objects</span></p>
+                    <p>Example result:</p>
+                    <code>[ { "uid": "53062997918043", "avatar": "http://res.cloudinary.com/decc00n/image/upload/v1624392018/decc00n-avatar.png", "isBanned": false, "isAdmin": true, "bio": "In love with BlogHouse!", "followers": ["41000280873374","71793775"], "following": ["41000280873374","71793775"], "posRep": 1, "negRep": 0, "name": "decc00n", "registeredAt": "2021-05-07T17:23:59.765Z", "slug": "decc00n" }, ... ]</code>
+                </div>
+            </div>
+        </div>
+        <div id="getuserbyslug" class="pb-5">
+            <p>
+                <a class="btn btn-outline-primary" data-toggle="collapse" href="#getuserbyslugCollaple" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  Get user by slug
+                </a>
+            </p>
+            <div class="collapse" id="getuserbyslugCollaple">
+                <div class="card card-body">
+                  <p>Method: <span class="method">GET</span> /api/users/{user-slug}</p>
+                  <p><strong>IF status code is 200</strong></p>
+                    <p>Returns: <span class="returns">Object</span></p>
+                    <p>Example result:</p>
+                    <code>{ "uid": "53062997918043", "avatar": "http://res.cloudinary.com/decc00n/image/upload/v1624392018/decc00n-avatar.png", "isBanned": false, "isAdmin": true, "bio": "In love with BlogHouse!", "followers": ["41000280873374","71793775"], "following": ["41000280873374","71793775"], "posRep": 1, "negRep": 0, "name": "decc00n", "registeredAt": "2021-05-07T17:23:59.765Z", "slug": "decc00n" }</code>
+                </div>
+            </div>
+        </div>
+        <div id="getuserposts" class="pb-5">
+            <p>
+                <a class="btn btn-outline-primary" data-toggle="collapse" href="#getuserpostsCollaple" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  Get user posts
+                </a>
+            </p>
+            <div class="collapse" id="getuserpostsCollaple">
+                <div class="card card-body">
+                  <p>Method: <span class="method">GET</span> /api/users/{user-slug}/posts</p>
+                  <p><strong>IF status code is 200</strong></p>
+                    <p>Returns: <span class="returns">Array with objects</span></p>
+                    <p>Example result:</p>
+                    <code>[ { "views": 12, "seenBy": ["53062997918043"], "createdAt": "2021-05-07T17:32:30.251Z", "title": "COVID-19: Unpleasing news", "description": "COVID-19 is getting stronger and harder to defeat, even with the vaccine", "markdown": "## No one can deny that 2020 has been a terrible year, when COVID-19 was discovered we were all in shock, we were forced to stay in our houses terrified of going outside, hoping to find a solution for this crisis.\r\n### But then even after discovering the vaccine, we're still afraid, its getting stronger and stronger with each transformation it occures.", "author": "53062997918043", "slug": "covid-19-unpleasing-news", "sanitizedHTML": "<p id=\"no-one-can-deny-that-2020-has-been-a-terrible-year-when-covid-19-was-discovered-we-were-all-in-shock-we-were-forced-to-stay-in-our-houses-terrified-of-going-outside-hoping-to-find-a-solution-for-this-crisis\">No one can deny that 2020 has been a terrible year, when COVID-19 was discovered we were all in shock, we were forced to stay in our houses terrified of going outside, hoping to find a solution for this crisis.</p>\n<p id=\"but-then-even-after-discovering-the-vaccine-were-still-afraid-its-getting-stronger-and-stronger-with-each-transformation-it-occures\">But then even after discovering the vaccine, we're still afraid, its getting stronger and stronger with each transformation it occures.</p>\n" } ]</code>
+                </div>
+            </div>
+        </div>
+        <div id="getposts" class="pb-5">
+            <p>
+                <a class="btn btn-outline-primary" data-toggle="collapse" href="#getpostsCollaple" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  Get posts
+                </a>
+            </p>
+            <div class="collapse" id="getpostsCollaple">
+                <div class="card card-body">
+                  <p>Method: <span class="method">GET</span> /api/posts</p>
+                  <p><strong>IF status code is 200</strong></p>
+                    <p>Returns: <span class="returns">Array with objects</span></p>
+                    <p>Example result:</p>
+                    <code>[ { "views": 12, "seenBy": ["53062997918043"], "createdAt": "2021-05-07T17:32:30.251Z", "title": "COVID-19: Unpleasing news", "description": "COVID-19 is getting stronger and harder to defeat, even with the vaccine", "markdown": "## No one can deny that 2020 has been a terrible year, when COVID-19 was discovered we were all in shock, we were forced to stay in our houses terrified of going outside, hoping to find a solution for this crisis.\r\n### But then even after discovering the vaccine, we're still afraid, its getting stronger and stronger with each transformation it occures.", "author": "53062997918043", "slug": "covid-19-unpleasing-news", "sanitizedHTML": "<p id=\"no-one-can-deny-that-2020-has-been-a-terrible-year-when-covid-19-was-discovered-we-were-all-in-shock-we-were-forced-to-stay-in-our-houses-terrified-of-going-outside-hoping-to-find-a-solution-for-this-crisis\">No one can deny that 2020 has been a terrible year, when COVID-19 was discovered we were all in shock, we were forced to stay in our houses terrified of going outside, hoping to find a solution for this crisis.</p>\n<p id=\"but-then-even-after-discovering-the-vaccine-were-still-afraid-its-getting-stronger-and-stronger-with-each-transformation-it-occures\">But then even after discovering the vaccine, we're still afraid, its getting stronger and stronger with each transformation it occures.</p>\n" }, ... ]</code>
+                </div>
+            </div>
+        </div>
+        <div id="getpostbyslug" class="pb-5">
+            <p>
+                <a class="btn btn-outline-primary" data-toggle="collapse" href="#getpostbyslugCollaple" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  Get post by slug
+                </a>
+            </p>
+            <div class="collapse" id="getpostbyslugCollaple">
+                <div class="card card-body">
+                  <p>Method: <span class="method">GET</span> /api/posts/{post-slug}</p>
+                  <p><strong>IF status code is 200</strong></p>
+                    <p>Returns: <span class="returns">Object</span></p>
+                    <p>Example result:</p>
+                    <code>{ "views": 12, "seenBy": ["53062997918043"], "createdAt": "2021-05-07T17:32:30.251Z", "title": "COVID-19: Unpleasing news", "description": "COVID-19 is getting stronger and harder to defeat, even with the vaccine", "markdown": "## No one can deny that 2020 has been a terrible year, when COVID-19 was discovered we were all in shock, we were forced to stay in our houses terrified of going outside, hoping to find a solution for this crisis.\r\n### But then even after discovering the vaccine, we're still afraid, its getting stronger and stronger with each transformation it occures.", "author": "53062997918043", "slug": "covid-19-unpleasing-news", "sanitizedHTML": "<p id=\"no-one-can-deny-that-2020-has-been-a-terrible-year-when-covid-19-was-discovered-we-were-all-in-shock-we-were-forced-to-stay-in-our-houses-terrified-of-going-outside-hoping-to-find-a-solution-for-this-crisis\">No one can deny that 2020 has been a terrible year, when COVID-19 was discovered we were all in shock, we were forced to stay in our houses terrified of going outside, hoping to find a solution for this crisis.</p>\n<p id=\"but-then-even-after-discovering-the-vaccine-were-still-afraid-its-getting-stronger-and-stronger-with-each-transformation-it-occures\">But then even after discovering the vaccine, we're still afraid, its getting stronger and stronger with each transformation it occures.</p>\n" }</code>
+                </div>
+            </div>
+        </div>
     </section>
 </div>
 
@@ -89,6 +170,32 @@
     .emoji-float {
         transform: translatey(0px);
         animation: floatEmoji 6s ease-in-out infinite;
+    }
+
+    .method {
+        background-color: green;
+        border: none;
+        color: #fff;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 16px;
+    }
+
+    .returns {
+        background-color: crimson;
+        border: none;
+        color: #fff;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 16px;
     }
 
     @keyframes floatEmoji {

@@ -55,4 +55,11 @@ postSchema.pre('validate', function(next) {
     next();
 });
 
+postSchema.methods.toJSON = function() {
+    var obj = this.toObject();
+    delete obj.__v;
+    delete obj._id;
+    return obj;
+}
+
 module.exports = mongoose.model('Post', postSchema);

@@ -38,10 +38,10 @@ module.exports.user = async () => {
                 const expiration = new Date(users[i].bannedAt).getTime() + time;
 
                 if (Date.now() >= expiration) {
-                    Logger.db(`Deleting user document with the id ${users[i]._id}...`, 'system')
+                    Logger.db(`Deleting user document with the id ${users[i].uid}...`, 'system')
                     User.deleteOne({ bannedAt: users[i].bannedAt }, function(err){
                         if (err) {
-                            return Logger.error(`There was an error attempting to delete user document with the id ${users[i]._id}.\n${err}`, 'system')
+                            return Logger.error(`There was an error attempting to delete user document with the id ${users[i].uid}.\n${err}`, 'system')
                         }else {
                             Logger.success(`Successfully deleted a user document that was older than 10 days!`, 'system')
                         }
