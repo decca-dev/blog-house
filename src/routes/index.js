@@ -185,6 +185,33 @@ router.get('/feed', ensureAuthenticated, async (req, res) => {
   })
 })
 
+router.get('/changelog', (req, res) => {
+  res.render('changelog', {
+    heading: "Changelog",
+    title: "Changelog",
+    description: "Checkout the recent changes to BlogHouse!",
+    route: "/changelog"
+  })
+})
+
+router.get('/tos', (req, res) => {
+  res.render('tos', {
+    heading: "Terms of Service",
+    title: "Terms of Service",
+    description: "Checkout our Terms of Service.",
+    route: "/tos"
+  })
+})
+
+router.get('/privacy', (req, res) => {
+  res.render('privacy', {
+    heading: "Privacy Policy",
+    title: "Privacy Policy",
+    description: "Checkout BlogHouse's Privacy Policy",
+    route: "/privacy"
+  })
+})
+
 router.get("/404", (req, res) => {
   res.render("errors/404.ejs", {
     heading: "Not Found",

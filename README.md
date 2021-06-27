@@ -48,7 +48,7 @@ DISCORD_CLIENT_SECRET=
 
 # Todo
 
-- API (Gotta make the documentation page)
+- API => Done
 - Feed => Done
 - Reputation leaderboard => Done
 - Post of the day => Done
