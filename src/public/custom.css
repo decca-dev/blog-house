@@ -85,6 +85,39 @@ h3 {
 
 .avatar:hover {
   -webkit-transform: scale(1.1);
+  transition: .3s;
   transform: scale(1.1);
   outline: none;
+}
+
+.pill {
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 16px;
+}
+
+.pill .pill-green {
+  background-color: green;
+}
+
+.pill .pill-red {
+  background-color: red;
+}
+
+.pill .pill-blue {
+  background-color: blue;
+}
+
+.pill .pill-primary {
+  background-color: #ff5500;
+}
+
+.pill .pill-secondary {
+  background-color: #ff8400;
 }

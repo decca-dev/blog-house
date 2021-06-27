@@ -1,0 +1,24 @@
+<div class="container">
+    <h1 class="pb-5"><i class="fas fa-sync"></i> Changelog</h1>
+    <h2 class="text-blue-400 pb-3"><i class="fab fa-github-alt"></i> Recent GitHub commits</h2>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Committer</th>
+            <th scope="col">Date</th>
+            <th scope="col">Message</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% for (let i = 0; i < 3; i++) { %>
+                <tr>  
+                    <th scope="row"><%= i+1 %></th>
+                    <td><%= data[i].commit.committer.name %></td>
+                    <td><%= moment(data[i].commit.committer.date).fromNow() %></td>
+                    <td><a href="<%= data[i].commit.url %>" class="no-underline text-black hover:text-blue-400"><%= data[i].commit.message %></a></td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,44 @@
+<div class="container cookie-container text-center">
+    <p class="mt-3">
+        We use cookies in BlogHouse to give you the best experience.
+    </p>
+    <button class="cookie-btn btn btn-secondary">
+        Accept
+    </button>
+</div>
+
+<style>
+    .cookie-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #2f3640;
+        color: #fff;
+        padding: 0 32px;
+        box-shadow: 0 -2px 16px rgba(47, 54, 64, 0.39);
+        transition: 400ms;
+    }
+
+    .cookie-container a {
+        color: #ff5500;
+    }
+</style>
+
+<script>
+    const cookieContainer = document.querySelector('.cookie-container');
+    const cookieBtn = document.querySelector('.cookie-btn');
+
+    cookieBtn.onclick = () => {
+        cookieContainer.style.bottom = "-100%"
+        localStorage.setItem('cookieBannerDisplayed', "true")
+    }
+
+    if (localStorage.getItem('cookieBannerDisplayed') === "true") {
+        cookieContainer.style.bottom = "-100%";
+    }else {
+        setTimeout(() => {
+            cookieContainer.style.bottom = 0;
+        }, 5000)
+    }
+</script>

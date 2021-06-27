@@ -185,12 +185,19 @@ router.get('/feed', ensureAuthenticated, async (req, res) => {
   })
 })
 
-router.get('/changelog', (req, res) => {
+router.get('/changelog', async (req, res) => {
+
+  let Data = [];
+  await fetch('https://api.github.com/repos/decca-dev/blog-house/commits')
+  .then (res => res.json())
+  .then(data => Data = data)
+
   res.render('changelog', {
+    data: Data,
     heading: "Changelog",
     title: "Changelog",
     description: "Checkout the recent changes to BlogHouse!",
-    route: "/changelog"
+    route: "/changelog",
   })
 })
 

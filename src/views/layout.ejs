@@ -17,7 +17,6 @@
       integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/default.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link rel="icon" href="../public/art/logo.png" type="image/png" />
     <title><%= heading %></title>
@@ -35,7 +34,10 @@
   <body>
     <%- include('partials/navbar') %>
     <img src="../public/assets/top.svg" alt="" width="100%" height="100%" id="top-svg">
-    <div class="main-container"><%- body %></div>
+    <div class="main-container">
+      <%- body %>
+      <%- include('partials/cookieBanner') %> 
+    </div>
     <div class="loader-wrapper flex flex-col">
       <span class="loader"
         ><img src="../public/art/logo.png" alt="logo" class="load-inner"
@@ -43,6 +45,7 @@
       <br>
       <h6 class="text-white" id="fact"></h6>
     </div>
+    <%- include('partials/footer') %>
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -66,9 +69,6 @@
     ></script>
     <script src="../server.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script>
-    <script>
-      AOS.init();
-    </script>
     <style>
       * {
         box-sizing: border-box;
@@ -132,7 +132,7 @@
       }
     </style>
     <script>
-      hljs.initHighlightingOnLoad();
+      AOS.init();
       twemoji.parse(document.body);
 
       const facts = [
@@ -155,6 +155,5 @@
         return new bootstrap.Tooltip(tooltipTriggerEl)
       })
     </script>
-    <%- include('partials/footer') %>
   </body>
 </html>
