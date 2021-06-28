@@ -1,0 +1,82 @@
+<div
+    class="btn-group d-flex justify-content-center"
+    role="group"
+    aria-label="Basic outlined example"
+  >
+    <button type="button" class="btn btn-outline-secondary" onclick="showLog()">
+        Current Changelog
+    </button>
+    <button type="button" class="btn btn-outline-secondary" onclick="showRenew()">
+        Renew Changelog
+    </button>
+</div>
+<div id="changelog" class="hidden pt-5">
+    <h1 class="mb-1">
+        <%= data.title %>
+    </h1>
+    <h3 class="mb-1">
+        <%= data.description %>
+    </h3>
+    <div class="mt-4 mb-4">
+        <%- data.sanitizedHTML %>
+    </div>
+    <p><img src="<%= data.avatar %>" alt="avatar" width="25" height="25" class="avatar inline-block align-middle">
+        <small class="text-muted">By <strong><a
+                    href="/users/<%= slugify(data.author) %>"><%= data.author %></a></strong></small></p>
+    <div class="text-muted mb-2">
+        <%= moment(data.date).fromNow() %>
+    </div>
+</div>
+<div id="renew" class="hidden pt-5">
+    <h1 class="mb-4">New Changelog</h1>
+    <form action="/admin/changelog/new" method="POST">
+        <div class="form-group">
+            <label for="title" class="mb-4">Title</label>
+            <input required type="text" name="title" id="title" placeholder="Title" class="form-control mb-4" />
+        </div>
+        <div class="form-group">
+            <label for="description" class="mb-4">Description</label>
+            <textarea required name="description" id="description" class="form-control mb-4">
+                </textarea>
+        </div>
+        <div class="form-group">
+            <label for="markdown" class="mb-4">Markdown</label>
+            <textarea oninput="showHTML()" required name="markdown" id="markdown" class="form-control mb-4">
+            </textarea>
+        </div>
+        <a href="https://www.markdownguide.org/cheat-sheet/" style="text-decoration: none">Markdown Cheat Sheet</a>
+        <div class="preview">
+            <h3>Markdown preview</h3>
+            <div id="preview-here" class="mt-4 mb-5"></div>
+        </div>
+        <a href="/articles" class="btn btn-danger">Cancel</a>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.0/dist/showdown.min.js"></script>
+        <script>
+            function showHTML() {
+                const markdownArea = document.getElementById("markdown");
+                const previewArea = document.getElementById("preview-here");
+                const converter = new showdown.Converter();
+                showdown.setFlavor("github");
+                previewArea.innerHTML = converter.makeHtml(markdownArea.value);
+            }
+
+            function showLog() {
+                const changelogDiv = document.getElementById("changelog");
+                if (changelogDiv.style.display === "block") {
+                changelogDiv.style.display = "none";
+                } else {
+                changelogDiv.style.display = "block";
+                }
+            }
+            function showRenew() {
+                const renewDiv = document.getElementById("renew");
+                if (renewDiv.style.display === "block") {
+                renewDiv.style.display = "none";
+                } else {
+                renewDiv.style.display = "block";
+                }
+            }
+        </script>
+    </form>
+</div>

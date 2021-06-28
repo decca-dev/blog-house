@@ -139,6 +139,8 @@ livereloadServer.server.once("connection", () => {
 const deleteDoc = require('./utils/deleteDocument');
 var interval = 1000 * 60 * 5
 
+Logger.info('Loading automatic scripts...', 'system')
+
 setInterval(async () => {
   await deleteDoc.log();
   await deleteDoc.user()

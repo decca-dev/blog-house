@@ -99,7 +99,6 @@ userSchema.methods.toJSON = function() {
     delete obj.hasNegRepped;
     delete obj.hasPosRepped;
     delete obj.__v;
-    delete obj._id;
     return obj;
 }
 

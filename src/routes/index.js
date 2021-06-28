@@ -5,6 +5,8 @@ const Log = require('../models/Log');
 const fetch = require("node-fetch");
 const functions = require('../misc/functions');
 const { ensureAuthenticated } = require('../misc/auth')
+const path = require('path'),
+  fs = require('fs')
 
 router.get("/", async (req, res) => {
   const { search } = req.query;
@@ -192,8 +194,14 @@ router.get('/changelog', async (req, res) => {
   .then (res => res.json())
   .then(data => Data = data)
 
+  const pathy = path.join(__dirname, '..', 'utils', 'changelog.json');
+
+  let rawData = fs.readFileSync(pathy);
+  let cData = JSON.parse(rawData);
+
   res.render('changelog', {
     data: Data,
+    cdata: cData,
     heading: "Changelog",
     title: "Changelog",
     description: "Checkout the recent changes to BlogHouse!",

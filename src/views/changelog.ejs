@@ -21,4 +21,22 @@
             <% } %>
         </tbody>
     </table>
+    <h2 class="pt-5 text-blue-400"><i class="far fa-newspaper"></i> Recent news from the dev</h2>
+    <div class="pt-3" id="changelog">
+        <h1 class="mb-1">
+            <%= cdata.title %>
+        </h1>
+        <h3 class="mb-1">
+            <%= cdata.description %>
+        </h3>
+        <div class="mt-4 mb-4">
+            <%- cdata.sanitizedHTML %>
+        </div>
+        <p><img src="<%= cdata.avatar %>" alt="avatar" width="25" height="25" class="avatar inline-block align-middle">
+            <small class="text-muted">By <strong><a
+                        href="/users/<%= slugify(cdata.author) %>"><%= cdata.author %></a></strong></small></p>
+        <div class="text-muted mb-2">
+            <%= moment(cdata.date).fromNow() %>
+        </div>
+    </div>
 </div>

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const marked = require('marked');
 const slugify = require('slugify');
+const marked = require('marked');
 const createDOMPurify = require('dompurify');
 const { JSDOM } = require('jsdom');
 const dompurify = createDOMPurify(new JSDOM().window);
