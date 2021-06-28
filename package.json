@@ -41,6 +41,7 @@
     "method-override": "^3.0.0",
     "moment": "^2.29.1",
     "mongoose": "^5.12.5",
+    "node-cron": "^3.0.0",
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.6.0",
     "nodemon": "latest",
