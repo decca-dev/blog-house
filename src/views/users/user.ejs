@@ -1,6 +1,4 @@
-<div class="container"></div>
-  <%- include('../partials/messages') %>
-  <% if (dude.isBanned) { %>
+ <% if (dude.isBanned) { %>
   <div class="avatar-bg">
     <img
     src="<%= dude.avatar %>"
@@ -9,7 +7,10 @@
     height="100"
     class="mx-auto pt-10 pb-10"
     style="border-radius: 50%;"
-  />
+    />
+  </div>
+    <div class="container">
+  <%- include('../partials/messages') %>
   </div>
   <h1 class="text-center pt-4 mb-10">🛑 <%= dude.name %></h1>
   <h1 class="text-center">This user is banned</h1>
@@ -17,8 +18,8 @@
   <div class="text-center pt-4">
     <%- include('_actions.ejs', { action: "Unban", user: dude, shortAction:
     "unban", method: "PUT"}) %>
-  </div>
     <% } %>
+  </div>
   <% } else { %>
     <div class="avatar-bg">
       <img
@@ -30,6 +31,8 @@
       style="border-radius: 50%;"
     />
     </div>
+    <div class="container">
+      <%- include('../partials/messages') %>
    <% if (dude.isAdmin) { %>
     <h1 class="text-center pt-4 mb-10">🛡️ <%= dude.name %></h1>
    <% }else { %>
@@ -124,7 +127,7 @@
       Account created at: <%= moment.utc(dude.registeredAt) %>
     </h4>
   </div>
-
+</div>
   <% } %>
 </div>
 <script>

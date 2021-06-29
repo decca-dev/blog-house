@@ -31,6 +31,15 @@
     <% if (user && article.author === user.uid) { %>
         <a href="/articles/edit/<%= article.id %>" class="btn btn-info">Edit</a>
     <% } %>
+    <% if (user && user.isAdmin == true) { %>
+        <form
+        action="/articles/<%= article.id %>?_method=DELETE"
+        method="POST"
+        class="d-inline"
+      >
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+    <% } %>
 </div>
 <script>
     async function copy(link){

@@ -227,6 +227,14 @@ router.get('/privacy', (req, res) => {
   })
 })
 
+router.get('/login', (req, res) => {
+  res.redirect('/users/login')
+})
+
+router.get('/register', (req, res) => {
+  res.redirect('/users/register')
+})
+
 router.get("/404", (req, res) => {
   res.render("errors/404.ejs", {
     heading: "Not Found",
