@@ -87,48 +87,6 @@
         position: relative;
         padding-bottom: 100px;
       }
-      .loader-wrapper {
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        background-color: #242f3f;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: none;
-        z-index: 10;
-      }
-
-      .loader {
-        display: inline-block;
-        position: relative;
-        width: 150px;
-        height: 150px;
-        box-sizing: border-box;
-        /* border: 5px white solid; */
-        border-radius: 50%;
-        overflow: hidden;
-        /* box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
-        transform: translatey(0px);
-        animation: float 6s ease-in-out infinite; */
-      }
-
-      /* @keyframes float {
-        0% {
-          box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
-          transform: translatey(0px);
-        }
-        50% {
-          box-shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
-          transform: translatey(-20px);
-        }
-        100% {
-          box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
-          transform: translatey(0px);
-        }
-      } */
     </style>
     <script>
       AOS.init();
@@ -143,9 +101,9 @@
         "BlogHouse's color palette is made of: #ff5500, #ff8400 and #fffff."
       ]
 
-      // $(window).on("load", function () {
-      //   $(".loader-wrapper").fadeOut("slow");
-      // });
+      $(window).on("load", function () {
+        $(".cookie-container").fadeIn("slow");
+      });
       var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
       var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
