@@ -54,7 +54,7 @@ module.exports.github = (passport) => {
             name: profile.username + '-gh',
             uid: profile.id,
             avatar: profile._json.avatar_url,
-            bio: profile._json.bio
+            bio: profile._json.bio || 'No bio'
           })
           .then((newUser) => {
             return cb(null, newUser)
