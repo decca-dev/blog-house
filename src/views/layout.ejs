@@ -40,10 +40,8 @@
     </div>
     <div class="loader-wrapper flex flex-col">
       <span class="loader"
-        ><img src="../public/art/logo.png" alt="logo" class="load-inner"
+        ><img src="../public/art/logo-animation.gif" alt="logo" class="load-inner"
       /></span>
-      <br>
-      <h6 class="text-white" id="fact"></h6>
     </div>
     <%- include('partials/footer') %>
     <script
@@ -100,6 +98,7 @@
         justify-content: center;
         align-items: center;
         overflow: none;
+        z-index: 10;
       }
 
       .loader {
@@ -108,15 +107,15 @@
         width: 150px;
         height: 150px;
         box-sizing: border-box;
-        border: 5px white solid;
+        /* border: 5px white solid; */
         border-radius: 50%;
         overflow: hidden;
-        box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+        /* box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
         transform: translatey(0px);
-        animation: float 6s ease-in-out infinite;
+        animation: float 6s ease-in-out infinite; */
       }
 
-      @keyframes float {
+      /* @keyframes float {
         0% {
           box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
           transform: translatey(0px);
@@ -129,7 +128,7 @@
           box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
           transform: translatey(0px);
         }
-      }
+      } */
     </style>
     <script>
       AOS.init();
@@ -145,10 +144,7 @@
       ]
 
       $(window).on("load", function () {
-        document.querySelector('#fact').innerHTML = facts[Math.floor(Math.random() * facts.length)]
-        setTimeout(() => {
-          $(".loader-wrapper").fadeOut("slow");          
-        }, 1000);
+        $(".loader-wrapper").fadeOut("slow");
       });
       var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
       var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
