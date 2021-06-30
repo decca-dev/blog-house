@@ -209,24 +209,6 @@ router.get('/changelog', async (req, res) => {
   })
 })
 
-router.get('/tos', (req, res) => {
-  res.render('tos', {
-    heading: "Terms of Service",
-    title: "Terms of Service",
-    description: "Checkout our Terms of Service.",
-    route: "/tos"
-  })
-})
-
-router.get('/privacy', (req, res) => {
-  res.render('privacy', {
-    heading: "Privacy Policy",
-    title: "Privacy Policy",
-    description: "Checkout BlogHouse's Privacy Policy",
-    route: "/privacy"
-  })
-})
-
 router.get('/login', (req, res) => {
   res.redirect('/users/login')
 })
