@@ -150,10 +150,30 @@ router.get("/:slug", async (req, res) => {
     followingData.push(await functions.findUser(following[i]));
   }
 
-  getColors(dude.avatar).then(colors => {
-    let Colors = colors.map(color => color.hex())
+  if (dude.avatar != "https://res.cloudinary.com/decc00n/image/upload/v1619792623/user.png") {
 
-    let style = `background-image: linear-gradient(to right, ${Colors[0]} , ${Colors[1]});`
+    getColors(dude.avatar).then(colors => {
+      let Colors = colors.map(color => color.hex())
+  
+      let style = `background-image: linear-gradient(to right, ${Colors[0]} , ${Colors[1]});`
+  
+      res.render("users/user", {
+        heading: dude.name,
+        dude: dude,
+        articles: posts,
+        title: dude.name,
+        followers: followersData,
+        following: followingData,
+        description: dude.bio,
+        route: `/users/${dude.slug}`,
+        colors: Colors,
+        style: style
+      });
+    })
+
+  }else {
+
+    let style = `background-image: linear-gradient(to right, yellow , red);`
 
     res.render("users/user", {
       heading: dude.name,
@@ -164,10 +184,10 @@ router.get("/:slug", async (req, res) => {
       following: followingData,
       description: dude.bio,
       route: `/users/${dude.slug}`,
-      colors: Colors,
       style: style
     });
-  })
+  }
+
 });
 
 //! Removed

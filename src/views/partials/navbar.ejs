@@ -70,6 +70,8 @@
           ><i class="fas fa-compass"></i> Feed</a
         >
       </li>
+      <li class="nav-item">
+      </li>
       </li>
       <li class="nav-item dropdown">
         <a
@@ -94,6 +96,9 @@
             />
             Create post</a
           >
+          <a class="dropdown-item" href="/leaderboard">
+              🏆 Leaderboard
+            </a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/api"
             ><img
@@ -177,9 +182,38 @@
           ><i class="fas fa-scroll"></i> Articles</a
         >
       </li>
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <i class="fas fa-plus"></i> More
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="/leaderboard">
+            🏆 Leaderboard
+          </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="/api"
+          ><img
+            src="../../public/art/developer.png"
+            alt="developer"
+            class="inline-block align-middle"
+            width="25"
+            height="25"
+          />
+          API</a
+        >
+      </div>
+      </li>
       <li class="nav-item">
         <a class="nav-link ml-1" href="/users/login"
-          >You are currently browsing as a guest | 💚 <strong>Login</strong></a
+          >You are currently browsing as a guest | 🟢 <strong class="text-blue-400">Login</strong></a
         >
       </li>
     </ul>

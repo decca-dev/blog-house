@@ -6,7 +6,8 @@ const fetch = require("node-fetch");
 const functions = require('../misc/functions');
 const { ensureAuthenticated } = require('../misc/auth')
 const path = require('path'),
-  fs = require('fs')
+  fs = require('fs'),
+  fetch = require('node-fetch');
 
 router.get("/", async (req, res) => {
   const { search } = req.query;
@@ -176,7 +177,7 @@ router.get('/feed', ensureAuthenticated, async (req, res) => {
       data2.push(payload)
     }
   }
-
+  
   res.render('feed', {
     heading: "Your feed",
     title: 'Feed',
