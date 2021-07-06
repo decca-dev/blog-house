@@ -1,10 +1,7 @@
 <footer class="footer">
   <div class="footer-left">
-    <p>
-      BlogHouse is designed to provide to best user experience when it comes to
-      blogs. If you found an issue, please checkout the discord server. If you
-      would like to contribute, the github icon will link you to the repository.
-    </p>
+    <h2 class="heading">Fun fact</h2>
+    <strong><p id="facts"></p></strong>
     <div class="socials">
       <a href="https://dsc.gg/decca">
         <i class="fab fa-discord"></i>
@@ -137,3 +134,16 @@
     }
   }
 </style>
+<script>
+  const facts = [
+    "BlogHouse's name is inspired by DogeHouse while DogeHouse's name is inspired from ClubHouse.",
+    "BlogHouse now has an API.",
+    "BlogHouse now has a leaderboard for people with the most positive reputation and the most viewed posts.",
+    "BlogHouse was planned ever since DogeHouse became popular.",
+    "BlogHouse is an open source platform.",
+    "BlogHouse's color palette is made of: #ff5500, #ff8400 and #fffff."
+  ];
+
+  const factEl = document.querySelector('#facts');
+  factEl.innerHTML = facts[Math.floor(Math.random() * facts.length)];
+</script>
