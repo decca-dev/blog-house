@@ -6,8 +6,7 @@ const fetch = require("node-fetch");
 const functions = require('../misc/functions');
 const { ensureAuthenticated } = require('../misc/auth')
 const path = require('path'),
-  fs = require('fs'),
-  fetch = require('node-fetch');
+  fs = require('fs');
 
 router.get("/", async (req, res) => {
   const { search } = req.query;
