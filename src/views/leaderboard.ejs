@@ -1,7 +1,9 @@
 <div class="container text-center">
     <h1 class="pb-3">🏆 <strong>Leaderboard</strong> 🏆</h1>
     <h4 class="pb-3">This leaderboard shows off our best bloggers with their positive reputation and also shows the most viewed blogs on our platform.</h4>
-    <h5 class="pb-10"><strong class="italic">Want to be included?</strong> <a href="/posts/new" class="no-underline">Create your own blogs now</a>, <a href="/form" class="no-underline">Sign up or Login</a> to start your epic journey!</h5>
+    <% if (!user) { %>
+        <h5 class="pb-10"><strong class="italic">Want to be included?</strong> <a href="/posts/new" class="no-underline">Create your own blogs now</a>, <a href="/form" class="no-underline">Sign up or Login</a> to start your epic journey!</h5>
+    <% } %>
     <% if (rep.length > 0) { %>
         <% if (rep.length > 10) { %>
             <h2 class="pb-10"><img src="../public/emojis/upvote.png" alt="⬆" width="25" height="25" class="inline-block align-top"> Top 10 users with the most positive reputation <img src="../public/emojis/upvote.png" alt="⬆" width="25" height="25" class="inline-block align-top"></h2>
