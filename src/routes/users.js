@@ -133,7 +133,7 @@ router.post("/negrep/:userID/:toRepID", async (req, res) => {
 
 router.get("/:slug", async (req, res) => {
   const dude = await User.findOne({ slug: req.params.slug });
-  if (dude == null) res.redirect("/404");
+  if (dude == null) return res.redirect("/404");
   const posts = await Post.find({ author: dude.uid });
   const followers = dude.followers;
 
