@@ -36,9 +36,6 @@
     <button class="btn btn-secondary" onclick="show()" id="show-btn">
       Show API key
     </button>
-    <form action="/dashboard/settings/apikey?_method=PUT" method="POST">
-      <button type="submit" class="btn btn-info mt-4">Refresh API Key</button>
-    </form>
   </div>
   <p id="api-key" class="hidden pt-4 text-muted text-blue-400">
     <%= user.apiKey %>
