@@ -32,7 +32,6 @@
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
     "express-session": "^1.17.1",
-    "express-sessions": "^1.0.6",
     "get-image-colors": "^4.0.0",
     "jsdom": "^16.5.3",
     "jsonwebtoken": "^8.5.1",
@@ -50,7 +49,8 @@
     "passport-github": "^1.1.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
-    "slugify": "^1.5.0"
+    "slugify": "^1.5.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.5",
