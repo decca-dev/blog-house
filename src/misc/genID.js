@@ -1,4 +1,4 @@
-module.exports = async () => {
+module.exports = () => {
 
   let id = "";
   const possible = "0123456789";

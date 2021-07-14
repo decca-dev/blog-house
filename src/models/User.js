@@ -98,7 +98,6 @@ userSchema.methods.toJSON = function() {
     delete obj.email;
     delete obj.hasNegRepped;
     delete obj.hasPosRepped;
-    delete obj.__v;
     return obj;
 }
 

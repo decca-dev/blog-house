@@ -50,7 +50,7 @@ router.put("/settings/name", async (req, res) => {
 
   const { name } = req.body;
 
-  const dupe = await User.findOne({ name: name});
+  const dupe = await User.findOne({ name: name });
 
   if (dupe) {
     req.flash('error_msg', "That name is already taken!")
