@@ -80,6 +80,20 @@ router.put("/settings/bio", async (req, res) => {
   res.redirect("/dashboard/settings");
 });
 
+router.put("/settings/apikey", async (req, res) => {
+  const user = await User.findOne({ uid: req.user.uid });
+
+  const genKey = require("../misc/genKey");
+
+  user.apiKey = genKey();
+
+  await user.save();
+
+  req.flash('success_msg', 'Successfully refreshed API key.')
+
+  res.redirect('/dashboard');
+})
+
 router.post("/settings/avatar", async (req, res) => {
   const user = await User.findOne({ uid: req.body.uid });
 

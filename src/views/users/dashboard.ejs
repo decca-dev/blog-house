@@ -1,4 +1,5 @@
 <div class="container">
+  <%- include('../partials/messages') %> 
   <img
     src="<%= user.avatar %>"
     alt="avatar"
@@ -36,6 +37,9 @@
     <button class="btn btn-secondary" onclick="show()" id="show-btn">
       Show API key
     </button>
+    <form action="/dashboard/settings/apikey?_method=PUT" method="POST">
+      <button type="submit" class="btn btn-info mt-3">Refresh API Key</button>
+    </form>
   </div>
   <p id="api-key" class="hidden pt-4 text-muted text-blue-400">
     <%= user.apiKey %>
@@ -46,10 +50,6 @@
   </h4>
 </div>
 <script>
-  const settings = document.getElementById("settings");
-  settings.addEventListener("click", function () {
-    settings.classList.add("animate-pulse");
-  });
   async function copy(text) {
     await navigator.clipboard.writeText(text);
     document.getElementById("copy-btn").innerHTML = "Copied!";
