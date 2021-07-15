@@ -29,12 +29,12 @@
   <div class="div pt-4">
     <button
       class="btn btn-primary"
-      onclick="copy('<%= user.apiKey %>')"
+      onclick="copyText('<%= user.apiKey %>')"
       id="copy-btn"
     >
       Copy API key
     </button>
-    <button class="btn btn-secondary" onclick="show()" id="show-btn">
+    <button class="btn btn-secondary" onclick="showKey()" id="show-btn">
       Show API key
     </button>
     <form action="/dashboard/settings/apikey?_method=PUT" method="POST">
@@ -50,14 +50,14 @@
   </h4>
 </div>
 <script>
-  async function copy(text) {
+  async function copyText(text) {
     await navigator.clipboard.writeText(text);
     document.getElementById("copy-btn").innerHTML = "Copied!";
     setTimeout(() => {
       document.getElementById("copy-btn").innerHTML = "Copy API key";
     }, 1000);
   }
-  function show() {
+  function showKey() {
     const api = document.getElementById("api-key");
     if (api.style.display === "block") {
       api.style.display = "none";

@@ -149,14 +149,14 @@
           <% if (post[i].actionType === "Post New") { %>
           <h5>
             Action performed: Created
-            <a href="/articles/<%= slugify(post[i].reason) %>"
+            <a class="no-underline" href="/articles/<%= slugify(post[i].reason) %>"
               ><%= post[i].reason %></a
             >
           </h5>
           <% } else { %>
           <h5>
             Action performed: Edited
-            <a href="/articles/<%= slugify(post[i].reason) %>"
+            <a class="no-underline" href="/articles/<%= slugify(post[i].reason) %>"
               ><%= post[i].reason %></a
             >
           </h5>
@@ -340,34 +340,3 @@
     <% } %>
   </div>
 </div>
-<script>
-  function showMod() {
-    const modDiv = document.getElementById("mod");
-    if (modDiv.style.display === "block") {
-      modDiv.style.display = "none";
-    } else {
-      modDiv.style.display = "block";
-    }
-  }
-  function showPost() {
-    const postDiv = document.getElementById("post");
-    if (postDiv.style.display === "block") {
-      postDiv.style.display = "none";
-    } else {
-      postDiv.style.display = "block";
-    }
-  }
-  function showUser() {
-    const userDiv = document.getElementById("user");
-    if (userDiv.style.display === "block") {
-      userDiv.style.display = "none";
-    } else {
-      userDiv.style.display = "block";
-    }
-  }
-</script>
-<style>
-  a {
-    text-decoration: none;
-  }
-</style>
