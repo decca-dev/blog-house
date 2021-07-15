@@ -36,10 +36,10 @@ const functions = require("./misc/functions");
 const publicDirectory = path.join(__dirname, "public");
 
 //*Development
-const livereloadServer = livereload.createServer();
-livereloadServer.watch(publicDirectory);
+// const livereloadServer = livereload.createServer();
+// livereloadServer.watch(publicDirectory);
+// app.use(connectLivereload());
 
-app.use(connectLivereload());
 //*Database
 Logger.info("Connecting to MongoDB...", "Database");
 
@@ -102,8 +102,6 @@ app.use((req, res, next) => {
   next();
 });
 
-//*Development
-
 //* Routes
 
 Logger.info("Loading routes...", "server");
@@ -130,11 +128,11 @@ server.listen(PORT, () => {
   Logger.info(`Server started on port ${PORT}`, "server");
 });
 
-livereloadServer.server.once("connection", () => {
-  setTimeout(() => {
-    livereloadServer.refresh("/");
-  }, 100);
-});
+// livereloadServer.server.once("connection", () => {
+//   setTimeout(() => {
+//     livereloadServer.refresh("/");
+//   }, 100);
+// });
 
 const deleteDoc = require('./utils/deleteDocument');
 var interval = 1000 * 60 * 5
