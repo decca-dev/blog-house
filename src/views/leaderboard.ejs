@@ -7,15 +7,15 @@
     <% if (rep.length > 0) { %>
         <% if (rep.length > 10) { %>
             <h2 class="pb-10"><img src="../public/emojis/upvote.png" alt="⬆" width="25" height="25" class="inline-block align-top"> Top 10 users with the most positive reputation <img src="../public/emojis/upvote.png" alt="⬆" width="25" height="25" class="inline-block align-top"></h2>
-            <div class="pb-36"></div>
+            <div class="pb-24"></div>
             <% for (let i = 0; i < 10; i++) { %>
-                <h3 class="pb-3"><%= ranks[i] %> <a href="/users/<%= rep[i].slug %>" style="text-decoration: none;"><%= rep[i].name %> <img src="<%= rep[i].avatar %>" alt="<%= rep[i].name %>'s avatar'" width="40" height="40" class="avatar inline-block align-bottom" style="border-radius: 50%;"></a> with <%= rep[i].posRep %> points.</h3>
+                <h3 class="pb-3"><%= ranks[i] %> <a href="/users/<%= rep[i].slug %>" style="text-decoration: none;"><%= rep[i].name %> <img src="<%= rep[i].avatar %>" width="40" height="40" class="avatar inline-block align-bottom" style="border-radius: 50%;"></a> with <%= rep[i].posRep %> points.</h3>
             <% } %>
         <% } else { %>
             <h2 class="pb-10"><img src="../public/emojis/upvote.png" alt="⬆" width="25" height="25" class="inline-block align-top"> Top <%= rep.length %> users with the most positive reputation <img src="../public/emojis/upvote.png" alt="⬆" width="25" height="25" class="inline-block align-top"></h2>
-            <div class="pb-36"></div>
+            <div class="pb-24"></div>
             <% for (let i = 0; i < rep.length; i++) { %>
-                <h3 class="pb-3"><%= ranks[i] %> <a href="/users/<%= rep[i].slug %>" style="text-decoration: none;"><%= rep[i].name %> <img src="<%= rep[i].avatar %>" alt="<%= rep[i].name %>'s avatar'" width="40" height="40" class="avatar inline-block align-bottom" style="border-radius: 50%;"></a> with <%= rep[i].posRep %> points.</h3>
+                <h3 class="pb-3"><%= ranks[i] %> <a href="/users/<%= rep[i].slug %>" style="text-decoration: none;"><%= rep[i].name %> <img src="<%= rep[i].avatar %>" width="40" height="40" class="avatar inline-block align-bottom" style="border-radius: 50%;"></a> with <%= rep[i].posRep %> points.</h3>
             <% } %>
         <% } %>
     <% }else { %>
@@ -31,16 +31,16 @@
     <% } %>
     <% if (posts.length > 0) { %>
         <% if (posts.length < 10) { %>
-            <div class="pt-36"></div>
+            <div class="pt-24"></div>
             <h2 class="pt-10 pb-10">😮 Top <%= posts.length %> all time viewed posts 👍</h2>
-            <div class="pb-36"></div>
+            <div class="pb-24"></div>
             <% for (let i = 0; i < posts.length; i++) { %>
                <h3 class="pb-3"><%= ranks[i] %> <a href="/posts/<%= posts[i].slug %>" style="text-decoration: none;"><%= posts[i].title %></a> by <a href="/users/<%= authors[i].slug %>" class="no-underline text-black"><%= authors[i].name %></a></h3>
             <% } %>
         <% }else { %>
-            <div class="pt-36"></div>
+            <div class="pt-24"></div>
             <h2 class="pt-10">😮 Top 10 all time viewed posts 👍</h2>
-            <div class="pb-36"></div>
+            <div class="pb-24"></div>
             <% for (let i = 0; i < 10; i++) { %>
                 <h3 class="pb-3"><%= ranks[i] %> <a href="/posts/<%= posts[i].slug %>" style="text-decoration: none;"><%= posts[i].title %></a> by <a href="/users/<%= authors[i].slug %>" class="no-underline text-black"><%= authors[i].name %></a></h3>
             <% } %>

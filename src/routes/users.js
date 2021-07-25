@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const authControllers = require("../misc/authControllers");
 const functions = require("../misc/functions");
-const getColors = require('get-image-colors');
+const getColors = require("get-image-colors");
 
 router.get("/login", async (req, res) => {
   res.render("login", {
@@ -58,20 +58,27 @@ router.post("/reset/:id", authControllers.resetPassword);
 
 router.get("/logout", authControllers.logoutHandle);
 
-router.get('/auth/github', passport.authenticate('github'));
+router.get("/auth/github", passport.authenticate("github"));
 
-router.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/users/login' }),
-  function(req, res) {
-    res.redirect('/dashboard');
-  });
+router.get(
+  "/auth/github/callback",
+  passport.authenticate("github", { failureRedirect: "/users/login" }),
+  function (req, res) {
+    res.redirect("/dashboard");
+  }
+);
 
-router.get('/auth/discord', passport.authenticate('discord'));
+router.get("/auth/discord", passport.authenticate("discord"));
 
-router.get('/auth/discord/callback', passport.authenticate('discord', {
-  failureRedirect: '/users/login'
-}), function(req, res) {
-  res.redirect('/dashboard')
-});
+router.get(
+  "/auth/discord/callback",
+  passport.authenticate("discord", {
+    failureRedirect: "/users/login",
+  }),
+  function (req, res) {
+    res.redirect("/dashboard");
+  }
+);
 
 router.post("/follow/:userID/:toFollowID", async (req, res) => {
   const { userID, toFollowID } = req.params;
@@ -150,13 +157,32 @@ router.get("/:slug", async (req, res) => {
     followingData.push(await functions.findUser(following[i]));
   }
 
-  if (dude.avatar != "https://res.cloudinary.com/decc00n/image/upload/v1619792623/user.png") {
+  if (
+    dude.avatar !=
+    "https://res.cloudinary.com/decc00n/image/upload/v1619792623/user.png"
+  ) {
+    try {
+      getColors(dude.avatar).then((colors) => {
+        let Colors = colors.map((color) => color.hex());
 
-    getColors(dude.avatar).then(colors => {
-      let Colors = colors.map(color => color.hex())
-  
-      let style = `background-image: linear-gradient(to right, ${Colors[0]} , ${Colors[1]});`
-  
+        let style = `background-image: linear-gradient(to right, ${Colors[0]} , ${Colors[1]});`;
+
+        res.render("users/user", {
+          heading: dude.name,
+          dude: dude,
+          articles: posts,
+          title: dude.name,
+          followers: followersData,
+          following: followingData,
+          description: dude.bio,
+          route: `/users/${dude.slug}`,
+          colors: Colors,
+          style: style,
+        });
+      });
+    } catch (err) {
+      let style = `background-image: linear-gradient(to right, yellow , red);`;
+
       res.render("users/user", {
         heading: dude.name,
         dude: dude,
@@ -167,13 +193,11 @@ router.get("/:slug", async (req, res) => {
         description: dude.bio,
         route: `/users/${dude.slug}`,
         colors: Colors,
-        style: style
+        style: style,
       });
-    })
-
-  }else {
-
-    let style = `background-image: linear-gradient(to right, yellow , red);`
+    }
+  } else {
+    let style = `background-image: linear-gradient(to right, yellow , red);`;
 
     res.render("users/user", {
       heading: dude.name,
@@ -184,10 +208,9 @@ router.get("/:slug", async (req, res) => {
       following: followingData,
       description: dude.bio,
       route: `/users/${dude.slug}`,
-      style: style
+      style: style,
     });
   }
-
 });
 
 //! Removed
