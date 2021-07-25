@@ -33,7 +33,6 @@ module.exports.local = (passport) => {
   passport.serializeUser((user, done) => {
     done(null, user);
   });
-
   passport.deserializeUser((id, done) => {
     User.findById(id, (err, user) => {
       done(err, user);
@@ -60,7 +59,15 @@ module.exports.github = (passport) => {
             return cb(null, newUser)
           })
         }else {
-          return cb(null, user)
+          if (user.avatar === profile._json.avatar_url) {
+            return cb(null, user)
+          }else {
+            User.findOne({ uid: user.uid }, (err, user) => {
+              if (err) throw err;
+              user.avatar = profile._json.avatar_url;
+              user.save();
+            })
+          }
         }
       })
   }))
@@ -86,7 +93,15 @@ module.exports.discord = (passport) => {
           return cb(null, newUser)
         })
       }else {
-        return cb(null, user)
+        if (user.avatar === `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png`) {
+          return cb(null, user)
+        }else {
+          User.findOne({ uid: user.uid }, (err, user) => {
+            if (err) throw err;
+            user.avatar = `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png`;
+            user.save();
+          })
+        }
       }
     })
   }))
