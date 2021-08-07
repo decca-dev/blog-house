@@ -46,6 +46,7 @@ exports.registerHandle = async (req, res) => {
       title: "BlogHouse",
       description: "Register an account with BlogHouse",
       route: "/users/register",
+			heading: "Register"
     });
   } else {
     //*Validation
@@ -62,6 +63,7 @@ exports.registerHandle = async (req, res) => {
           title: "BlogHouse",
           description: "Register an account with BlogHouse",
           route: "/users/register",
+					heading: "Register"
         });
       } else {
         const token = jwt.sign({ name, email, password }, JWT_KEY, {
@@ -77,6 +79,9 @@ exports.registerHandle = async (req, res) => {
 
         const transporter = nodemailer.createTransport({
           service: "gmail",
+					host: 'smtp.gmail.com',
+    			port: 465,
+    			secure: true, 
           auth: {
             user: EMAIL,
             pass: PASSWORD,
@@ -106,6 +111,7 @@ exports.registerHandle = async (req, res) => {
               title: "BlogHouse",
               description: "Register an account with BlogHouse",
               route: "/users/register",
+							heading: "Register"
             });
           } else {
             req.flash(
@@ -207,6 +213,7 @@ exports.forgotPassword = async (req, res) => {
       title: "BlogHouse",
       description: "Password recovery",
       route: "/users/forgot",
+			heading: "Password Forget"
     });
   } else {
     User.findOne({ email: email }).then(async (user) => {
@@ -218,6 +225,7 @@ exports.forgotPassword = async (req, res) => {
           title: "BlogHouse",
           description: "Password recovery",
           route: "/users/forgot",
+					heading: "Password Forget"
         });
       } else {
         const token = jwt.sign({ _id: user._id }, JWT_RESET, {
@@ -240,6 +248,7 @@ exports.forgotPassword = async (req, res) => {
               title: "BlogHouse",
               description: "Password recovery",
               route: "/users/forgot",
+							heading: "Password Forget"
             });
           } else {
             const transporter = nodemailer.createTransport({
@@ -270,6 +279,7 @@ exports.forgotPassword = async (req, res) => {
                   title: "BlogHouse",
                   description: "Password recovery",
                   route: "/users/forgot",
+									heading: "Password Forget"
                 });
               } else {
                 req.flash(
