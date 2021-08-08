@@ -1,16 +1,8 @@
 module.exports = () => {
-  // let id = "";
 
-  // const possible =
-  //   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const crypto = require("crypto");
 
-  // for (let i = 0; i < Math.floor(Math.random() * possible.length) + 20; i++) {
-  //   id += possible.charAt(Math.floor(Math.random() * possible.length));
-  // }
-
-  // return id;
-
-  const { v4: uuidv4 } = require('uuid');
-
-  return uuidv4();
+  const id = crypto.randomBytes(16).toString("hex");
+  
+  return id;
 };

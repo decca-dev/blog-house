@@ -13,7 +13,7 @@
         />
         <div class="card-body">
           <h5 class="card-title"><%= user.name %></h5>
-          <p class="card-text"><%= user.bio %></p>
+          <p class="card-text"><%= user.bio || 'No bio' %></p>
           <a href="/users/<%= user.slug %>" class="btn btn-primary">Profile</a>
         </div>
       </div>

@@ -3,6 +3,7 @@ const { ensureAuthenticated } = require("../misc/auth");
 const User = require("../models/User");
 const slugify = require("slugify");
 const cloudinary = require('cloudinary').v2;
+const functions = require('../misc/functions');
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -105,6 +106,17 @@ router.post("/settings/avatar", async (req, res) => {
 });
 
 router.delete("/settings/delete", async (req, res) => {
+  const dude = await User.findOne({ uid: req.user.uid });
+  const users = await User.find();
+
+  for (let i = 0; i < users.length; i++){
+    if (users[i].followers.includes(dude.uid)) {
+      await functions.unfollowUser(dude.uid, users[i].uid)
+    }else if (users[i].following.includes(dude.uid)) {
+      await functions.unfollowUser(users[i].uid, dude.uid)
+    }
+  }
+
   await User.findOneAndDelete({ uid: req.user.uid });
   res.redirect("/");
 });

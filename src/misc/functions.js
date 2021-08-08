@@ -29,8 +29,18 @@ module.exports.unfollowUser = async (userID, toUnfollowID) => {
   const guy = await User.findOne({ uid: userID });
   const guyToUnfollow = await User.findOne({ uid: toUnfollowID });
 
-  guy.following.splice(0, guyToUnfollow.uid);
-  guyToUnfollow.followers.splice(0, guy.uid);
+  for (let i = 0; i < guyToUnfollow.followers.length; i++) {
+    if (guyToUnfollow.followers[i] === guy.uid) {
+      guyToUnfollow.followers.splice(i, 1);
+    }
+  }
+
+  for (let i = 0; i < guy.following.length; i++) {
+    if (guy.following[i] === guyToUnfollow.uid) {
+      guy.following.splice(i, 1);
+    }
+  }
+
 
   await guy.save();
   await guyToUnfollow.save();
