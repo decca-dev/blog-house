@@ -1,11 +1,8 @@
 module.exports = () => {
 
-  let id = "";
-  const possible = "0123456789";
+  const crypto = require("crypto");
 
-  for (let i = 0; i < Math.floor(Math.random() * 18) + 14; i++) {
-    id += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
+  const id = crypto.randomBytes(16).toString("hex");
   
   return id;
 };
