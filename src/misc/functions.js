@@ -171,3 +171,15 @@ module.exports.negRep = async (user, toRep, req) => {
     );
   }
 };
+
+module.exports.removeFromSeen = async (slug, userID) => {
+  const post = await Post.findOne({ slug: slug });
+
+  for (let i = 0; i < post.seenBy.length; i++) {
+    if (post.seenBy[i] === userID) {
+      post.seenBy.splice(i, 1);
+    }
+  }
+
+  await post.save();
+}

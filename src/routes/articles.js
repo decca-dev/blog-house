@@ -7,7 +7,12 @@ const functions = require("../misc/functions");
 
 router.get("/", async (req, res) => {
   const articles = await Post.find().sort({ createdAt: "desc" });
-  const randomPost = articles[Math.floor(Math.random() * articles.length)];
+  let randomPost;
+  if (articles.length > 0) {
+    randomPost = articles[Math.floor(Math.random() * articles.length)];
+  }else {
+    randomPost = undefined;
+  }
   
   res.render("articles/index", {
     heading: "Articles | BlogHouse",

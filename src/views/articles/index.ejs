@@ -10,31 +10,33 @@
     />
     New</a
   >
-  <h1 class="mb-3 pt-3">Random Post</h1>
-  <div class="card mt-4 mb-5">
-    <div class="card-body bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
-      <h4 class="card-title"><%= random.title %></h4>
-      <div class="card-subtitle text-muted mb-2">
-        <%= random.createdAt.toLocaleDateString() %>
+  <% if (typeof random !== "undefined") { %>
+    <h1 class="mb-3 pt-3">Random Post</h1>
+    <div class="card mt-4 mb-5">
+      <div class="card-body bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
+        <h4 class="card-title"><%= random.title %></h4>
+        <div class="card-subtitle text-muted mb-2">
+          <%= random.createdAt.toLocaleDateString() %>
+        </div>
+        <div class="card-text mb-2">
+          <%= random.description.substr(0, 50) %>...
+        </div>
+        <a href="/articles/<%= random.slug %>" class="btn btn-primary"
+          >Read more</a
+        >
+        <% if (user && random.author === user.uid) { %>
+        <a href="/articles/edit/<%= random.id %>" class="btn btn-info">Edit</a>
+        <form
+          action="/articles/<%= random.id %>?_method=DELETE"
+          method="POST"
+          class="d-inline"
+        >
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+        <% } %>
       </div>
-      <div class="card-text mb-2">
-        <%= random.description.substr(0, 50) %>...
-      </div>
-      <a href="/articles/<%= random.slug %>" class="btn btn-primary"
-        >Read more</a
-      >
-      <% if (user && random.author === user.uid) { %>
-      <a href="/articles/edit/<%= random.id %>" class="btn btn-info">Edit</a>
-      <form
-        action="/articles/<%= random.id %>?_method=DELETE"
-        method="POST"
-        class="d-inline"
-      >
-        <button type="submit" class="btn btn-danger">Delete</button>
-      </form>
-      <% } %>
-    </div>
-  </div>  
+    </div>  
+  <% } %>
   <% if (articles.length > 0) { %> 
     <h1 class="mb-3 pt-3">All recent posts</h1>
   <% articles.forEach(article => { %>
