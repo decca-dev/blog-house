@@ -90,15 +90,4 @@ userSchema.pre('validate', function(next) {
     next();
 });
 
-userSchema.methods.toJSON = function() {
-    var obj = this.toObject();
-    delete obj.password;
-    delete obj.resetLink;
-    delete obj.apiKey;
-    delete obj.email;
-    delete obj.hasNegRepped;
-    delete obj.hasPosRepped;
-    return obj;
-}
-
 module.exports = mongoose.model('User', userSchema)

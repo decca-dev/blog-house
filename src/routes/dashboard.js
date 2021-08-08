@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { ensureAuthenticated } = require("../misc/auth");
 const User = require("../models/User");
+const Post = require("../models/Post");
 const slugify = require("slugify");
 const cloudinary = require('cloudinary').v2;
 const functions = require('../misc/functions');
@@ -114,6 +115,14 @@ router.delete("/settings/delete", async (req, res) => {
       await functions.unfollowUser(dude.uid, users[i].uid)
     }else if (users[i].following.includes(dude.uid)) {
       await functions.unfollowUser(users[i].uid, dude.uid)
+    }
+  }
+
+  const posts = await Post.find();
+
+  for (let i = 0; i < posts.length; i++) {
+    if (posts[i].seenBy.includes(dude.uid)) {
+      await functions.removeFromSeen(posts[i].slug, dude.uid)
     }
   }
 
