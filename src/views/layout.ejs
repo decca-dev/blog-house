@@ -61,13 +61,26 @@
       crossorigin="anonymous"
     ></script>
     <script>
+
       AOS.init();
       twemoji.parse(document.body);
-
-      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
       })
+
+      const buttons = document.querySelectorAll('button') || document.querySelectorAll('.btn');
+
+      for (let i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', () => {
+          if (buttons[i].form) {
+            buttons[i].form.submit()
+            buttons[i].disabled = true;
+          }
+          buttons[i].disabled = true;
+        })
+      }
+      
     </script>
   </body>
 </html>

@@ -18,8 +18,6 @@
     if (localStorage.getItem('cookieBannerDisplayed') === "true") {
         cookieContainer.style.bottom = "-100%";
     }else {
-        setTimeout(() => {
-            cookieContainer.style.bottom = 0;
-        }, 5000)
+        cookieContainer.style.bottom = 0;
     }
 </script>
