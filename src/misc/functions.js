@@ -183,3 +183,34 @@ module.exports.removeFromSeen = async (slug, userID) => {
 
   await post.save();
 }
+
+module.exports.deleteAccount = async (userID) => {
+  const dude = await User.findOne({ uid: userID });
+
+  const users = await User.find();
+  for (let i = 0; i < users.length; i++){
+    if (users[i].followers.includes(dude.uid)) {
+      await unfollowUser(dude.uid, users[i].uid)
+    }else if (users[i].following.includes(dude.uid)) {
+      await unfollowUser(users[i].uid, dude.uid)
+    }
+  }
+
+  const posts = await Post.find();
+  for (let i = 0; i < posts.length; i++) {
+    if (posts[i].seenBy.includes(dude.uid)) {
+      await removeFromSeen(posts[i].slug, dude.uid)
+    }
+  }
+
+  const logs = await Log.find();
+  for (let i = 0; i < logs.length; i++) {
+    if (logs[i].by === dude.uid) {
+      Log.findOneAndDelete({ _id: logs[i]._id });
+    }else if (logs[i].onUser === dude.uid) {
+      Log.findOneAndDelete({ _id: logs[i]._id });
+    }
+  }
+
+  await User.findOneAndDelete({ uid: userID });
+}
