@@ -107,26 +107,7 @@ router.post("/settings/avatar", async (req, res) => {
 });
 
 router.delete("/settings/delete", async (req, res) => {
-  const dude = await User.findOne({ uid: req.user.uid });
-  const users = await User.find();
-
-  for (let i = 0; i < users.length; i++){
-    if (users[i].followers.includes(dude.uid)) {
-      await functions.unfollowUser(dude.uid, users[i].uid)
-    }else if (users[i].following.includes(dude.uid)) {
-      await functions.unfollowUser(users[i].uid, dude.uid)
-    }
-  }
-
-  const posts = await Post.find();
-
-  for (let i = 0; i < posts.length; i++) {
-    if (posts[i].seenBy.includes(dude.uid)) {
-      await functions.removeFromSeen(posts[i].slug, dude.uid)
-    }
-  }
-
-  await User.findOneAndDelete({ uid: req.user.uid });
+ await functions.deleteAccount(req.user.uid)
   res.redirect("/");
 });
 

@@ -70,7 +70,7 @@ router.get("/", async (req, res) => {
 });
 
 router.delete("/logs/delete/:id", async (req, res) => {
-  const log = await Log.findOneAndDelete({ _id: req.params.id });
+  await Log.findOneAndDelete({ _id: req.params.id });
   res.redirect("/admin");
 });
 
