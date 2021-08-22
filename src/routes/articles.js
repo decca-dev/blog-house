@@ -4,6 +4,7 @@ const User = require("../models/User");
 const { ensureAuthenticated } = require("../misc/auth");
 const baseUrl = process.env.URL;
 const functions = require("../misc/functions");
+const fetch = require('node-fetch');
 
 router.get("/", async (req, res) => {
   const articles = await Post.find().sort({ createdAt: "desc" });
@@ -52,6 +53,25 @@ router.post(
   "/new",
   async (req, res, next) => {
     req.post = new Post();
+
+    if (typeof process.env.JAKE_SITE !== "undefined") {
+      const payload = {
+        title: req.post.title,
+        description: req.post.description,
+        sanitizedHTML: req.post.sanitizedHTML,
+        url: `${process.env.URL}/articles/${req.post.slug}`
+      }
+      await fetch(`${process.env.JAKE_SITE}/api/email/notify`, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          "authentication": process.env.JAKE_KEY
+        },
+      })
+    }
+
     next();
   },
   saveArticleAndRedirect("new")
@@ -126,6 +146,7 @@ function saveArticleAndRedirect(path) {
     } catch (err) {
       console.log(err);
       res.render(`articles/${path}`, {
+        heading: "BlogHouse",
         article: post,
         title: "BlogHouse",
         description:

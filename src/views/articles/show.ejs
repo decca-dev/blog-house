@@ -21,7 +21,9 @@
     <div class="flex flex-wrap">
         <p class="text-muted pb-3">Viewed By</p>
         <div class="pt-5 pb-5 space-x-4">
-            <%= data %> 
+            <% data.forEach((u) => { %>
+                <a href="/users/<%= u.slug %>" class="no-underline"><img src="<%= u.avatar %>" title="<%= u.name %>" alt="" width="60" height="60" class="inline-block" style="border-radius: 50%;"></a>
+            <% }) %> 
         </div>
     </div>
     <button onclick="copy('<%= link %>')" class="btn btn-primary" id="share-btn">Share</button>
