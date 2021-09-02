@@ -5,6 +5,12 @@ const { ensureAuthenticated } = require("../misc/auth");
 const baseUrl = process.env.URL;
 const functions = require("../misc/functions");
 const fetch = require('node-fetch');
+const Logger = require('../utils/Logger');
+const slugify = require('slugify');
+const marked = require('marked');
+const createDOMPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
+const dompurify = createDOMPurify(new JSDOM().window);
 
 router.get("/", async (req, res) => {
   const articles = await Post.find().sort({ createdAt: "desc" });
@@ -55,21 +61,29 @@ router.post(
     req.post = new Post();
 
     if (typeof process.env.JAKE_SITE !== "undefined") {
-      const payload = {
-        title: req.post.title,
-        description: req.post.description,
-        sanitizedHTML: req.post.sanitizedHTML,
-        url: `${process.env.URL}/articles/${req.post.slug}`
+
+      if (req.user.uid === process.env.JAKE_ID) {
+        const payload = {
+          title: req.body.title,
+          description: req.body.description,
+          sanitizedHTML: dompurify.sanitize(marked(req.body.markdown)),
+          url: `${process.env.URL}/articles/${slugify(req.body.title, { lower: true, strict: true })}`
+        }
+        fetch(`${process.env.JAKE_SITE}/api/email/notify`, {
+          method: "POST",
+          body: JSON.stringify(payload),
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "authentication": process.env.JAKE_KEY
+          },
+        }).then((resp) => {
+          Logger.success("Request sent to the notify API", "ARTICLE_CREATE")
+        }).catch((err) => {
+          Logger.error(`Request failed to the notify API\nError: ${err.message}`, "ARTICLE_CREATE")
+        })
       }
-      await fetch(`${process.env.JAKE_SITE}/api/email/notify`, {
-        method: "POST",
-        body: JSON.stringify(payload),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          "authentication": process.env.JAKE_KEY
-        },
-      })
+
     }
 
     next();

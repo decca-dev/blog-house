@@ -104,6 +104,10 @@ router.post("/settings/avatar", async (req, res) => {
   user.avatar = avatar;
 
   await user.save();
+
+  req.flash('success_msg', 'Successfully updated your profile picture.')
+
+  res.redirect('/dashboard/settings');
 });
 
 router.delete("/settings/delete", async (req, res) => {

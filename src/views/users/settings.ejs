@@ -26,7 +26,7 @@
   </form>
   <div class="mb-10"></div>
   <div id="errors"></div>
-  <form method="POST" enctype="multipart/form-data" id="avatar-form">
+  <form enctype="multipart/form-data" id="avatar-form">
     <div class="form-group">
       <label for="file" class="mb-3">Change avatar</label>
       <div class="input-group mb-3">
@@ -95,6 +95,7 @@
   const result = document.querySelector('#result');
 
   form.addEventListener('submit', (e) => {
+
     e.preventDefault();
 
     let url = "https://api.cloudinary.com/v1_1/decc00n/image/upload";
@@ -110,7 +111,7 @@
       `
     }
 
-    const  fileType = file['type'];
+    const fileType = file['type'];
     const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
     if (!validImageTypes.includes(fileType)) {
       return errors.innerHTML = `
@@ -144,10 +145,12 @@
       body: formData
     })
     .then((response) => {
+      console.log(147)
       return response.json();
     })
     .then((data) => {
       const image = document.createElement('img');
+      image.id = "av-display";
       image.src = data.url;
       image.setAttribute('height', '100')
       image.setAttribute('width', '100')
@@ -169,7 +172,6 @@
       })
       .then((res) => {
         console.log(res.status)
-        location.href = "/dashboard/settings"
       })
       
     });

@@ -65,7 +65,7 @@ router.get('/users/:slug/posts', validateApiKey, async (req, res) => {
         error: true,
         message: "user not found"
     })
-    const posts = await Post.find({ author: user.uid });
+    const posts = await Post.find({ author: user.uid }).sort({ createdAt: "desc" });
 
     let data = [];
 
@@ -89,7 +89,7 @@ router.get('/users/:slug/posts', validateApiKey, async (req, res) => {
 })
 
 router.get('/posts', validateApiKey, async (req, res) => {
-    const posts =  await Post.find()
+    const posts =  await Post.find().sort({ createdAt: "desc" })
 
     let data = [];
 
